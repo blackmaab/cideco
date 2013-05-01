@@ -1,0 +1,57 @@
+﻿
+body {background:repeat-x top left; font-family:arial; font-size:11px; color:#666666;text-align:left;}
+  
+
+.fieldsetTitle
+{
+    font-family: Arial,Comic Sans MS;
+    color:DarkRed;
+    font-size: 12px;
+    font-weight: bolder;
+}
+
+.label
+{
+    font-family: Arial;
+    color:#000000;
+    font-size: 12px;
+    font-weight: normal;
+}
+  
+.tiny  {
+	width: 120px;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #ddd ;
+	background-color:#ffffff;
+	font-size: 11px;
+	color: #000000;
+}
+
+
+.small  {
+	width: 150px;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #ddd ;
+	background-color:#ffffff;
+	font-size: 11px;
+	color: #000000;
+}
+
+
+.medium  {
+	width: 225px;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #ddd ;
+	background-color:#ffffff;
+	font-size: 11px;
+	color: #000000;
+}
+
+.long  {
+	width: 300px;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #ddd ;
+	background-color:#ffffff;
+	font-size: 11px;
+	color: #000000;
+}

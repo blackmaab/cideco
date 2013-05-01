@@ -1,0 +1,13 @@
+Skin: dhx_skyblue
+
+======== JS CODE =========
+./dhtmlxcommon.js
+./message/message.js
+../dhtmlxCalendar/codebase/dhtmlxcalendar.js
+../dhtmlxDataProcessor/codebase/dhtmlxdataprocessor.js
+../dhtmlxDataStore/codebase/datastore.js
+
+======== CSS CODE ========
+./message/message.css
+../dhtmlxCalendar/codebase/dhtmlxcalendar.css
+../dhtmlxCalendar/codebase/skins/dhtmlxcalendar_dhx_skyblue.css

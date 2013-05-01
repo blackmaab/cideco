@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<menu>
+	
+	<item id="Admin" text="Administracion" img="application.png" >
+		<item id="Ad_Usuarios" text="Usuarios" img="group.png"/>
+		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>
+		<item id="Ad_sep1" type="separator"/>
+		<item id="Ad_Salir" text="Salir" img="door_in.png"/>
+	</item>
+	
+	<item id="Sep1" type="separator"/>
+	
+	<item id="Control" text="Control" img="shape_move_forwards.png">
+		<item id="Ctr_Solicitud" text="Solicitud Donante(Promotor)" img="shape_move_back.png"/>
+		<item id="Ctr_Donaciones" text="Donaciones" img="creditcards.png"/>
+		<item id="Ctr_Becas" text="Becas" img="vcard.png"/>
+		<item id="Ctr_sep1" type="separator"/>
+		<item id="Ctr_Pagos" text="Realizar Pago Donacion" img="money.png"/>
+		<item id="Ctr_Notas" text="Nota Promedio Alumno" img="page_white_database_yellow.png"/>
+	</item>
+	
+	<item id="Sep2" type="separator"/>
+	
+	<item id="Consultas" text="Consultas" img="table.png">
+		<item id="Con_Donaciones" text="Donaciones" img="table_multiple.png"/>
+		<item id="Con_Becas" text="Becas" img="table_multiple.png"/>
+		<item id="Con_Notas" text="Notas" img="table_multiple.png"/>
+	</item>
+	
+	<item id="Sep3" type="separator" />
+	
+	
+	<item id="Mantenimientos" text="Mantenimientos" img="database.png" >
+		<item id="Man_Tipo_Beca" text="Tipos de Beca" img="database_wrench.png"/>
+		<item id="Man_Tipo_Donacion" text="Tipos de Donacion" img="database_wrench.png"/>
+		<item id="Man_Tipo_Pago" text="Tipo de Pagos" img="database_wrench.png"/>
+		<item id="Man_sep_1" type="separator"/>
+		<item id="Man_Institucion" text="Institucion Educativas" img="database_wrench.png"/>
+		<item id="Man_Bancos" text="Bancos" img="database_wrench.png"/>
+		<item id="Man_Pais" text="Paises" img="database_wrench.png"/>
+	</item>
+	
+	
+	<item id="Sep4" type="separator"/>
+	
+	
+	<item id="Reportes" text="Reportes" img="report.png">
+		<item id="Rep_01" text="Reporte de Pagos" img="folder_page_white.png"/>
+		<item id="Rep_02" text="Reporte Pagos Pendientes" img="folder_page_white.png"/>
+		
+	</item>
+
+	
+</menu>

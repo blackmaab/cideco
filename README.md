@@ -1,4 +1,0 @@
-cideco
-======
-
-Proyecto de catedra
