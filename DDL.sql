@@ -1,66 +1,29 @@
--- phpMyAdmin SQL Dump
--- version 3.5.8
--- http://www.phpmyadmin.net
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2013 a las 07:32:20
--- Versión del servidor: 5.5.27
--- Versión de PHP: 5.4.7
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `gd_cideco_es`
---
 CREATE DATABASE `gd_cideco_es` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `gd_cideco_es`;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `alumno`
---
 
 CREATE TABLE IF NOT EXISTS `alumno` (
   `id_alumno` int(11) NOT NULL AUTO_INCREMENT,
   `id_persona` int(11) NOT NULL,
-  `nie` varchar(20) DEFAULT NULL,
+  `nie` int(11) NOT NULL,
   `destacado_en` varchar(100) DEFAULT NULL,
   `necesidades_medicas` varchar(100) DEFAULT NULL,
   `numero_hermanos` int(11) DEFAULT NULL,
-  `vive_con` varchar(255) DEFAULT NULL,
+  `vive_con` varchar(255) NOT NULL,
   `grande_quiere_ser` varchar(100) DEFAULT NULL,
   `juego_favorito` varchar(100) DEFAULT NULL,
   `materia_favorita` varchar(100) DEFAULT NULL,
   `ayuda_en_casa` varchar(100) DEFAULT NULL,
-  `fecha_creacion` varchar(255) DEFAULT NULL,
-  `fotografia` varchar(100) DEFAULT NULL,
+  `fecha_creacion` varchar(255) NOT NULL,
+  `fotografia` varchar(100) NOT NULL,
   PRIMARY KEY (`id_alumno`),
   KEY `Fkey_alumno_persona` (`id_persona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `banco`
---
-
 CREATE TABLE IF NOT EXISTS `banco` (
   `id_banco` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_banco` varchar(100) DEFAULT NULL,
+  `nombre_banco` varchar(100) NOT NULL,
   PRIMARY KEY (`id_banco`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `banco`
---
 DROP TRIGGER IF EXISTS `trg_banco_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_banco_insert` BEFORE INSERT ON `banco`
@@ -96,42 +59,27 @@ CREATE TRIGGER `trg_banco_update` BEFORE UPDATE ON `banco`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `beca_escolar`
---
-
 CREATE TABLE IF NOT EXISTS `beca_escolar` (
   `id_beca` int(11) NOT NULL AUTO_INCREMENT,
   `id_tipo_beca` int(11) NOT NULL,
   `id_frecuencia_beca` int(11) NOT NULL,
   `id_registro_alumno` int(11) NOT NULL,
-  `porcentaje_beca` decimal(10,2) DEFAULT NULL,
-  `fecha_inicio_beca` date DEFAULT NULL,
-  `fecha_fin_beca` date DEFAULT NULL,
-  `activo` varchar(255) DEFAULT NULL,
+  `porcentaje_beca` decimal(10,2) NOT NULL,
+  `fecha_inicio_beca` date NOT NULL,
+  `fecha_fin_beca` date NOT NULL,
+  `activo` varchar(255) NOT NULL,
+  `beca_escolarcol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_beca`),
   KEY `fk_tipo_beca_idx` (`id_tipo_beca`),
   KEY `fk_frecuencia_beca_idx` (`id_frecuencia_beca`),
   KEY `fk_registro_alumno_idx` (`id_registro_alumno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `departamento`
---
-
 CREATE TABLE IF NOT EXISTS `departamento` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
   `departamento` varchar(50) NOT NULL,
   PRIMARY KEY (`id_departamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `departamento`
---
 DROP TRIGGER IF EXISTS `trg_departamento_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_departamento_insert` BEFORE INSERT ON `departamento`
@@ -167,21 +115,15 @@ CREATE TRIGGER `trg_departamento_update` BEFORE UPDATE ON `departamento`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `donacion`
---
-
 CREATE TABLE IF NOT EXISTS `donacion` (
   `id_donacion` int(11) NOT NULL AUTO_INCREMENT,
-  `id_donante` int(11) DEFAULT NULL,
-  `id_tipo_pago` int(11) DEFAULT NULL,
-  `id_tipo_donacion` int(11) DEFAULT NULL,
-  `id_promotor` int(11) DEFAULT NULL,
-  `Monto` decimal(10,2) DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL,
-  `estado` int(1) DEFAULT NULL,
+  `id_donante` int(11) NOT NULL,
+  `id_tipo_pago` int(11) NOT NULL,
+  `id_tipo_donacion` int(11) NOT NULL,
+  `id_promotor` int(11) NOT NULL,
+  `Monto` decimal(10,2) NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  `estado` int(1) NOT NULL,
   PRIMARY KEY (`id_donacion`),
   KEY `Fkey_donacion_donante` (`id_donante`),
   KEY `Fkey_donacion_tipo_donacion` (`id_tipo_donacion`),
@@ -190,94 +132,52 @@ CREATE TABLE IF NOT EXISTS `donacion` (
   KEY `fk_estado_idx` (`estado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `donante`
---
-
 CREATE TABLE IF NOT EXISTS `donante` (
   `id_donante` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_persona` int(11) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
+  `estado` int(11) NOT NULL,
   PRIMARY KEY (`id_donante`),
   KEY `Fkey_donante_estado` (`estado`),
   KEY `Fkey_donante_persona` (`id_persona`),
   KEY `Fkey_donante_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado_donacion`
---
-
 CREATE TABLE IF NOT EXISTS `estado_donacion` (
   `id_est_donacion` int(11) NOT NULL AUTO_INCREMENT,
-  `estado_donacion` varchar(60) DEFAULT NULL,
+  `estado_donacion` varchar(60) NOT NULL,
   PRIMARY KEY (`id_est_donacion`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado_donante`
---
-
 CREATE TABLE IF NOT EXISTS `estado_donante` (
   `id_est_donante` int(11) NOT NULL AUTO_INCREMENT,
-  `estado_donante` varchar(100) DEFAULT NULL,
+  `estado_donante` varchar(100) NOT NULL,
   PRIMARY KEY (`id_est_donante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `frecuencia_beca`
---
-
 CREATE TABLE IF NOT EXISTS `frecuencia_beca` (
   `id_frec_beca` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(60) DEFAULT NULL,
-  `aplica_renovacion` bit(1) DEFAULT NULL,
-  `numero_cuotas` int(11) DEFAULT NULL,
+  `descripcion` varchar(60) NOT NULL,
+  `aplica_renovacion` bit(1) NOT NULL,
+  `numero_cuotas` int(11) NOT NULL,
   PRIMARY KEY (`id_frec_beca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `grado`
---
-
 CREATE TABLE IF NOT EXISTS `grado` (
   `id_grado` int(11) NOT NULL AUTO_INCREMENT,
-  `grado` varchar(50) DEFAULT NULL,
-  `activo` bit(1) DEFAULT NULL,
+  `grado` varchar(50) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_grado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `institucion_educativa`
---
-
 CREATE TABLE IF NOT EXISTS `institucion_educativa` (
   `id_institucion` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_institucion` varchar(100) DEFAULT NULL,
+  `nombre_institucion` varchar(100) NOT NULL,
   `direccion` varchar(300) DEFAULT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   `nombre_director` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id_institucion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `municipio`
---
 
 CREATE TABLE IF NOT EXISTS `municipio` (
   `id_municipio` int(11) NOT NULL AUTO_INCREMENT,
@@ -287,10 +187,6 @@ CREATE TABLE IF NOT EXISTS `municipio` (
   PRIMARY KEY (`id_municipio`),
   KEY `Fkey_municipio_departamento` (`id_departamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `municipio`
---
 DROP TRIGGER IF EXISTS `trg_municipio_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_municipio_insert` BEFORE INSERT ON `municipio`
@@ -326,23 +222,17 @@ CREATE TRIGGER `trg_municipio_update` BEFORE UPDATE ON `municipio`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pagos`
---
-
 CREATE TABLE IF NOT EXISTS `pagos` (
   `id_pago` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date DEFAULT NULL,
+  `fecha` date NOT NULL,
   `id_donacion` int(11) NOT NULL,
-  `numero_cuota` int(11) DEFAULT NULL,
+  `numero_cuota` int(11) NOT NULL,
   `tipo_pago` int(11) NOT NULL,
-  `monto` decimal(10,2) DEFAULT NULL,
+  `monto` decimal(10,2) NOT NULL,
   `id_banco` int(11) NOT NULL,
-  `numero_recibo` int(11) DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL,
-  `usuario_creacion` int(11) DEFAULT NULL,
+  `numero_recibo` int(11) NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  `usuario_creacion` int(11) NOT NULL,
   `fecha_mod` datetime DEFAULT NULL,
   `usuario_mod` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_pago`),
@@ -351,21 +241,11 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   KEY `fk_tipo_pago_idx` (`tipo_pago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pais`
---
-
 CREATE TABLE IF NOT EXISTS `pais` (
   `id_pais` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_pais` varchar(50) NOT NULL,
   PRIMARY KEY (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `pais`
---
 DROP TRIGGER IF EXISTS `trg_pais_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_pais_insert` BEFORE INSERT ON `pais`
@@ -399,26 +279,14 @@ CREATE TRIGGER `trg_pais_update` BEFORE UPDATE ON `pais`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `perfil`
---
-
 CREATE TABLE IF NOT EXISTS `perfil` (
   `id_perfil` int(11) NOT NULL AUTO_INCREMENT,
-  `perfil` varchar(255) DEFAULT NULL,
-  `menu` varchar(8000) DEFAULT NULL,
-  `comentario` varchar(200) DEFAULT NULL,
-  `activo` bit(1) DEFAULT NULL,
+  `perfil` varchar(255) NOT NULL,
+  `menu` varchar(8000) NOT NULL,
+  `comentario` varchar(200) NOT NULL,
+  `activo` bit(1) NOT NULL,
   PRIMARY KEY (`id_perfil`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `persona`
---
 
 CREATE TABLE IF NOT EXISTS `persona` (
   `id_persona` int(11) NOT NULL AUTO_INCREMENT,
@@ -431,18 +299,14 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `telefono_casa` varchar(15) DEFAULT NULL,
   `telefono_movil` varchar(15) DEFAULT NULL,
   `telefono_trabajo` varchar(15) DEFAULT NULL,
-  `nit` varchar(20) DEFAULT NULL,
+  `nit` varchar(20) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `Genero` char(1) DEFAULT NULL,
+  `Genero` char(1) NOT NULL,
   `correo_electronico` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_persona`),
   KEY `Fkey_persona_pais` (`id_pais`),
   KEY `Fkey_persona_municipio` (`id_municipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `persona`
---
 DROP TRIGGER IF EXISTS `trg_persona_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
@@ -640,25 +504,15 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `promotor`
---
-
 CREATE TABLE IF NOT EXISTS `promotor` (
   `id_promotor` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_persona` int(11) DEFAULT NULL,
-  `fecha_inicio` date DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
   `fecha_fin` date DEFAULT NULL,
-  `activo` bit(1) DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_promotor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `promotor`
---
 DROP TRIGGER IF EXISTS `trg_promotor_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_promotor_insert` BEFORE INSERT ON `promotor`
@@ -703,88 +557,172 @@ CREATE TRIGGER `trg_promotor_update` BEFORE UPDATE ON `promotor`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `registro_alumno`
---
-
 CREATE TABLE IF NOT EXISTS `registro_alumno` (
   `id_registro` int(11) NOT NULL AUTO_INCREMENT,
-  `id_alumno` int(11) DEFAULT NULL,
-  `id_donante` int(11) DEFAULT NULL,
-  `id_institucion_edu` int(11) DEFAULT NULL,
-  `id_grado` int(11) DEFAULT NULL,
-  `seccion` char(1) DEFAULT NULL,
+  `id_alumno` int(11) NOT NULL,
+  `id_donante` int(11) NOT NULL,
+  `id_institucion_edu` int(11) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `seccion` char(1) NOT NULL,
   `nota_promedio` decimal(10,2) DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL,
   PRIMARY KEY (`id_registro`),
   KEY `Fkey_registro_donante` (`id_donante`),
   KEY `Fkey_registro_alumno` (`id_alumno`),
   KEY `Fkey_registro_institucion` (`id_institucion_edu`),
   KEY `Fkey_registro_grado` (`id_grado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+DROP TRIGGER IF EXISTS `trg_registro_alumno_insert`;
+DELIMITER //
+CREATE TRIGGER `trg_registro_alumno_insert` BEFORE INSERT ON `registro_alumno`
+ FOR EACH ROW BEGIN  
+		
 
--- --------------------------------------------------------
+		DECLARE validar varchar(50);
+		DECLARE msg varchar(255);
+		DECLARE sec char(1);
 
---
--- Estructura de tabla para la tabla `renovacion`
---
+		/*VALIDACION DEL CAMPO*/
+		IF new.seccion <> null OR new.seccion<>"" THEN
+			SET sec=(select UPPER(new.seccion));
+
+			IF sec<>'A' AND sec<>'B' AND sec<>'C' AND sec<>'D' THEN 
+				SET msg = concat('En el campo SECCION solamente pueden existir las siguientes: A, B, C y D');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
+
+		/*VALIDACION DEL CAMPO NOTA_PROMEDIO*/
+		IF new.nota_promedio <> null OR new.nota_promedio <> "" THEN
+			IF new.nota_promedio > 10 THEN 
+				SET msg = concat('En el campo NOTA_PROMEDIO no se aceptan numeros mayores a 10');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;		
+	END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_registro_alumno_update`;
+DELIMITER //
+CREATE TRIGGER `trg_registro_alumno_update` BEFORE UPDATE ON `registro_alumno`
+ FOR EACH ROW BEGIN  
+		
+
+		DECLARE validar varchar(50);
+		DECLARE msg varchar(255);
+		DECLARE sec char(1);
+
+		/*VALIDACION DEL CAMPO*/
+		IF new.seccion <> null OR new.seccion<>"" THEN
+			SET sec=(select UPPER(new.seccion));
+
+			IF sec<>'A' AND sec<>'B' AND sec<>'C' AND sec<>'D' THEN 
+				SET msg = concat('En el campo SECCION solamente pueden existir las siguientes: A, B, C y D');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
+
+		/*VALIDACION DEL CAMPO NOTA_PROMEDIO*/
+		IF new.nota_promedio <> null OR new.nota_promedio <> "" THEN
+			IF new.nota_promedio > 10 THEN 
+				SET msg = concat('En el campo NOTA_PROMEDIO no se aceptan numeros mayores a 10');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;		
+	END
+//
+DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `renovacion` (
   `id_renovacion` int(11) NOT NULL AUTO_INCREMENT,
   `id_donacion` int(11) NOT NULL,
-  `fecha_renovacion` date DEFAULT NULL,
+  `fecha_renovacion` date NOT NULL,
   `documento_renovacion_img` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_renovacion`),
   KEY `fk_donacion_idx` (`id_donacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tarjetas_cobro`
---
-
 CREATE TABLE IF NOT EXISTS `tarjetas_cobro` (
   `id_tarjeta` int(11) NOT NULL AUTO_INCREMENT,
-  `id_donante` int(11) DEFAULT NULL,
-  `numero_tarjeta` varchar(15) DEFAULT NULL,
-  `fecha_expiracion` date DEFAULT NULL,
-  `nombre_titular` varchar(50) DEFAULT NULL,
+  `id_donante` int(11) NOT NULL,
+  `numero_tarjeta` varchar(15) NOT NULL,
+  `fecha_expiracion` date NOT NULL,
+  `nombre_titular` varchar(50) NOT NULL,
   PRIMARY KEY (`id_tarjeta`),
   KEY `Fkey_tarjeta_donante` (`id_donante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+DROP TRIGGER IF EXISTS `trg_tarjetas_cobro_insert`;
+DELIMITER //
+CREATE TRIGGER `trg_tarjetas_cobro_insert` BEFORE INSERT ON `tarjetas_cobro`
+ FOR EACH ROW BEGIN  
+		
 
--- --------------------------------------------------------
+		DECLARE validar varchar(50);
+		DECLARE msg varchar(255);
+		
+		/*VALIDACION DEL CAMPO NUMERO_TARJETA*/
+		IF new.numero_tarjeta<>null OR new.numero_tarjeta<>"" THEN
+			SET validar=(SELECT NEW.numero_tarjeta REGEXP '^[0-9]{4}[-]{1}[0-9]{4}[-]{1}[0-9]{4}$');
+			IF validar<>1 THEN
+				SET msg = concat('No coicide el formato en el campo NUMERO_TARJETA. Ejemplo: 0124-1457-9897');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
 
---
--- Estructura de tabla para la tabla `tipo_beca`
---
+		/*VALIDACION DEL CAMPO NOMBRE_TITULAR*/
+		IF new.nombre_titular<>null OR new.nombre_titular<>"" THEN
+			SET validar=(SELECT NEW.nombre_titular REGEXP '^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$');
+			IF validar<>1 THEN
+				SET msg = concat('En el campo NOMBRE_TITULAR solamente se aceptan letras ');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
+	END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_tarjetas_cobro_update`;
+DELIMITER //
+CREATE TRIGGER `trg_tarjetas_cobro_update` BEFORE UPDATE ON `tarjetas_cobro`
+ FOR EACH ROW BEGIN  
+		
+
+		DECLARE validar varchar(50);
+		DECLARE msg varchar(255);
+		
+		/*VALIDACION DEL CAMPO NUMERO_TARJETA*/
+		IF new.numero_tarjeta<>null OR new.numero_tarjeta<>"" THEN
+			SET validar=(SELECT NEW.numero_tarjeta REGEXP '^[0-9]{4}[-]{1}[0-9]{4}[-]{1}[0-9]{4}$');
+			IF validar<>1 THEN
+				SET msg = concat('No coicide el formato en el campo NUMERO_TARJETA. Ejemplo: 0124-1457-9897');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
+
+		/*VALIDACION DEL CAMPO NOMBRE_TITULAR*/
+		IF new.nombre_titular<>null OR new.nombre_titular<>"" THEN
+			SET validar=(SELECT NEW.nombre_titular REGEXP '^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$');
+			IF validar<>1 THEN
+				SET msg = concat('En el campo NOMBRE_TITULAR solamente se aceptan letras ');
+				SIGNAL sqlstate '45000' SET message_text = msg;     
+			END IF;
+		END IF;
+	END
+//
+DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `tipo_beca` (
   `id_beca` int(11) NOT NULL AUTO_INCREMENT,
-  `valor` decimal(10,2) DEFAULT NULL,
-  `activo` bit(1) DEFAULT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `activo` bit(1) NOT NULL,
   PRIMARY KEY (`id_beca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_donacion`
---
 
 CREATE TABLE IF NOT EXISTS `tipo_donacion` (
   `id_tipo_donacion` int(11) NOT NULL AUTO_INCREMENT,
   `valor` decimal(10,2) NOT NULL,
-  `activo` bit(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_tipo_donacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Disparadores `tipo_donacion`
---
 DROP TRIGGER IF EXISTS `trg_tipo_donacion_insert`;
 DELIMITER //
 CREATE TRIGGER `trg_tipo_donacion_insert` BEFORE INSERT ON `tipo_donacion`
@@ -850,59 +788,35 @@ CREATE TRIGGER `trg_tipo_donacion_update` BEFORE UPDATE ON `tipo_donacion`
 //
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_pago`
---
-
 CREATE TABLE IF NOT EXISTS `tipo_pago` (
   `id_tipo_pago` int(11) NOT NULL AUTO_INCREMENT,
-  `valor` decimal(10,2) DEFAULT NULL,
-  `activo` bit(1) DEFAULT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_tipo_pago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_usuario` varchar(50) DEFAULT NULL,
-  `clave_acceso` varchar(50) DEFAULT NULL,
-  `fecha_caducidad` date DEFAULT NULL,
+  `nombre_usuario` varchar(50) NOT NULL,
+  `clave_acceso` varchar(50) NOT NULL,
+  `fecha_caducidad` date NOT NULL,
   `pregunta_secreta` varchar(200) DEFAULT NULL,
   `respuesta_secreta` varchar(50) DEFAULT NULL,
-  `id_perfil` int(11) DEFAULT NULL,
-  `estado_usuario` char(1) DEFAULT NULL,
+  `id_perfil` int(11) NOT NULL,
+  `estado_usuario` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_usuario`),
   KEY `Fkey_usuarios_perfil` (`id_perfil`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Restricciones para tablas volcadas
---
 
---
--- Filtros para la tabla `alumno`
---
 ALTER TABLE `alumno`
   ADD CONSTRAINT `Fkey_alumno_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `beca_escolar`
---
 ALTER TABLE `beca_escolar`
   ADD CONSTRAINT `fk_tipo_beca` FOREIGN KEY (`id_tipo_beca`) REFERENCES `tipo_beca` (`id_beca`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_frecuencia_beca` FOREIGN KEY (`id_frecuencia_beca`) REFERENCES `frecuencia_beca` (`id_frec_beca`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_registro_alumno` FOREIGN KEY (`id_registro_alumno`) REFERENCES `registro_alumno` (`id_registro`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Filtros para la tabla `donacion`
---
 ALTER TABLE `donacion`
   ADD CONSTRAINT `Fkey_donacion_promotor` FOREIGN KEY (`id_promotor`) REFERENCES `promotor` (`id_promotor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_donacion_donante` FOREIGN KEY (`id_donante`) REFERENCES `donante` (`id_donante`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -910,62 +824,34 @@ ALTER TABLE `donacion`
   ADD CONSTRAINT `Fkey_donacion_tipo_pago` FOREIGN KEY (`id_tipo_pago`) REFERENCES `tipo_pago` (`id_tipo_pago`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_estado` FOREIGN KEY (`estado`) REFERENCES `estado_donacion` (`id_est_donacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Filtros para la tabla `donante`
---
 ALTER TABLE `donante`
   ADD CONSTRAINT `Fkey_donante_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_donante_estado` FOREIGN KEY (`estado`) REFERENCES `estado_donante` (`id_est_donante`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_donante_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `municipio`
---
 ALTER TABLE `municipio`
   ADD CONSTRAINT `Fkey_municipio_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamento` (`id_departamento`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `pagos`
---
 ALTER TABLE `pagos`
   ADD CONSTRAINT `fk_banco` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_id_donacion` FOREIGN KEY (`id_donacion`) REFERENCES `donacion` (`id_donacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_tipo_pago` FOREIGN KEY (`tipo_pago`) REFERENCES `donacion` (`id_tipo_pago`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Filtros para la tabla `persona`
---
 ALTER TABLE `persona`
   ADD CONSTRAINT `Fkey_persona_municipio` FOREIGN KEY (`id_municipio`) REFERENCES `municipio` (`id_municipio`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_persona_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `registro_alumno`
---
 ALTER TABLE `registro_alumno`
   ADD CONSTRAINT `Fkey_registro_grado` FOREIGN KEY (`id_grado`) REFERENCES `grado` (`id_grado`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_registro_alumno` FOREIGN KEY (`id_alumno`) REFERENCES `alumno` (`id_alumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_registro_donante` FOREIGN KEY (`id_donante`) REFERENCES `donante` (`id_donante`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_registro_institucion` FOREIGN KEY (`id_institucion_edu`) REFERENCES `institucion_educativa` (`id_institucion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `renovacion`
---
 ALTER TABLE `renovacion`
   ADD CONSTRAINT `fk_donacion` FOREIGN KEY (`id_donacion`) REFERENCES `donacion` (`id_donacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Filtros para la tabla `tarjetas_cobro`
---
 ALTER TABLE `tarjetas_cobro`
   ADD CONSTRAINT `Fkey_tarjeta_donante` FOREIGN KEY (`id_donante`) REFERENCES `donante` (`id_donante`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `usuarios`
---
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `Fkey_usuarios_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
