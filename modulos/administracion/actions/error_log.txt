@@ -1,0 +1,5 @@
+Array - usuarios_update.php - Error: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+08-05-2013 01:06:09 - usuarios_update.php - Error: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+08-05-2013 01:10:21 - usuarios_update.php - Error: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+08-05-2013 01:15:31 - usuarios_update.php - Error: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+08-05-2013 01:15:42 - usuarios_update.php - Error: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens

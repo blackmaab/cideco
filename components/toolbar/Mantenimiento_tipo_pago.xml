@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<toolbar>
+	<item id="sep1" type="separator"/>
+	<item id="new" type="button" text="Nuevo Registro"  img="page_white.png" imgdis="page_white.png"/>
+	<item id="edit" type="button" text="Editar Registro"  img="page_edit.png" imgdis="page_edit.png"/> 
+	<item id="delete" type="button" text="Eliminar Registro"  img="delete.png" imgdis="delete.png"/>
+	<item id="export" type="button" text="Exportar Excel"  img="page_excel.png" imgdis="page_excel.png"/>
+	<item id="info" type="text" text=""/>
+</toolbar>

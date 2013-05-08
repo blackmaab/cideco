@@ -7,8 +7,8 @@ function LoadMenu() {
 	menu.setSkin("dhx_skyblue");
 	menu.setIconsPath("../../../images/icons/");
 	menu.setTopText(document.getElementById("usr").value);
-	//menu.loadXML("../../../components/menu/menu.xml?e="+new Date().getTime());
-	menu.loadXML("../../../tmp/"+document.getElementById("mnu").value+"?e="+new Date().getTime());
+	menu.loadXML("../../../components/menu/menu.xml?e="+new Date().getTime());
+	//menu.loadXML("../../../tmp/"+document.getElementById("mnu").value+"?e="+new Date().getTime());
 	
 	menu.attachEvent("onClick", menuClick);
 	
@@ -36,10 +36,106 @@ function menuClick(id) {
 		
 		case "Ad_Usuarios":
 		
-			document.getElementById('contenido').src = "../../administracion/pages/usuarios.php"
+			document.getElementById('contenido').src = "../../administracion/pages/usuarios.php";
 		
 		break;
 		
+		
+		
+		case "Ad_Cambiar":
+			
+			document.getElementById('contenido').src = "";
+			document.getElementById('pass_show').click();
+			document.getElementById('contrasena').focus();
+
+			
+		break;
+		
+		
+		case "Ctr_Solicitud":
+		
+			document.getElementById('contenido').src = "../../control/pages/solicitud_donante.php";
+		
+		break;		
+		
+		
+		case "Ctr_Donaciones":
+		
+			document.getElementById('contenido').src = "../../control/pages/donacion.php";
+		
+		break;		
+
+
+		case "Ctr_Becas":
+		
+			document.getElementById('contenido').src = "../../control/pages/beca_escolar.php";
+		
+		break;	
+
+		
+		case "Ctr_Pagos":
+		
+			document.getElementById('contenido').src = "../../control/pages/pagos_donacion.php";
+		
+		break;	
+		
+
+		case "Ctr_Alumno":
+		
+			document.getElementById('contenido').src = "../../control/pages/registro_alumno.php";
+		
+		break;				
+		
+		
+		
+		
+		
+		// Mantenimiento.
+		
+		
+		case "Man_Tipo_Beca":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_beca.php";
+		
+		break;	
+		
+		
+		case "Man_Tipo_Donacion":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_donacion.php";
+		
+		break;	
+		
+		case "Man_Tipo_Pago":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_pago.php";
+		
+		break;			
+		
+
+		
+		case "Man_Institucion":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/institucion.php";
+		
+		break;
+		
+		
+		case "Man_Bancos":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/bancos.php";
+		
+		break;
+
+
+		case "Man_Pais":
+		
+			document.getElementById('contenido').src = "../../mantenimiento/pages/pais.php";
+		
+		break;			
+		
+		
+		/*
 		case "ayuda": 
 		
 			ModalAlert("Secci&oacute;n en Mantenimiento...");
@@ -53,18 +149,9 @@ function menuClick(id) {
 			OpenWindow(url,'Reporte de Bugs del Sistema.',740,410,40,20);
 			
 		break;
-		case "mapa":
-			//Nothing
-		break;
-		case "cerrar":
-			
-			document.location.href = "../../login/pages/logout.php?ids=new";
-			
-		break;
-	
 
-	
-		case "Dye_Rep1": // Desarrollo de Color por Libras
+		
+		case "Dye_Rep1": // 
 			  
 			  var url="../../dye/actions/rep_desarrollo_colores_lib.php";
 		  
@@ -77,7 +164,7 @@ function menuClick(id) {
 		
 		break;
 	
-
+	*/
 					
 		default:
 			alert("Seccion en Mantenimiento...(Id Key: <b>"+id+"</b>)");
@@ -145,5 +232,41 @@ function getToday()
 	 var Hoy = dayname[day] + ", " + monthname[month] + " " + tmpVar + year + ", ";
 
 	document.getElementById("Dte").value = Hoy;
+	
 
+}
+
+
+
+
+
+
+// Funciones de los Formularios
+var Pass_Submit = function() { document.getElementById('pass_hide').click();};
+var Pass_Cancel = function() { document.getElementById('pass_hide').click();};	
+
+
+function Init() {
+
+	try
+	{
+	
+		
+		// Fromulario Cambio de Contraseña . ************************
+		
+		FormPass = new HBI.widget.Dialog("RegPass", { width : "23em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
+									buttons : [ { text:"Cambiar", handler:Pass_Submit, isDefault:true }, { text:"Cancelar", handler:Pass_Cancel } ]});
+		FormPass.render();
+		HBI.util.Event.addListener("pass_show", "click", FormPass.show, FormPass, true);
+		HBI.util.Event.addListener("pass_hide", "click", FormPass.hide, FormPass, true);
+		
+		
+	}
+	catch(err)
+	{
+
+		alert(err.message );
+		
+	}
+	
 }

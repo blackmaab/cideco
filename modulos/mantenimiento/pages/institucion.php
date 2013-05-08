@@ -45,7 +45,7 @@
 
 <br/>
 <fieldset style="width: 99%;">
-	<legend class="fieldsetTitle">&nbsp;Administracion de Usuarios</legend>
+	<legend class="fieldsetTitle">&nbsp;Mantenimiento - Institucion Educativa</legend>
 	
 	<br />
 	<table width="100%">
@@ -53,6 +53,9 @@
 			<td width="2%">&nbsp;</td>
 			<td width="96%">
 				<div style="width:99%;"><div id="toolbarObj"></div></div>
+				<table width="100%" >
+				
+				</table>
 				<div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
 			</td>
 			<td width="1%">&nbsp;</td>
@@ -80,99 +83,50 @@
 		
 		<div class="label">
 		
-			<table width="100%" style="text-align: left;">
-			<tr>
-				<td width="1%"></td>
-				<td width="40%"></td>
-				<td width="59%"></td>
 
+		<table width="100%" >
+			<tr>
+				<td width="3%"></td>
+				<td width="35%"></td>
+				<td width="62%"></td>
 			</tr>
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Institucion Educativa:</td>
+				<td ><input name="tipo_pago" id="tipo_pago" class="medium" onfocus="jform.col(this);" /></td>
+			</tr>		
+			<tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Direccion:</td>
+				<td rowspan="2"><textarea height="15" name="direccion" id="direccion" 
+						style="width: 250px;padding: 3px 3px 3px 3px;border: 1px solid #ddd ;background: #ffffff;;font-size: 11px;color: #000000;overflow: auto;"></textarea>
 				</td>
-				<td>
-					Usuario:
-				</td>
-				<td>
-					<input name="usuario" id="usuario" class="tiny" onfocus="jform.col(this);" >
-				</td>
-				
 			</tr>
+			<tr><td></td><td>&nbsp;</td></tr>	
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Contraseña:
-				</td>
-				<td>
-					<input name="contrasena" id="contrasena" type="password" class="tiny" onfocus="jform.col(this);" >
-				</td>
-			</tr>			
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Telefono:</td>
+				<td ><input name="tipo_pago" id="tipo_pago" class="tiny" onfocus="jform.col(this);" /></td>
+			</tr>		
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Perfil:
-				</td>
-				<td>
-					<div id='combo_perfil'></div>
-				</td>	
-				
-			</tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Nombre Director:</td>
+				<td ><input name="director" id="director" class="medium" onfocus="jform.col(this);" /></td>
+			</tr>				
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>				
-				<td>
-					Fecha Caducidad:
-				</td>
-				<td>
-					<input name="fechacad" id="fechacad" class="tiny" onfocus="jform.col(this);" readonly="true" >
-				</td>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Estado:</td>
+				<td ><div id='cbo_estado'></div></td>
+			</tr>	
+		
+			<tr ><td></td><td>&nbsp;</td></tr>
+			<tr><td></td><td colspan="2"><div class="fieldsetTitle">(*) Campos Obligatorios</div></td></tr>			
 
-			</tr>
-			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Pregunta Secreta:
-				</td>
-				<td>
-					<input name="pregunta" id="pregunta" class="medium" onfocus="jform.col(this);" >
-				</td>
-				
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Respuesta:
-				</td>
-				<td>
-					<input name="respuesta" id="respuesta" class="medium" onfocus="jform.col(this);" >
-				</td>
-			</tr>			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Status:
-				</td>
-				<td>
-					<div id='combo_status'></div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">&nbsp;<div class="fieldsetTitle">(*) Campos Obligatorios</div></td>
-			</tr>			
-			</table>
+		</table>
+
+
+		
+
 		</div>
 		</div>
 		</div>
@@ -241,7 +195,7 @@
 <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
 <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-<script type="text/javascript" src = '../scripts/usuarios.js'></script>
+<script type="text/javascript" src = '../scripts/institucion.js'></script>
 
 
 

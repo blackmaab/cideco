@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<toolbar>
+
+	<item id="sep1" type="separator"/>
+	<item id="new" type="button" text="Nueva Beca"  img="page_white.png" imgdis="page_white.png"/>
+	<item id="edit" type="button" text="Editar Beca"  img="page_edit.png" imgdis="page_edit.png"/> 
+	<!-- <item id="find" type="button" text="Buscar Registro"  img="find.png" imgdis="find.png"/> -->
+	<item id="delete" type="button" text="Eliminar Beca"  img="delete.png" imgdis="delete.png"/>	
+	<item id="export" type="button" text="Exportar Excel"  img="page_excel.png" imgdis="page_excel.png"/>
+	<item id="sep1" type="separator"/>
+
+	<item id="info" type="text" text=""/>
+	
+</toolbar>

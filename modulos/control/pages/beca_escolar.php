@@ -45,13 +45,14 @@
 
 <br/>
 <fieldset style="width: 99%;">
-	<legend class="fieldsetTitle">&nbsp;Administracion de Usuarios</legend>
+	<legend class="fieldsetTitle">&nbsp;Administracion de Becas</legend>
 	
 	<br />
 	<table width="100%">
 		<tr>
 			<td width="2%">&nbsp;</td>
 			<td width="96%">
+				<div style="font-weight: bolder;" align="right">Becas: $ 0.00 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Proyeccion Donaciones: $ 0.00&nbsp;&nbsp;&nbsp;&nbsp;</div>
 				<div style="width:99%;"><div id="toolbarObj"></div></div>
 				<div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
 			</td>
@@ -66,8 +67,6 @@
 
 <div align = 'left' id="content"></div>
 
-
-
 	<!-- Fromulario de Nuevo, Editar Registro -->
 
 	<div style="visibility:hidden;">
@@ -80,99 +79,36 @@
 		
 		<div class="label">
 		
-			<table width="100%" style="text-align: left;">
+		<table width="100%" CellSpacing = 0 >
+		
 			<tr>
-				<td width="1%"></td>
-				<td width="40%"></td>
-				<td width="59%"></td>
+				<td width="3%"></td>
+				<td width="30%"></td>
+				<td width="67%"></td>
+			</tr>
+			<tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Alumno</td>
+				<td ><div id='cbo_alumno'></div></td>
+			</tr>	
+			<tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Monto ($ USD)</td>
+				<td ><input name="Monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
+			</tr>	
+			<tr>
+				<td >&nbsp;</td>
+				<td >Comentario:</td>
+				<td ><input name="comentario" id="apellido2" class="medium" onfocus="jform.col(this);" ></td>
+			</tr>
+			<tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Estado</td>
+				<td ><div id='cbo_estado'></div></td>
+			</tr>				
+		
+		</table>
 
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Usuario:
-				</td>
-				<td>
-					<input name="usuario" id="usuario" class="tiny" onfocus="jform.col(this);" >
-				</td>
-				
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Contraseña:
-				</td>
-				<td>
-					<input name="contrasena" id="contrasena" type="password" class="tiny" onfocus="jform.col(this);" >
-				</td>
-			</tr>			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Perfil:
-				</td>
-				<td>
-					<div id='combo_perfil'></div>
-				</td>	
-				
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>				
-				<td>
-					Fecha Caducidad:
-				</td>
-				<td>
-					<input name="fechacad" id="fechacad" class="tiny" onfocus="jform.col(this);" readonly="true" >
-				</td>
-
-			</tr>
-			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Pregunta Secreta:
-				</td>
-				<td>
-					<input name="pregunta" id="pregunta" class="medium" onfocus="jform.col(this);" >
-				</td>
-				
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Respuesta:
-				</td>
-				<td>
-					<input name="respuesta" id="respuesta" class="medium" onfocus="jform.col(this);" >
-				</td>
-			</tr>			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Status:
-				</td>
-				<td>
-					<div id='combo_status'></div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">&nbsp;<div class="fieldsetTitle">(*) Campos Obligatorios</div></td>
-			</tr>			
-			</table>
 		</div>
 		</div>
 		</div>
@@ -241,7 +177,7 @@
 <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
 <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-<script type="text/javascript" src = '../scripts/usuarios.js'></script>
+<script type="text/javascript" src = '../scripts/beca_escolar.js'></script>
 
 
 

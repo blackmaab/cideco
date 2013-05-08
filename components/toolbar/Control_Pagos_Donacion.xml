@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<toolbar>
+
+	<item id="sep1" type="separator"/>
+	<item id="add" type="button" text="Agregar Pago"  img="add.png" imgdis="add.png"/>
+	<item id="sep1" type="separator"/>
+	<item id="pagos" type="button" text="Ir a Pagos"  img="arrow_turn_right.png" imgdis="arrow_turn_right.png"/> 
+	<item id="sep2" type="separator"/>
+	<item id="info" type="text" text=""/>
+	
+</toolbar>

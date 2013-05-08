@@ -2,8 +2,6 @@
 // Variables globales
 
 var toolbar;
-var combo_perfil;
-var combo_status;
 var mygrid;
 var myCalendar;
 var loader;
@@ -18,7 +16,7 @@ function doOnLoad() {
 	// Direccion de iconos
     toolbar.setIconsPath("../../../images/icons/");
 	// xml a cargar, este es fijo en la direccion q aparece
-    toolbar.loadXML("../../../components/toolbar/Administracion_usuarios.xml?etc=" + new Date().getTime());
+    toolbar.loadXML("../../../components/toolbar/Control_Donacion.xml?etc=" + new Date().getTime());
 	
 	
 	// Funcion cuando el usuario da click en el toolbar
@@ -37,13 +35,20 @@ function DoEvent(data) {
 	switch(data)
 	{
 	
-		case "new":
+		case "add":
 			idReg=0;
 			ClearParam()
 			document.getElementById('frm_show').click();
-			document.getElementById('usuario').focus();
-			//Msjbox.show();
+			//document.getElementById('cbo_donate').focus();
 		break;
+		
+		
+		case "sol":
+
+			document.location.href = "control_solicitud.php";
+			
+		break;
+		
 		
 		case "save":
 		
@@ -133,11 +138,11 @@ function LoadGrid()
 	mygrid.setSkin("dhx_skyblue");
 
 	// direccion de la pagina que hace el xml de forma dinamica
-	mygrid.loadXML("../actions/usuarios_grid.php",
+	mygrid.loadXML("../actions/donacion_grid.php",
 		function()
 		{
 			// Para agregar los filtros del grid.
-			mygrid.attachHeader(",#text_filter,,,(yyyy-mm-dd),,,#text_filter,");
+			mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,,,,");
 			// finalizamos el mensaje de espere
 			MsjWait.hide();
 		}
@@ -150,6 +155,13 @@ function LoadGrid()
 
 // funcion q carga los combos. perfil y estatus
 
+var tipo_donacion;
+var tipo_pago;
+var alumno;
+var donante;
+
+
+
 function LoadCombos()
 {
 
@@ -157,26 +169,31 @@ function LoadCombos()
 	window.dhx_globalImgPath = "../../../components/select/imgs/";
 	
 	
-	// creacion del combo perfil
-	combo_perfil = new dhtmlXCombo("combo_perfil","perfil",125);
-	combo_perfil.enableFilteringMode(true);	
+	// creacion del combo tipo donacion
+	tipo_donacion = new dhtmlXCombo("cbo_tipo_donacion","cbo_tipo_donacion",150);
+	tipo_donacion.enableFilteringMode(true);	
 	//combo_perfil.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
-	combo_perfil.attachEvent("onBlur", Validacion1);
+	//combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
+	//combo_perfil.attachEvent("onBlur", Validacion1);
 	
-	// creacion del combo status
-	combo_status = new dhtmlXCombo("combo_status","status",125);
-	combo_status.enableFilteringMode(true);	
-	//combo_status.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	combo_status.loadXML("../actions/usuarios_combo_status.php?p0=" , function(){});
-	combo_status.attachEvent("onBlur", Validacion2);
+	// creacion del combo tipo pago
+	tipo_pago = new dhtmlXCombo("cbo_tipo_pago","cbo_tipo_pago",150);
+	tipo_pago.enableFilteringMode(true);	
+	
+	// creacion del combo alumno
+	alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
+	alumno.enableFilteringMode(true);	
+	
+	// creacion del combo donante
+	donante = new dhtmlXCombo("cbo_donante","cbo_donante",250);
+	donante.enableFilteringMode(true);		
  
 
 
 }
 
 
-
+/*
 // validacion del combo perfil
 function Validacion1() {
 
@@ -196,7 +213,7 @@ function Validacion2() {
 	}
     return true;
 }
-
+*/
 
 
 // funcion para guardar los registros
@@ -211,17 +228,14 @@ function SaveData()
 		{
 		
 			// guardamos los parametros en un arreglo post
-			var parameters = ""; 
-			parameters = parameters + "?p0=" + idReg;
-			parameters = parameters + "&p1=" + document.getElementById("usuario").value;
-			parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
-			parameters = parameters + "&p3=" + document.getElementById("fechacad").value;
-			parameters = parameters + "&p4=" + document.getElementById("pregunta").value;
-			parameters = parameters + "&p5=" + document.getElementById("respuesta").value;
-			parameters = parameters + "&p6=" + combo_perfil.getSelectedValue();
-			parameters = parameters + "&p7=" + combo_status.getSelectedValue();
 			
+			//var parameters = ""; 
+			//parameters = parameters + "?p0=" + idReg;
+			//parameters = parameters + "&p1=" + document.getElementById("usuario").value;
+
 			
+		
+
 			if (idReg==0)
 			{
 				// si es nuevo entra aqui
@@ -265,7 +279,7 @@ function CheckParam()
 	
 	
 	
-	if (document.getElementById('usuario').value == '')
+	/*if (document.getElementById('usuario').value == '')
 	{
 		Val = false;
 	}
@@ -279,7 +293,7 @@ function CheckParam()
 	{
 		Val = false;
 	}
-
+	*/
 	
 	
 	return Val;
@@ -296,13 +310,16 @@ function LoadParam()
 	
 	// llenamos las cajas
 	idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
+	
+	/*
 	document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
 	document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
 	document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
 	document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
 	document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
+	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),7).getValue());
 	combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
-	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),9).getValue());
+	*/
 	
 	document.getElementById('frm_show').click();
 
@@ -313,13 +330,11 @@ function LoadParam()
 
 function ClearParam(){
 
-	document.getElementById("usuario").value = "";
-	document.getElementById("contrasena").value = "";
-	document.getElementById("fechacad").value = "";
-	document.getElementById("pregunta").value = "";
-	document.getElementById("respuesta").value = "";
-	combo_perfil.setComboText('');
-	combo_status.setComboText('');
+
+
+	//document.getElementById("usuario").value = "";	
+	//combo_perfil.setComboText('');
+
 	
 	
 }
@@ -335,7 +350,7 @@ function DeleteData()
 
 	if (idReg==0)
 	{
-		loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
+		//loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
 	}
 			
 }
@@ -386,14 +401,6 @@ function ReadXml(){
 				document.getElementById('msj_hide').click();
 				LoadGrid();
 				
-			
-			break;
-			
-			default:
-			
-			
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Error en la Base de Datos, Contacte a su Administrado!!!</td></tr></table>");
-				Msjbox.show();
 			
 			break;
 		
@@ -447,7 +454,7 @@ function init() {
 		
 		// Fromulario de Nuevo Registro y Edicion. ************************
 		
-		FormRegistro = new HBI.widget.Dialog("RegNew", { width : "30em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
+		FormRegistro = new HBI.widget.Dialog("RegNew", { width : "40em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
 									buttons : [ { text:"Guardar", handler:RegNew_Submit, isDefault:true }, { text:"Cancelar", handler:RegNew_Cancel } ]});
 		FormRegistro.render();
 		HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);

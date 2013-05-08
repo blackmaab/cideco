@@ -45,7 +45,7 @@
 
 <br/>
 <fieldset style="width: 99%;">
-	<legend class="fieldsetTitle">&nbsp;Administracion de Usuarios</legend>
+	<legend class="fieldsetTitle">&nbsp;Detalles de Pagos</legend>
 	
 	<br />
 	<table width="100%">
@@ -75,104 +75,50 @@
 		<button id="frm_hide"></button>
     
 		<div id="RegNew" class="yui-pe-content">
-		<div class="hd">Datos Registro...</div>
+		<div class="hd">Datos Pago...</div>
 		<div class="bd">
 		
 		<div class="label">
 		
-			<table width="100%" style="text-align: left;">
-			<tr>
-				<td width="1%"></td>
-				<td width="40%"></td>
-				<td width="59%"></td>
 
+		<fieldset style="width: 99%;">
+		<legend class="fieldsetTitle">&nbsp;Datos Pago</legend>
+		
+		<table width="100%" >
+			<tr>
+				<td width="3%"></td>
+				<td width="25%"></td>
+				<td width="72%"></td>
 			</tr>
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Usuario:
-				</td>
-				<td>
-					<input name="usuario" id="usuario" class="tiny" onfocus="jform.col(this);" >
-				</td>
-				
-			</tr>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Fecha:</td>
+				<td ><input name="fecha" id="fecha" class="tiny" onfocus="jform.col(this);" /></td>
+			</tr>				
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Contraseña:
-				</td>
-				<td>
-					<input name="contrasena" id="contrasena" type="password" class="tiny" onfocus="jform.col(this);" >
-				</td>
+				<td  align="center"><div class="fieldsetTitle">*</div></td>
+				<td >Monto:</td>
+				<td ><input name="monto" id="monto" class="tiny" onfocus="jform.col(this);" /></td>
+			</tr>	
+			<tr>
+				<td align="center" ><div class="fieldsetTitle">*</div></td>
+				<td >No. Recibo:</td>
+				<td ><input name="recibo" id="recibo" class="tiny" onfocus="jform.col(this);" /></td>
 			</tr>			
 			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Perfil:
-				</td>
-				<td>
-					<div id='combo_perfil'></div>
-				</td>	
-				
+				<td align="center" ><div class="fieldsetTitle">*</div></td>
+				<td >Comentario:</td>
+				<td ><input name="comentario" id="comentario" class="medium" onfocus="jform.col(this);" /></td>
 			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>				
-				<td>
-					Fecha Caducidad:
-				</td>
-				<td>
-					<input name="fechacad" id="fechacad" class="tiny" onfocus="jform.col(this);" readonly="true" >
-				</td>
+			<tr ><td></td><td>&nbsp;</td></tr>
+			<tr><td></td><td colspan="2"><div class="fieldsetTitle">(*) Campos Obligatorios</div></td></tr>			
 
-			</tr>
-			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>			
-				<td>
-					Pregunta Secreta:
-				</td>
-				<td>
-					<input name="pregunta" id="pregunta" class="medium" onfocus="jform.col(this);" >
-				</td>
-				
-			</tr>
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Respuesta:
-				</td>
-				<td>
-					<input name="respuesta" id="respuesta" class="medium" onfocus="jform.col(this);" >
-				</td>
-			</tr>			
-			<tr>
-				<td>
-					<div class="fieldsetTitle">*</div>
-				</td>
-				<td>
-					Status:
-				</td>
-				<td>
-					<div id='combo_status'></div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">&nbsp;<div class="fieldsetTitle">(*) Campos Obligatorios</div></td>
-			</tr>			
-			</table>
+		</table>
+		
+		</fieldset>
+
+		
+
 		</div>
 		</div>
 		</div>
@@ -241,7 +187,7 @@
 <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
 <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-<script type="text/javascript" src = '../scripts/usuarios.js'></script>
+<script type="text/javascript" src = '../scripts/pagos.js'></script>
 
 
 
