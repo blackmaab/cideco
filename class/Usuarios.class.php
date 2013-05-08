@@ -51,12 +51,44 @@ class Usuarios extends Conexion {
             $where = substr($where, 0, strlen($where) - 4);
             $sql = "UPDATE usuarios SET id_usuario=:id_usuario,nombre_usuario=:nombre_usuario,clave_acceso=:clave_acceso,fecha_caducidad=:fecha_caducidad,pregunta_secreta=:pregunta_secreta,respuesta_secreta=:respuesta_secreta,id_perfil=:id_perfil,estado_usuario=:estado_usuario WHERE $where";
             $resultSet = $this->conection->prepare($sql);
+            $resultSet->bindParam(":id_usuario", $this->id_usuario);
+            $resultSet->bindParam(":nombre_usuario", $this->nombre_usuario);
+            $resultSet->bindParam(":clave_acceso", $this->clave_acceso);
+            $resultSet->bindParam(":fecha_caducidad", $this->fecha_caducidad);
+            $resultSet->bindParam(":pregunta_secreta", $this->pregunta_secreta);
+            $resultSet->bindParam(":respuesta_secreta", $this->respuesta_secreta);
+            $resultSet->bindParam(":id_perfil", $this->id_perfil);
+            $resultSet->bindParam(":estado_usuario", $this->estado_usuario);
             foreach ($arrayWhere as $key => $value):
                 $resultSet->bindParam("$key", $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Actualizado con Exito";
+            $this->bandera = 1;
+        } catch (PDOException $e) {
+            $this->conection->rollBack();
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
+    public function delete_Usuarios($arrayWhere) {
+        try {
+            $this->conection->beginTransaction();
+            $where = "";
+            foreach ($arrayWhere as $key => $value):
+                $where.=$key . "=" . $value . " AND ";
+            endforeach;
+            $where = substr($where, 0, strlen($where) - 4);
+            $sql = "DELETE FROM usuarios WHERE $where";
+            $resultSet = $this->conection->prepare($sql);
+            foreach ($arrayWhere as $key => $value):
+                $resultSet->bindParam("$key", $value);
+            endforeach;
+            $resultSet->execute();
+            $this->conection->commit();
+            $this->mensaje = "Registro Eliminado con Exito";
             $this->bandera = 1;
         } catch (PDOException $e) {
             $this->conection->rollBack();

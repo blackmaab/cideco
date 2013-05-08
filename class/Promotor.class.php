@@ -47,12 +47,42 @@ class Promotor extends Conexion {
             $where = substr($where, 0, strlen($where) - 4);
             $sql = "UPDATE promotor SET id_promotor=:id_promotor,id_usuario=:id_usuario,id_persona=:id_persona,fecha_inicio=:fecha_inicio,fecha_fin=:fecha_fin,activo=:activo WHERE $where";
             $resultSet = $this->conection->prepare($sql);
+            $resultSet->bindParam(":id_promotor", $this->id_promotor);
+            $resultSet->bindParam(":id_usuario", $this->id_usuario);
+            $resultSet->bindParam(":id_persona", $this->id_persona);
+            $resultSet->bindParam(":fecha_inicio", $this->fecha_inicio);
+            $resultSet->bindParam(":fecha_fin", $this->fecha_fin);
+            $resultSet->bindParam(":activo", $this->activo);
             foreach ($arrayWhere as $key => $value):
                 $resultSet->bindParam("$key", $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Actualizado con Exito";
+            $this->bandera = 1;
+        } catch (PDOException $e) {
+            $this->conection->rollBack();
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
+    public function delete_Promotor($arrayWhere) {
+        try {
+            $this->conection->beginTransaction();
+            $where = "";
+            foreach ($arrayWhere as $key => $value):
+                $where.=$key . "=" . $value . " AND ";
+            endforeach;
+            $where = substr($where, 0, strlen($where) - 4);
+            $sql = "DELETE FROM promotor WHERE $where";
+            $resultSet = $this->conection->prepare($sql);
+            foreach ($arrayWhere as $key => $value):
+                $resultSet->bindParam("$key", $value);
+            endforeach;
+            $resultSet->execute();
+            $this->conection->commit();
+            $this->mensaje = "Registro Eliminado con Exito";
             $this->bandera = 1;
         } catch (PDOException $e) {
             $this->conection->rollBack();
