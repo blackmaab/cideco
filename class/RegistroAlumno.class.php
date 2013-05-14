@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Nombre de Archivo: RegistroAlumno.class.php
+ * Fecha Creación: 14-May-2013
+ * Hora: 09:55:35
+ * @author Mario Alvarado
+ */
 class RegistroAlumno extends Conexion {
 
     public $id_registro = "";
@@ -41,26 +47,37 @@ class RegistroAlumno extends Conexion {
         }
     }
 
-    public function update_RegistroAlumno($arrayWhere) {
+    public function update_RegistroAlumno($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
-            foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+            $campos = "";
+            $value = "";
+            //RECORRIENDO LOS CAMPOS QUE SERAN ACTUALIZADOS
+            $cont = 0;
+            foreach ($arrayCampos as $key => $value):
+                if ($cont == (count($arrayCampos) - 1)):
+                    $campos .= $key . "=" . $value;
+                else:
+                    $campos.=$key . "=" . $value . ", ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "UPDATE registro_alumno SET id_registro=:id_registro,id_alumno=:id_alumno,id_donante=:id_donante,id_institucion_edu=:id_institucion_edu,id_grado=:id_grado,seccion=:seccion,nota_promedio=:nota_promedio,fecha_creacion=:fecha_creacion WHERE $where";
-            $resultSet = $this->conection->prepare($sql);
-            $resultSet->bindParam(":id_registro", $this->id_registro);
-            $resultSet->bindParam(":id_alumno", $this->id_alumno);
-            $resultSet->bindParam(":id_donante", $this->id_donante);
-            $resultSet->bindParam(":id_institucion_edu", $this->id_institucion_edu);
-            $resultSet->bindParam(":id_grado", $this->id_grado);
-            $resultSet->bindParam(":seccion", $this->seccion);
-            $resultSet->bindParam(":nota_promedio", $this->nota_promedio);
-            $resultSet->bindParam(":fecha_creacion", $this->fecha_creacion);
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
+            endforeach;
+            $sql = "UPDATE registro_alumno SET " . $campos . " WHERE " . $where;
+            $resultSet = $this->conection->prepare($sql);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -73,18 +90,25 @@ class RegistroAlumno extends Conexion {
         }
     }
 
-    public function delete_RegistroAlumno($arrayWhere) {
+    public function delete_RegistroAlumno($arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "DELETE FROM registro_alumno WHERE $where";
+            $sql = "DELETE FROM registro_alumno WHERE " . $where;
             $resultSet = $this->conection->prepare($sql);
-            foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -92,6 +116,47 @@ class RegistroAlumno extends Conexion {
             $this->bandera = 1;
         } catch (PDOException $e) {
             $this->conection->rollBack();
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
+    public function select_RegistroAlumno($all_row = true) {
+        try {
+            $array_data = array();
+            //verificacion si se filtraran los datos
+            if ($all_row == true):
+                $this->sqlQuery = "SELECT * FROM registro_alumno ORDER BY id_registro ASC";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+            else:
+                $this->sqlQuery = "SELECT * FROM registro_alumno WHERE id_registro=:id_registro";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+                $resultSet->bindParam(":id_registro", $this->id_registro);
+            endif;
+            $resultSet->execute();
+            $coicidencias = $resultSet->rowCount();
+            if ($coicidencias > 0) {
+                $i = 1;
+                while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
+                    $array_data[$i] = array(
+                        "id_registro" => $row["id_registro"],
+                        "id_alumno" => $row["id_alumno"],
+                        "id_donante" => $row["id_donante"],
+                        "id_institucion_edu" => $row["id_institucion_edu"],
+                        "id_grado" => $row["id_grado"],
+                        "seccion" => $row["seccion"],
+                        "nota_promedio" => $row["nota_promedio"],
+                        "fecha_creacion" => $row["fecha_creacion"]
+                    );
+                    $i++;
+                }
+                $this->bandera = 1;
+            } else {
+                $this->mensaje = "NO SE ENCONTRARON COICIDENCIAS";
+                $this->bandera = 0;
+            }
+            return $array_data;
+        } catch (PDOException $e) {
             $this->mensaje = "Error: " . $e->getMessage();
             $this->bandera = 0;
         }

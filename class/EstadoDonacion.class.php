@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Nombre de Archivo: EstadoDonacion.class.php
+ * Fecha Creación: 14-May-2013
+ * Hora: 09:55:34
+ * @author Mario Alvarado
+ */
 class EstadoDonacion extends Conexion {
 
     public $id_est_donacion = "";
@@ -29,20 +35,37 @@ class EstadoDonacion extends Conexion {
         }
     }
 
-    public function update_EstadoDonacion($arrayWhere) {
+    public function update_EstadoDonacion($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
-            foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+            $campos = "";
+            $value = "";
+            //RECORRIENDO LOS CAMPOS QUE SERAN ACTUALIZADOS
+            $cont = 0;
+            foreach ($arrayCampos as $key => $value):
+                if ($cont == (count($arrayCampos) - 1)):
+                    $campos .= $key . "=" . $value;
+                else:
+                    $campos.=$key . "=" . $value . ", ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "UPDATE estado_donacion SET id_est_donacion=:id_est_donacion,estado_donacion=:estado_donacion WHERE $where";
-            $resultSet = $this->conection->prepare($sql);
-            $resultSet->bindParam(":id_est_donacion", $this->id_est_donacion);
-            $resultSet->bindParam(":estado_donacion", $this->estado_donacion);
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
+            endforeach;
+            $sql = "UPDATE estado_donacion SET " . $campos . " WHERE " . $where;
+            $resultSet = $this->conection->prepare($sql);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -55,18 +78,25 @@ class EstadoDonacion extends Conexion {
         }
     }
 
-    public function delete_EstadoDonacion($arrayWhere) {
+    public function delete_EstadoDonacion($arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "DELETE FROM estado_donacion WHERE $where";
+            $sql = "DELETE FROM estado_donacion WHERE " . $where;
             $resultSet = $this->conection->prepare($sql);
-            foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -74,6 +104,41 @@ class EstadoDonacion extends Conexion {
             $this->bandera = 1;
         } catch (PDOException $e) {
             $this->conection->rollBack();
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
+    public function select_EstadoDonacion($all_row = true) {
+        try {
+            $array_data = array();
+            //verificacion si se filtraran los datos
+            if ($all_row == true):
+                $this->sqlQuery = "SELECT * FROM estado_donacion ORDER BY id_est_donacion ASC";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+            else:
+                $this->sqlQuery = "SELECT * FROM estado_donacion WHERE id_est_donacion=:id_est_donacion";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+                $resultSet->bindParam(":id_est_donacion", $this->id_est_donacion);
+            endif;
+            $resultSet->execute();
+            $coicidencias = $resultSet->rowCount();
+            if ($coicidencias > 0) {
+                $i = 1;
+                while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
+                    $array_data[$i] = array(
+                        "id_est_donacion" => $row["id_est_donacion"],
+                        "estado_donacion" => $row["estado_donacion"]
+                    );
+                    $i++;
+                }
+                $this->bandera = 1;
+            } else {
+                $this->mensaje = "NO SE ENCONTRARON COICIDENCIAS";
+                $this->bandera = 0;
+            }
+            return $array_data;
+        } catch (PDOException $e) {
             $this->mensaje = "Error: " . $e->getMessage();
             $this->bandera = 0;
         }

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Nombre de Archivo: Pagos.class.php
+ * Fecha Creación: 14-May-2013
+ * Hora: 09:55:35
+ * @author Mario Alvarado
+ */
 class Pagos extends Conexion {
 
     public $id_pago = "";
@@ -49,30 +55,37 @@ class Pagos extends Conexion {
         }
     }
 
-    public function update_Pagos($arrayWhere) {
+    public function update_Pagos($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
-            foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+            $campos = "";
+            $value = "";
+            //RECORRIENDO LOS CAMPOS QUE SERAN ACTUALIZADOS
+            $cont = 0;
+            foreach ($arrayCampos as $key => $value):
+                if ($cont == (count($arrayCampos) - 1)):
+                    $campos .= $key . "=" . $value;
+                else:
+                    $campos.=$key . "=" . $value . ", ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "UPDATE pagos SET id_pago=:id_pago,fecha=:fecha,id_donacion=:id_donacion,numero_cuota=:numero_cuota,tipo_pago=:tipo_pago,monto=:monto,id_banco=:id_banco,numero_recibo=:numero_recibo,fecha_creacion=:fecha_creacion,usuario_creacion=:usuario_creacion,fecha_mod=:fecha_mod,usuario_mod=:usuario_mod WHERE $where";
-            $resultSet = $this->conection->prepare($sql);
-            $resultSet->bindParam(":id_pago", $this->id_pago);
-            $resultSet->bindParam(":fecha", $this->fecha);
-            $resultSet->bindParam(":id_donacion", $this->id_donacion);
-            $resultSet->bindParam(":numero_cuota", $this->numero_cuota);
-            $resultSet->bindParam(":tipo_pago", $this->tipo_pago);
-            $resultSet->bindParam(":monto", $this->monto);
-            $resultSet->bindParam(":id_banco", $this->id_banco);
-            $resultSet->bindParam(":numero_recibo", $this->numero_recibo);
-            $resultSet->bindParam(":fecha_creacion", $this->fecha_creacion);
-            $resultSet->bindParam(":usuario_creacion", $this->usuario_creacion);
-            $resultSet->bindParam(":fecha_mod", $this->fecha_mod);
-            $resultSet->bindParam(":usuario_mod", $this->usuario_mod);
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
+            endforeach;
+            $sql = "UPDATE pagos SET " . $campos . " WHERE " . $where;
+            $resultSet = $this->conection->prepare($sql);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -85,18 +98,25 @@ class Pagos extends Conexion {
         }
     }
 
-    public function delete_Pagos($arrayWhere) {
+    public function delete_Pagos($arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
             $where = "";
+            //RECORRIENDO LAS CONDICIONES PARA LA ACTUALIZACION
+            $cont = 0;
             foreach ($arrayWhere as $key => $value):
-                $where.=$key . "=" . $value . " AND ";
+                if ($cont == (count($arrayWhere) - 1)):
+                    $where .= $key . "=" . $value;
+                else:
+                    $where.=$key . "=" . $value . " AND ";
+                endif;
+                $cont++;
             endforeach;
-            $where = substr($where, 0, strlen($where) - 4);
-            $sql = "DELETE FROM pagos WHERE $where";
+            $sql = "DELETE FROM pagos WHERE " . $where;
             $resultSet = $this->conection->prepare($sql);
-            foreach ($arrayWhere as $key => $value):
-                $resultSet->bindParam("$key", $value);
+            //RECORRIENDO LOS NUEVOS VALORES
+            foreach ($arrayValue as $key => &$value):
+                $resultSet->bindParam($key, $value);
             endforeach;
             $resultSet->execute();
             $this->conection->commit();
@@ -104,6 +124,51 @@ class Pagos extends Conexion {
             $this->bandera = 1;
         } catch (PDOException $e) {
             $this->conection->rollBack();
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
+    public function select_Pagos($all_row = true) {
+        try {
+            $array_data = array();
+            //verificacion si se filtraran los datos
+            if ($all_row == true):
+                $this->sqlQuery = "SELECT * FROM pagos ORDER BY id_pago ASC";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+            else:
+                $this->sqlQuery = "SELECT * FROM pagos WHERE id_pago=:id_pago";
+                $resultSet = $this->conection->prepare($this->sqlQuery);
+                $resultSet->bindParam(":id_pago", $this->id_pago);
+            endif;
+            $resultSet->execute();
+            $coicidencias = $resultSet->rowCount();
+            if ($coicidencias > 0) {
+                $i = 1;
+                while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
+                    $array_data[$i] = array(
+                        "id_pago" => $row["id_pago"],
+                        "fecha" => $row["fecha"],
+                        "id_donacion" => $row["id_donacion"],
+                        "numero_cuota" => $row["numero_cuota"],
+                        "tipo_pago" => $row["tipo_pago"],
+                        "monto" => $row["monto"],
+                        "id_banco" => $row["id_banco"],
+                        "numero_recibo" => $row["numero_recibo"],
+                        "fecha_creacion" => $row["fecha_creacion"],
+                        "usuario_creacion" => $row["usuario_creacion"],
+                        "fecha_mod" => $row["fecha_mod"],
+                        "usuario_mod" => $row["usuario_mod"]
+                    );
+                    $i++;
+                }
+                $this->bandera = 1;
+            } else {
+                $this->mensaje = "NO SE ENCONTRARON COICIDENCIAS";
+                $this->bandera = 0;
+            }
+            return $array_data;
+        } catch (PDOException $e) {
             $this->mensaje = "Error: " . $e->getMessage();
             $this->bandera = 0;
         }

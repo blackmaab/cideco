@@ -3,29 +3,26 @@
 
 /**
  * Nombre de Archivo: Conexion.class.php
- * Fecha Creación: 04-07-2013 
+ * Fecha Creaciï¿½n: 04-07-2013 
  */
 class Conexion {
 
-
     //variables de conexion
-    private 	$hostname = "localhost";
-    private 	$userData = "cideco";
-    private  	$passwordData = "2P5Y5TDjaCO5E";
-    protected 	$database = "cideco";
-    public 		$conection;
+    private $hostname = "localhost";
+    private $userData = "admin";
+    private $passwordData = "admin";
+    protected $database = "gd_cideco_es";
+    public $conection;
 
     public function conexion() {
         try {
             $this->conection = new PDO("mysql:host=" . $this->hostname . ";dbname=" . $this->database, $this->userData, $this->passwordData, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 
 }
-
 ?>
 
 
