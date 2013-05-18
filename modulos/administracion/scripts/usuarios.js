@@ -13,20 +13,20 @@ var idReg=0;
 // Funcion para cargar el menu
 function doOnLoad() {
 
-	// Creando nuevo objeto
+    // Creando nuevo objeto
     toolbar = new dhtmlXToolbarObject("toolbarObj");
-	// Direccion de iconos
+    // Direccion de iconos
     toolbar.setIconsPath("../../../images/icons/");
-	// xml a cargar, este es fijo en la direccion q aparece
+    // xml a cargar, este es fijo en la direccion q aparece
     toolbar.loadXML("../../../components/toolbar/Administracion_usuarios.xml?etc=" + new Date().getTime());
 	
 	
-	// Funcion cuando el usuario da click en el toolbar
-	toolbar.attachEvent("onClick", function(id) {
+    // Funcion cuando el usuario da click en el toolbar
+    toolbar.attachEvent("onClick", function(id) {
 	
-		DoEvent(id);
+        DoEvent(id);
 	
-	});
+    });
 }
 
 
@@ -34,70 +34,70 @@ function doOnLoad() {
 function DoEvent(data) {
 	
 	
-	switch(data)
-	{
+    switch(data)
+    {
 	
-		case "new":
-			idReg=0;
-			ClearParam()
-			document.getElementById('frm_show').click();
-			document.getElementById('usuario').focus();
-			//Msjbox.show();
-		break;
+        case "new":
+            idReg=0;
+            ClearParam()
+            document.getElementById('frm_show').click();
+            document.getElementById('usuario').focus();
+            //Msjbox.show();
+            break;
 		
-		case "save":
+        case "save":
 		
-			SaveData();
-			//Msjbox.show();
-		break;
+            SaveData();
+            //Msjbox.show();
+            break;
 		
-		case "edit":
+        case "edit":
 		
-			if(mygrid.getSelectedId())
-			{
-				LoadParam();
-			}
-			else
-			{
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-				Msjbox.show();
-			}
+            if(mygrid.getSelectedId())
+            {
+                LoadParam();
+            }
+            else
+            {
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+                Msjbox.show();
+            }
 			
-		break;		
+            break;		
 		
-		case "delete":
+        case "delete":
 		
-			if(mygrid.getSelectedId())
-			{
-				document.getElementById('msj_show').click();
-			}
-			else
-			{
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-				Msjbox.show();
-			}		
+            if(mygrid.getSelectedId())
+            {
+                document.getElementById('msj_show').click();
+            }
+            else
+            {
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+                Msjbox.show();
+            }		
 			
 
-		break;
+            break;
 		
-		case "export":
+        case "export":
 		
-			var url="../actions/usuarios_export.php";
+            var url="../actions/usuarios_export.php";
 			
-			var window_width = 10;
-			var window_height = 10;
-			var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-			var window_top = (screen.height-window_height)/2;
-			var window_left = (screen.width-window_width)/2;
-			window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+            var window_width = 10;
+            var window_height = 10;
+            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+            var window_top = (screen.height-window_height)/2;
+            var window_left = (screen.width-window_width)/2;
+            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
 		
-		break;
+            break;
 		
-		default:
-			alert('Opcion aun en desarrollo.... ' + data);
-		break;
+        default:
+            alert('Opcion aun en desarrollo.... ' + data);
+            break;
 		
-	}
+    }
 	
 }
 
@@ -106,18 +106,18 @@ function DoEvent(data) {
 function doCalendar()
 {
 
-	myCalendar = new dhtmlXCalendarObject(["fechacad"]);
+    myCalendar = new dhtmlXCalendarObject(["fechacad"]);
 
 }
 
 // Funcion para cargar los datos
 function LoadData(){
 
-	// primero se muestra el mensaje de "espere"
-	MsjWait.show();
+    // primero se muestra el mensaje de "espere"
+    MsjWait.show();
 	
-	// Luego despues de un segundo cargamos el grid
-	setTimeout("LoadGrid();", 1000);
+    // Luego despues de un segundo cargamos el grid
+    setTimeout("LoadGrid();", 1000);
 
 }
 
@@ -127,21 +127,21 @@ function LoadData(){
 function LoadGrid()
 {
 
-	mygrid = new dhtmlXGridObject('gridbox');
-	mygrid.setImagePath("../../../components/grid/imgs/");
-	mygrid.init();
-	mygrid.setSkin("dhx_skyblue");
+    mygrid = new dhtmlXGridObject('gridbox');
+    mygrid.setImagePath("../../../components/grid/imgs/");
+    mygrid.init();
+    mygrid.setSkin("dhx_skyblue");
 
-	// direccion de la pagina que hace el xml de forma dinamica
-	mygrid.loadXML("../actions/usuarios_grid.php",
-		function()
-		{
-			// Para agregar los filtros del grid.
-			mygrid.attachHeader(",#text_filter,,,(yyyy-mm-dd),,,#text_filter,");
-			// finalizamos el mensaje de espere
-			MsjWait.hide();
-		}
-	);
+    // direccion de la pagina que hace el xml de forma dinamica
+    mygrid.loadXML("../actions/usuarios_grid.php",
+        function()
+        {
+            // Para agregar los filtros del grid.
+            mygrid.attachHeader(",#text_filter,,,(yyyy-mm-dd),,,#text_filter,");
+            // finalizamos el mensaje de espere
+            MsjWait.hide();
+        }
+        );
 	
 	
 	
@@ -153,23 +153,23 @@ function LoadGrid()
 function LoadCombos()
 {
 
-	// directorio de las imagenes del combo (no tocar)
-	window.dhx_globalImgPath = "../../../components/select/imgs/";
+    // directorio de las imagenes del combo (no tocar)
+    window.dhx_globalImgPath = "../../../components/select/imgs/";
 	
 	
-	// creacion del combo perfil
-	combo_perfil = new dhtmlXCombo("combo_perfil","perfil",125);
-	combo_perfil.enableFilteringMode(true);	
-	//combo_perfil.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
-	combo_perfil.attachEvent("onBlur", Validacion1);
+    // creacion del combo perfil
+    combo_perfil = new dhtmlXCombo("combo_perfil","perfil",125);
+    combo_perfil.enableFilteringMode(true);	
+    //combo_perfil.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
+    combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
+    combo_perfil.attachEvent("onBlur", Validacion1);
 	
-	// creacion del combo status
-	combo_status = new dhtmlXCombo("combo_status","status",125);
-	combo_status.enableFilteringMode(true);	
-	//combo_status.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	combo_status.loadXML("../actions/usuarios_combo_status.php?p0=" , function(){});
-	combo_status.attachEvent("onBlur", Validacion2);
+    // creacion del combo status
+    combo_status = new dhtmlXCombo("combo_status","status",125);
+    combo_status.enableFilteringMode(true);	
+    //combo_status.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
+    combo_status.loadXML("../actions/usuarios_combo_status.php?p0=" , function(){});
+    combo_status.attachEvent("onBlur", Validacion2);
  
 
 
@@ -180,20 +180,20 @@ function LoadCombos()
 // validacion del combo perfil
 function Validacion1() {
 
-	if (combo_perfil.getSelectedValue()==null)
-	{
-		combo_perfil.setComboText('');
-	}
+    if (combo_perfil.getSelectedValue()==null)
+    {
+        combo_perfil.setComboText('');
+    }
     return true;
 }
 
 // validacion del combo status
 function Validacion2() {
 
-	if (combo_status.getSelectedValue()==null)
-	{
-		combo_status.setComboText('');
-	}
+    if (combo_status.getSelectedValue()==null)
+    {
+        combo_status.setComboText('');
+    }
     return true;
 }
 
@@ -203,53 +203,57 @@ function Validacion2() {
 function SaveData()
 {
 
-	try
-	{
+    try
+    {
 
-		// verificamos q los parametros obligatorios esten llenos
-		if(CheckParam())
-		{
+        // verificamos q los parametros obligatorios esten llenos
+        if(CheckParam())
+        {
 		
-			// guardamos los parametros en un arreglo post
-			var parameters = ""; 
-			parameters = parameters + "?p0=" + idReg;
-			parameters = parameters + "&p1=" + document.getElementById("usuario").value;
-			parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
-			parameters = parameters + "&p3=" + document.getElementById("fechacad").value;
-			parameters = parameters + "&p4=" + document.getElementById("pregunta").value;
-			parameters = parameters + "&p5=" + document.getElementById("respuesta").value;
-			parameters = parameters + "&p6=" + combo_perfil.getSelectedValue();
-			parameters = parameters + "&p7=" + combo_status.getSelectedValue();
+            // guardamos los parametros en un arreglo post
+            var parameters = ""; 
+            parameters = parameters + "?p0=" + idReg;
+            parameters = parameters + "&p1=" + document.getElementById("usuario").value;
+            parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
+            parameters = parameters + "&p3=" + document.getElementById("fechacad").value;
+            parameters = parameters + "&p4=" + document.getElementById("pregunta").value;
+            parameters = parameters + "&p5=" + document.getElementById("respuesta").value;
+            parameters = parameters + "&p6=" + combo_perfil.getSelectedValue();
+            parameters = parameters + "&p7=" + combo_status.getSelectedValue();
 			
 			
-			if (idReg==0)
-			{
-				// si es nuevo entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml()} );
-			}
-			else
-			{
-				// si es un update entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml()} );
-			}
+            if (idReg==0)
+            {
+                // si es nuevo entra aqui
+                loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){
+                    ReadXml()
+                } );
+            }
+            else
+            {
+                // si es un update entra aqui
+                loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){
+                    ReadXml()
+                } );
+            }
 
-		}
-		else
-		{
+        }
+        else
+        {
 		
-			// mensaje de llenar los campos obligatorios
-			Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos Obligatorios</td></tr></table>");
-			Msjbox.show();
+            // mensaje de llenar los campos obligatorios
+            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos Obligatorios</td></tr></table>");
+            Msjbox.show();
 		
-		}
+        }
 
-	}
-	catch(err)
-	{
+    }
+    catch(err)
+    {
 
-		alert(err.message );
+        alert(err.message );
 		
-	}
+    }
 
 
 
@@ -261,28 +265,28 @@ function SaveData()
 
 function CheckParam()
 {
-	var Val = true
+    var Val = true
 	
 	
 	
-	if (document.getElementById('usuario').value == '')
-	{
-		Val = false;
-	}
+    if (document.getElementById('usuario').value == '')
+    {
+        Val = false;
+    }
 	
-	if (document.getElementById('contrasena').value == '')
-	{
-		Val = false;
-	}
+    if (document.getElementById('contrasena').value == '')
+    {
+        Val = false;
+    }
 	
-	if (document.getElementById('fechacad').value == '')
-	{
-		Val = false;
-	}
+    if (document.getElementById('fechacad').value == '')
+    {
+        Val = false;
+    }
 
 	
 	
-	return Val;
+    return Val;
 
 }
 
@@ -291,20 +295,20 @@ function CheckParam()
 function LoadParam()
 {
 
-	// limpiamos las cajas
-	ClearParam();
+    // limpiamos las cajas
+    ClearParam();
 	
-	// llenamos las cajas
-	idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
-	document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
-	document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
-	document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
-	document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
-	document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
-	combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
-	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),9).getValue());
+    // llenamos las cajas
+    idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
+    document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
+    document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
+    document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
+    document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
+    document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
+    combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
+    combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),9).getValue());
 	
-	document.getElementById('frm_show').click();
+    document.getElementById('frm_show').click();
 
 }
 
@@ -313,13 +317,13 @@ function LoadParam()
 
 function ClearParam(){
 
-	document.getElementById("usuario").value = "";
-	document.getElementById("contrasena").value = "";
-	document.getElementById("fechacad").value = "";
-	document.getElementById("pregunta").value = "";
-	document.getElementById("respuesta").value = "";
-	combo_perfil.setComboText('');
-	combo_status.setComboText('');
+    document.getElementById("usuario").value = "";
+    document.getElementById("contrasena").value = "";
+    document.getElementById("fechacad").value = "";
+    document.getElementById("pregunta").value = "";
+    document.getElementById("respuesta").value = "";
+    combo_perfil.setComboText('');
+    combo_status.setComboText('');
 	
 	
 }
@@ -330,13 +334,15 @@ function DeleteData()
 {
 
 
-	var parameters = ""; 
-	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),0).getValue();
+    var parameters = ""; 
+    parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),0).getValue();
 
-	if (idReg==0)
-	{
-		loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
-	}
+    if (idReg==0)
+    {
+        loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){
+            ReadXml()
+        } );
+    }
 			
 }
 
@@ -345,66 +351,66 @@ function DeleteData()
 // lectura del xml de respuesta
 function ReadXml(){
 
- //alert(loader.doSerialization());
-	if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
-	{
-		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async = false;
-		xmlDoc.loadXML(loader.doSerialization());
+    //alert(loader.doSerialization());
+    if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
+    {
+        xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        xmlDoc.async = false;
+        xmlDoc.loadXML(loader.doSerialization());
 		
-		switch(xmlDoc.documentElement.childNodes[0].text)
-		{
+        switch(xmlDoc.documentElement.childNodes[0].text)
+        {
 		
-			// si fue un insert
-			case "Insert":
+            // si fue un insert
+            case "Insert":
 				
-				MsjWait.show();
-				document.getElementById('frm_hide').click();
-				LoadGrid();
+                MsjWait.show();
+                document.getElementById('frm_hide').click();
+                LoadGrid();
 				
 				
-			break;
+                break;
 		
 		
-			// si fue un update
-			case "Update":
+            // si fue un update
+            case "Update":
 			
 				
-				MsjWait.show();
-				document.getElementById('frm_hide').click();
-				LoadGrid();
+                MsjWait.show();
+                document.getElementById('frm_hide').click();
+                LoadGrid();
 				
 			
-			break;
+                break;
 			
 			
-			// si fue un delete
-			case "Delete":
+            // si fue un delete
+            case "Delete":
 			
 				
-				MsjWait.show();
-				document.getElementById('msj_hide').click();
-				LoadGrid();
+                MsjWait.show();
+                document.getElementById('msj_hide').click();
+                LoadGrid();
 				
 			
-			break;
+                break;
 			
-			default:
+            default:
 			
 			
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Error en la Base de Datos, Contacte a su Administrado!!!</td></tr></table>");
-				Msjbox.show();
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Error en la Base de Datos, Contacte a su Administrado!!!</td></tr></table>");
+                Msjbox.show();
 			
-			break;
+                break;
 		
-		}
-	}
-	else
-	{
-		// en el caso q haya sucedido un error.
-		alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
+        }
+    }
+    else
+    {
+        // en el caso q haya sucedido un error.
+        alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
   
-	}
+    }
  
 }
   
@@ -416,59 +422,108 @@ function ReadXml(){
 
 
 // Funciones de los Formularios
-var RegNew_Submit = function() { SaveData(); };
-var RegNew_Cancel = function() { document.getElementById('frm_hide').click();};	
+var RegNew_Submit = function() {
+    SaveData();
+};
+var RegNew_Cancel = function() {
+    document.getElementById('frm_hide').click();
+};	
 
-var RegDel_Submit = function() { DeleteData(); };
-var RegDel_Cancel = function() { document.getElementById('msj_hide').click();};	
+var RegDel_Submit = function() {
+    DeleteData();
+};
+var RegDel_Cancel = function() {
+    document.getElementById('msj_hide').click();
+};	
 
 
 function init() {
 
-	try
-	{
+    try
+    {
 	
-		// Cargar los Controles.
+        // Cargar los Controles.
 		
-		// Mensaje de Espere. *********************************************
+        // Mensaje de Espere. *********************************************
 		
-		MsjWait = new HBI.widget.Panel("wait", { width: "240px", fixedcenter: true, close: false, draggable: false, zindex:4, modal: true, visible: false } );
-		MsjWait.setHeader("Espere...");
-		MsjWait.setBody("<img src=\"../../../images/icons/rel_interstitial_loading.gif\"/>");
-		MsjWait.render(document.body);
-		
-		
-		// Mensaje Personalizado. ****************************************
-		Msjbox = new HBI.widget.Panel("panel1", { width:"500px",  visible:false, draggable:true, close:true, modal: true, fixedcenter : true});
-		Msjbox.setHeader("Atenci&oacute;n... <br>");
-		Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Prueba de Mensaje</td></tr></table>");
-		Msjbox.render(document.body);
-		
-		
-		// Fromulario de Nuevo Registro y Edicion. ************************
-		
-		FormRegistro = new HBI.widget.Dialog("RegNew", { width : "30em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
-									buttons : [ { text:"Guardar", handler:RegNew_Submit, isDefault:true }, { text:"Cancelar", handler:RegNew_Cancel } ]});
-		FormRegistro.render();
-		HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);
-		HBI.util.Event.addListener("frm_hide", "click", FormRegistro.hide, FormRegistro, true);
+        MsjWait = new HBI.widget.Panel("wait", {
+            width: "240px", 
+            fixedcenter: true, 
+            close: false, 
+            draggable: false, 
+            zindex:4, 
+            modal: true, 
+            visible: false
+        } );
+        MsjWait.setHeader("Espere...");
+        MsjWait.setBody("<img src=\"../../../images/icons/rel_interstitial_loading.gif\"/>");
+        MsjWait.render(document.body);
 		
 		
-		// Mensaje de Eliminar Registro. **********************************
-		MsjDelete = new HBI.widget.Dialog("RegDel", { width : "35em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
-									buttons : [ { text:"Aceptar", handler:RegDel_Submit, isDefault:true }, { text:"Cancelar", handler:RegDel_Cancel } ]});
-		MsjDelete.render();
-		HBI.util.Event.addListener("msj_show", "click", MsjDelete.show, MsjDelete, true);
-		HBI.util.Event.addListener("msj_hide", "click", MsjDelete.hide, MsjDelete, true);
+        // Mensaje Personalizado. ****************************************
+        Msjbox = new HBI.widget.Panel("panel1", {
+            width:"500px",  
+            visible:false, 
+            draggable:true, 
+            close:true, 
+            modal: true, 
+            fixedcenter : true
+        });
+        Msjbox.setHeader("Atenci&oacute;n... <br>");
+        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Prueba de Mensaje</td></tr></table>");
+        Msjbox.render(document.body);
+		
+		
+        // Fromulario de Nuevo Registro y Edicion. ************************
+		
+        FormRegistro = new HBI.widget.Dialog("RegNew", {
+            width : "30em", 
+            fixedcenter : true, 
+            visible : false, 
+            modal: true, 
+            constraintoviewport : true, 
+            buttons : [ {
+                text:"Guardar", 
+                handler:RegNew_Submit, 
+                isDefault:true
+            }, {
+                text:"Cancelar", 
+                handler:RegNew_Cancel
+            } ]
+        });
+        FormRegistro.render();
+        HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);
+        HBI.util.Event.addListener("frm_hide", "click", FormRegistro.hide, FormRegistro, true);
+		
+		
+        // Mensaje de Eliminar Registro. **********************************
+        MsjDelete = new HBI.widget.Dialog("RegDel", {
+            width : "35em", 
+            fixedcenter : true, 
+            visible : false, 
+            modal: true, 
+            constraintoviewport : true, 
+            buttons : [ {
+                text:"Aceptar", 
+                handler:RegDel_Submit, 
+                isDefault:true
+            }, {
+                text:"Cancelar", 
+                handler:RegDel_Cancel
+            } ]
+        });
+        MsjDelete.render();
+        HBI.util.Event.addListener("msj_show", "click", MsjDelete.show, MsjDelete, true);
+        HBI.util.Event.addListener("msj_hide", "click", MsjDelete.hide, MsjDelete, true);
 		
 		
 		
-	}
-	catch(err)
-	{
+    }
+    catch(err)
+    {
 
-		alert(err.message );
+        alert(err.message );
 		
-	}
+    }
 	
 }

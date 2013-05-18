@@ -2,14 +2,15 @@
 
 /**
  * Nombre de Archivo: Banco.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:34
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:41
  * @author Mario Alvarado
  */
 class Banco extends Conexion {
 
     public $id_banco = "";
     public $nombre_banco = "";
+    public $activo = "";
     public $mensaje = "";
     public $bandera = "";
 
@@ -20,10 +21,11 @@ class Banco extends Conexion {
     public function insert_Banco() {
         try {
             $this->conection->beginTransaction();
-            $sql = "INSERT INTO banco VALUES(:id_banco,:nombre_banco)";
+            $sql = "INSERT INTO banco VALUES(:id_banco,:nombre_banco,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_banco", $this->id_banco);
             $resultSet->bindParam(":nombre_banco", $this->nombre_banco);
+            $resultSet->bindParam(":activo", $this->activo);
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Guardado con Exito";
@@ -128,7 +130,8 @@ class Banco extends Conexion {
                 while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
                     $array_data[$i] = array(
                         "id_banco" => $row["id_banco"],
-                        "nombre_banco" => $row["nombre_banco"]
+                        "nombre_banco" => $row["nombre_banco"],
+                        "activo" => $row["activo"]
                     );
                     $i++;
                 }

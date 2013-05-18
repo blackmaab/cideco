@@ -2,14 +2,15 @@
 
 /**
  * Nombre de Archivo: EstadoDonacion.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:34
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:41
  * @author Mario Alvarado
  */
 class EstadoDonacion extends Conexion {
 
     public $id_est_donacion = "";
     public $estado_donacion = "";
+    public $activo = "";
     public $mensaje = "";
     public $bandera = "";
 
@@ -20,10 +21,11 @@ class EstadoDonacion extends Conexion {
     public function insert_EstadoDonacion() {
         try {
             $this->conection->beginTransaction();
-            $sql = "INSERT INTO estado_donacion VALUES(:id_est_donacion,:estado_donacion)";
+            $sql = "INSERT INTO estado_donacion VALUES(:id_est_donacion,:estado_donacion,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_est_donacion", $this->id_est_donacion);
             $resultSet->bindParam(":estado_donacion", $this->estado_donacion);
+            $resultSet->bindParam(":activo", $this->activo);
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Guardado con Exito";
@@ -128,7 +130,8 @@ class EstadoDonacion extends Conexion {
                 while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
                     $array_data[$i] = array(
                         "id_est_donacion" => $row["id_est_donacion"],
-                        "estado_donacion" => $row["estado_donacion"]
+                        "estado_donacion" => $row["estado_donacion"],
+                        "activo" => $row["activo"]
                     );
                     $i++;
                 }

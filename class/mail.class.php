@@ -2,97 +2,93 @@
 
 include "../../../components/mail/mail.php";
 include "../../../components/mail/mime.php";
-	
+
 class Email_Services {
 
-	function sendNotification($html, $email)
-	{
+    function sendNotification($html, $email) {
 
-		$htmlfinal = $html;
-		
-		$from = "Planning System <planning.system@hanesbrands.com>";
-		
-		$to = $email; //"Arturo Aguirre <arturo.aguirre@hanesbrands.com>";
-		$Bcc = "";
-		
-		$subject = "Planning System - Password Reset.";
+        $htmlfinal = $html;
 
-		$host = "10.109.12.89";
-		$username = "";
-		$password = "";
+        $from = "Planning System <planning.system@hanesbrands.com>";
 
-		$crlf = "\n"; 
+        $to = $email; //"Arturo Aguirre <arturo.aguirre@hanesbrands.com>";
+        $Bcc = "";
 
-		$hdrs = array ('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);  
+        $subject = "Planning System - Password Reset.";
 
-		$mime = new Mail_Mime($crlf); 
-		$mime->setHTMLBody($htmlfinal);
+        $host = "10.109.12.89";
+        $username = "";
+        $password = "";
 
-		$body = $mime->get(); 
+        $crlf = "\n";
 
-		$headers = $mime->headers($hdrs);  
+        $hdrs = array('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);
 
-		$smtp =& Mail::factory('smtp', array ('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));  
+        $mime = new Mail_Mime($crlf);
+        $mime->setHTMLBody($htmlfinal);
 
-		$mail = $smtp->send($to, $headers, $body);
+        $body = $mime->get();
 
-	}
-	
-	function sendBug($html, $copyDest, $emailDest)
-	{
+        $headers = $mime->headers($hdrs);
 
-		$htmlfinal = $html;
-		
-		$from = "Planning System <planning.system@hanesbrands.com>";
-		
-		$to = "Arturo Aguirre <arturo.aguirre@hanesbrands.com>";
-		$Bcc = "";
-		
-		$subject = "Planning System - Bug Report.";
+        $smtp = & Mail::factory('smtp', array('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));
 
-		$host = "10.109.12.89";
-		$username = "";
-		$password = "";
+        $mail = $smtp->send($to, $headers, $body);
+    }
 
-		$crlf = "\n"; 
+    function sendBug($html, $copyDest, $emailDest) {
 
-		$hdrs = array ('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);  
+        $htmlfinal = $html;
 
-		$mime = new Mail_Mime($crlf); 
-		$mime->setHTMLBody($htmlfinal);
+        $from = "Planning System <planning.system@hanesbrands.com>";
 
-		$body = $mime->get(); 
+        $to = "Arturo Aguirre <arturo.aguirre@hanesbrands.com>";
+        $Bcc = "";
 
-		$headers = $mime->headers($hdrs);  
+        $subject = "Planning System - Bug Report.";
 
-		$smtp =& Mail::factory('smtp', array ('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));  
+        $host = "10.109.12.89";
+        $username = "";
+        $password = "";
 
-		$mail = $smtp->send($to, $headers, $body);
-		
-		//enviar una copia al usuario
-		if ($copyDest == '1' && $emailDest != '')
-		{
-			try
-			{
-				$to = $emailDest;
-				
-				$hdrs = array ('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);  
+        $crlf = "\n";
 
-				$mime = new Mail_Mime($crlf); 
-				$mime->setHTMLBody($htmlfinal);
+        $hdrs = array('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);
 
-				$body = $mime->get(); 
+        $mime = new Mail_Mime($crlf);
+        $mime->setHTMLBody($htmlfinal);
 
-				$headers = $mime->headers($hdrs);  
+        $body = $mime->get();
 
-				$smtp =& Mail::factory('smtp', array ('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));  
+        $headers = $mime->headers($hdrs);
 
-				$mail = $smtp->send($to, $headers, $body);
-			}
-			catch (Exception $e) { }
-		
-		}
+        $smtp = & Mail::factory('smtp', array('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));
 
-	}
+        $mail = $smtp->send($to, $headers, $body);
+
+        //enviar una copia al usuario
+        if ($copyDest == '1' && $emailDest != '') {
+            try {
+                $to = $emailDest;
+
+                $hdrs = array('From' => $from, 'To' => $to, 'Subject' => $subject, 'Bcc' => $Bcc);
+
+                $mime = new Mail_Mime($crlf);
+                $mime->setHTMLBody($htmlfinal);
+
+                $body = $mime->get();
+
+                $headers = $mime->headers($hdrs);
+
+                $smtp = & Mail::factory('smtp', array('host' => $host, 'auth' => false, 'username' => $username, 'password' => $password));
+
+                $mail = $smtp->send($to, $headers, $body);
+            } catch (Exception $e) {
+                
+            }
+        }
+    }
+
 }
+
 ?>

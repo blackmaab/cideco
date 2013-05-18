@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: TipoDonacion.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:35
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:42
  * @author Mario Alvarado
  */
 class TipoDonacion extends Conexion {

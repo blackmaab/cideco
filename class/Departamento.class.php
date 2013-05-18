@@ -2,14 +2,15 @@
 
 /**
  * Nombre de Archivo: Departamento.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:34
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:41
  * @author Mario Alvarado
  */
 class Departamento extends Conexion {
 
     public $id_departamento = "";
     public $departamento = "";
+    public $activo = "";
     public $mensaje = "";
     public $bandera = "";
 
@@ -20,10 +21,11 @@ class Departamento extends Conexion {
     public function insert_Departamento() {
         try {
             $this->conection->beginTransaction();
-            $sql = "INSERT INTO departamento VALUES(:id_departamento,:departamento)";
+            $sql = "INSERT INTO departamento VALUES(:id_departamento,:departamento,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_departamento", $this->id_departamento);
             $resultSet->bindParam(":departamento", $this->departamento);
+            $resultSet->bindParam(":activo", $this->activo);
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Guardado con Exito";
@@ -128,7 +130,8 @@ class Departamento extends Conexion {
                 while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
                     $array_data[$i] = array(
                         "id_departamento" => $row["id_departamento"],
-                        "departamento" => $row["departamento"]
+                        "departamento" => $row["departamento"],
+                        "activo" => $row["activo"]
                     );
                     $i++;
                 }

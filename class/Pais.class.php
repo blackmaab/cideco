@@ -2,14 +2,15 @@
 
 /**
  * Nombre de Archivo: Pais.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:35
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:42
  * @author Mario Alvarado
  */
 class Pais extends Conexion {
 
     public $id_pais = "";
     public $nombre_pais = "";
+    public $activo = "";
     public $mensaje = "";
     public $bandera = "";
 
@@ -20,10 +21,11 @@ class Pais extends Conexion {
     public function insert_Pais() {
         try {
             $this->conection->beginTransaction();
-            $sql = "INSERT INTO pais VALUES(:id_pais,:nombre_pais)";
+            $sql = "INSERT INTO pais VALUES(:id_pais,:nombre_pais,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_pais", $this->id_pais);
             $resultSet->bindParam(":nombre_pais", $this->nombre_pais);
+            $resultSet->bindParam(":activo", $this->activo);
             $resultSet->execute();
             $this->conection->commit();
             $this->mensaje = "Registro Guardado con Exito";
@@ -128,7 +130,8 @@ class Pais extends Conexion {
                 while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
                     $array_data[$i] = array(
                         "id_pais" => $row["id_pais"],
-                        "nombre_pais" => $row["nombre_pais"]
+                        "nombre_pais" => $row["nombre_pais"],
+                        "activo" => $row["activo"]
                     );
                     $i++;
                 }

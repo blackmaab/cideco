@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Pagos.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:35
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:41
  * @author Mario Alvarado
  */
 class Pagos extends Conexion {
@@ -12,7 +12,6 @@ class Pagos extends Conexion {
     public $fecha = "";
     public $id_donacion = "";
     public $numero_cuota = "";
-    public $tipo_pago = "";
     public $monto = "";
     public $id_banco = "";
     public $numero_recibo = "";
@@ -30,13 +29,12 @@ class Pagos extends Conexion {
     public function insert_Pagos() {
         try {
             $this->conection->beginTransaction();
-            $sql = "INSERT INTO pagos VALUES(:id_pago,:fecha,:id_donacion,:numero_cuota,:tipo_pago,:monto,:id_banco,:numero_recibo,:fecha_creacion,:usuario_creacion,:fecha_mod,:usuario_mod)";
+            $sql = "INSERT INTO pagos VALUES(:id_pago,:fecha,:id_donacion,:numero_cuota,:monto,:id_banco,:numero_recibo,:fecha_creacion,:usuario_creacion,:fecha_mod,:usuario_mod)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_pago", $this->id_pago);
             $resultSet->bindParam(":fecha", $this->fecha);
             $resultSet->bindParam(":id_donacion", $this->id_donacion);
             $resultSet->bindParam(":numero_cuota", $this->numero_cuota);
-            $resultSet->bindParam(":tipo_pago", $this->tipo_pago);
             $resultSet->bindParam(":monto", $this->monto);
             $resultSet->bindParam(":id_banco", $this->id_banco);
             $resultSet->bindParam(":numero_recibo", $this->numero_recibo);
@@ -151,7 +149,6 @@ class Pagos extends Conexion {
                         "fecha" => $row["fecha"],
                         "id_donacion" => $row["id_donacion"],
                         "numero_cuota" => $row["numero_cuota"],
-                        "tipo_pago" => $row["tipo_pago"],
                         "monto" => $row["monto"],
                         "id_banco" => $row["id_banco"],
                         "numero_recibo" => $row["numero_recibo"],

@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: BecaEscolar.class.php
- * Fecha Creación: 14-May-2013
- * Hora: 09:55:34
+ * Fecha Creación: 18-May-2013
+ * Hora: 22:54:41
  * @author Mario Alvarado
  */
 class BecaEscolar extends Conexion {

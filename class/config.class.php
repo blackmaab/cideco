@@ -1,10 +1,9 @@
-<?php 
+<?php
 
-$dbhost="localhost";
-$dbuser="cideco";
-$dbpass="2P5Y5TDjaCO5E";
-$dbname="cideco";
+$dbhost = "localhost";
+$dbuser = "admin";
+$dbpass = "admin";
+$dbname = "gd_cideco_es";
 
-$errordb="Imposible comunicación con Base de Datos, Disculpe los inconvenientes";
-
+$errordb = "Imposible comunicaciï¿½n con Base de Datos, Disculpe los inconvenientes";
 ?>
