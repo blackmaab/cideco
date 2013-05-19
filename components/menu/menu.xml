@@ -34,15 +34,16 @@
 	
     <item id="Mantenimientos" text="Mantenimientos" img="database.png" >
         <item id="Man_Pais" text="Paises" img="database_wrench.png"/>
-        <item id="Man_Departamento" text="Departamento" img="database_wrench.png"/>
-        <item id="Man_Municipio" text="Municipio" img="database_wrench.png"/>
+        <!--<item id="Man_Departamento" text="Departamento" img="database_wrench.png"/>
+        <item id="Man_Municipio" text="Municipio" img="database_wrench.png"/>-->
         <item id="Man_sep_1" type="separator"/>
-        <item id="Man_Bancos" text="Bancos" img="database_wrench.png"/>		        
-        <item id="Man_Tipo_Donacion" text="Tipos de Donacion" img="database_wrench.png"/>
-        <item id="Man_Tipo_Pago" text="Tipo de Pagos" img="database_wrench.png"/>        
+        <item id="Man_Bancos" text="Bancos" img="database_wrench.png"/>		                        
         <item id="Man_Institucion" text="Institucion Educativas" img="database_wrench.png"/>
-		
-        
+        <item id="Man_Grado" text="Grado escolar" img="database_wrench.png"/>        
+        <item id="Man_sep_2" type="separator"/>
+        <item id="Man_EstadoDonacion" text="Estado Donacion" img="database_wrench.png"/>
+        <item id="Man_EstadoDonante" text="Estado Donante" img="database_wrench.png"/>
+        <item id="Man_Tipo_Pago" text="Tipo de Pagos" img="database_wrench.png"/>        
     </item>
 	
 	

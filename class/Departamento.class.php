@@ -21,6 +21,7 @@ class Departamento extends Conexion {
     public function insert_Departamento() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO departamento VALUES(:id_departamento,:departamento,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_departamento", $this->id_departamento);
@@ -40,6 +41,7 @@ class Departamento extends Conexion {
     public function update_Departamento($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

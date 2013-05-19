@@ -23,6 +23,7 @@ class InstitucionEducativa extends Conexion {
     public function insert_InstitucionEducativa() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO institucion_educativa VALUES(:id_institucion,:nombre_institucion,:direccion,:telefono,:nombre_director)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_institucion", $this->id_institucion);
@@ -44,6 +45,7 @@ class InstitucionEducativa extends Conexion {
     public function update_InstitucionEducativa($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

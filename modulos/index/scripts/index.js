@@ -96,25 +96,30 @@ function menuClick(id) {
             document.getElementById('contenido').src = "../../mantenimiento/pages/pais.php";
 		
             break;
+        case "Man_Departamento":
 		
-        case "Man_Tipo_Beca":
+            //            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_donacion.php";
 		
-            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_beca.php";
+            break;
+            
+        case "Man_Municipio":
 		
-            break;	
+            //            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_donacion.php";
 		
+            break;
 		
-        case "Man_Tipo_Donacion":
+                
+        case "Man_Bancos":
 		
-            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_donacion.php";
+            document.getElementById('contenido').src = "../../mantenimiento/pages/bancos.php";
 		
-            break;	
+            break;
+            
+       	 case "Man_Grado":
 		
-        case "Man_Tipo_Pago":
+            document.getElementById('contenido').src = "../../mantenimiento/pages/grado.php";
 		
-            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_pago.php";
-		
-            break;			
+            break;		
 		
 
 		
@@ -123,13 +128,23 @@ function menuClick(id) {
             document.getElementById('contenido').src = "../../mantenimiento/pages/institucion.php";
 		
             break;
-		
-		
-        case "Man_Bancos":
-		
-            document.getElementById('contenido').src = "../../mantenimiento/pages/bancos.php";
+            
+            case "Man_EstadoDonacion":
+            document.getElementById('contenido').src = "../../mantenimiento/pages/estado_donacion.php";
 		
             break;
+            
+              case "Man_EstadoDonante":
+            document.getElementById('contenido').src = "../../mantenimiento/pages/estado_donante.php";
+		
+            break;
+		
+		 case "Man_Tipo_Pago":
+		
+            document.getElementById('contenido').src = "../../mantenimiento/pages/tipo_pago.php";
+		
+            break;	
+     
 
 
 					
@@ -272,7 +287,7 @@ function Init() {
                 text:"Cancelar", 
                 handler:Pass_Cancel
             } ]
-            });
+        });
         FormPass.render();
         HBI.util.Event.addListener("pass_show", "click", FormPass.show, FormPass, true);
         HBI.util.Event.addListener("pass_hide", "click", FormPass.hide, FormPass, true);

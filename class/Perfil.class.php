@@ -23,6 +23,7 @@ class Perfil extends Conexion {
     public function insert_Perfil() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO perfil VALUES(:id_perfil,:perfil,:menu,:comentario,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_perfil", $this->id_perfil);
@@ -44,6 +45,7 @@ class Perfil extends Conexion {
     public function update_Perfil($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

@@ -21,6 +21,7 @@ class TipoBeca extends Conexion {
     public function insert_TipoBeca() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO tipo_beca VALUES(:id_beca,:valor,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_beca", $this->id_beca);
@@ -40,6 +41,7 @@ class TipoBeca extends Conexion {
     public function update_TipoBeca($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

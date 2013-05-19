@@ -21,6 +21,7 @@ class Grado extends Conexion {
     public function insert_Grado() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO grado VALUES(:id_grado,:grado,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_grado", $this->id_grado);
@@ -40,6 +41,7 @@ class Grado extends Conexion {
     public function update_Grado($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

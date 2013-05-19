@@ -22,6 +22,7 @@ class Renovacion extends Conexion {
     public function insert_Renovacion() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO renovacion VALUES(:id_renovacion,:id_donacion,:fecha_renovacion,:documento_renovacion_img)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_renovacion", $this->id_renovacion);
@@ -42,6 +43,7 @@ class Renovacion extends Conexion {
     public function update_Renovacion($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

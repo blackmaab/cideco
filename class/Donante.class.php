@@ -22,6 +22,7 @@ class Donante extends Conexion {
     public function insert_Donante() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO donante VALUES(:id_donante,:id_usuario,:id_persona,:estado)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_donante", $this->id_donante);
@@ -42,6 +43,7 @@ class Donante extends Conexion {
     public function update_Donante($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

@@ -24,6 +24,7 @@ class Promotor extends Conexion {
     public function insert_Promotor() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO promotor VALUES(:id_promotor,:id_usuario,:id_persona,:fecha_inicio,:fecha_fin,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_promotor", $this->id_promotor);
@@ -46,6 +47,7 @@ class Promotor extends Conexion {
     public function update_Promotor($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

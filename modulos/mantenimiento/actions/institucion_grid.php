@@ -1,113 +1,53 @@
 <?php
-	
-	header("Content-type: text/xml");
-	
-	set_time_limit (120);
 
-	//session_name("PLANNING_SYSTEM");
-	session_start();
-	
-	$id = session_id();
-	
-	/*
-	if(!isset($_SESSION['PLANNING_SYSTEM']) || $_SESSION['EXPIRE'] == 999) 
-	{
-	  header ("location: ../../login/pages/default.php"); 
-	}
-	*/
-	
-	//Inicia
-	include("../../../class/database.class.php");
+include_once '../../../class/Conexion.class.php';
+include_once '../../../class/InstitucionEducativa.class.php';
+header("Content-type: text/xml");
 
-	
-	/*
-	$p0 = $_GET['p0'];
-	$p1 = $_GET['p1'];
-*/
-	$execQuery = "";
-	$retVal = ""; 
-	
-	
-	$execQuery = " Select 
-	
-						id_donante,
-						per.id_persona
-						nombres,
-						apellido_pri,
-						apellido_seg,    
-						direccion,
-						'Municipio',
-						'Pais',
-						Telefono_casa
-						
-				   From donante don
-				   Left Join persona per On per.id_persona = don.id_persona
-        ";
-			
-			
+//Inicia encabezado
+$head = "";
 
-	//consulta a base de datos
-	$result = $database -> database_query ($execQuery);
+$head .="<head>";
+
+$head .="<column width='50' type='ro' align='center' sort='str'>Id</column> \n";
+$head .="<column width='300' type='ro' align='left' sort='str'>Institucion</column> \n";
+$head .="<column width='450' type='ro' align='center' sort='str'>Direccion</column> \n";
+$head .="<column width='75' type='ro' align='center' sort='str'>Telefono</column> \n";
+$head .="<column width='150' type='ro' align='center' sort='str'>Director</column> \n";
+
+$head .="<settings> \n";
+$head .="<colwidth>px</colwidth> \n";
+$head .="</settings> \n";
+
+$head .="</head> \n";
+
+$obj_institucion = new InstitucionEducativa();
 
 
-		
-	$counter = 0;
-	
-	//Inicia encabezado
-	$head = "";
 
-	$head .="<head>";
-		
-		$head .="<column width='100' type='ro' align='center' sort='str'>Id</column> \n";
-		$head .="<column width='150' type='ro' align='left' sort='str'>Institucion Educativa</column> \n";
-		$head .="<column width='250' type='ro' align='left' sort='str'>Direccion</column> \n";
-		$head .="<column width='100' type='ro' align='left' sort='str'>Telefono</column> \n";
-		$head .="<column width='160' type='ro' align='left' sort='str'>Nombre Director</column> \n";
-		$head .="<column width='80' type='ro' align='left' sort='str'>Estado</column> \n";
-		
+//Cierra encabezado
+//Bucle para armar la tabla a mostrar
+$contador = 0;
+$retVal = "";
+$array_data = $obj_institucion->select_InstitucionEducativa();
 
-		
-		$head .="<settings> \n";
-		    $head .="<colwidth>px</colwidth> \n";
-		$head .="</settings> \n";
-		
-		$head .="</head> \n";
+foreach ($array_data as $key => $value):
+    $retVal .= "<row id='$contador'> \n";
+    $retVal .= "<cell >" . $value["id_institucion"] . "</cell> \n";
+    $retVal .= "<cell >" . $value["nombre_institucion"] . "</cell> \n";
+    $retVal .= "<cell >" . $value["direccion"] . "</cell> \n";
+    $retVal .= "<cell >" . $value["telefono"] . "</cell> \n";
+    $retVal .= "<cell >" . $value["nombre_director"] . "</cell> \n";
+    $retVal .= "</row>";
+    $contador++;
+endforeach;
 
-	//Cierra encabezado
-	
-	
-	//Bucle para armar la tabla a mostrar
-	while($row = $database -> database_array($result))
-	{	
-	
-		$counter++;
+//Concatenar elementos
 
-			$retVal .= "<row id='$counter'> \n"; 
-			$retVal .= "<cell >".trim($row[0])."</cell> \n";
-			$retVal .= "<cell >".trim($row[1])."</cell> \n";
-			$retVal .= "<cell >".trim($row[1])."</cell> \n";
-			$retVal .= "<cell >".trim($row[2])."</cell> \n";
-			$retVal .= "<cell >".trim($row[3])."</cell> \n";
-			$retVal .= "<cell >".trim($row[4])."</cell> \n";
-			$retVal .= "<cell >".trim($row[5])."</cell> \n";
-			$retVal .= "<cell >".trim($row[6])."</cell> \n";
-			$retVal .= "<cell >".trim($row[7])."</cell> \n";
-			$retVal .= "</row>";
+$retVal = $head . $retVal;
 
-	}
-	
-	//Cerra conexiones a base de datos
-	$database -> database_close();
-
-
-	//Concatenar elementos
-	
-	$retVal = $head.$retVal;
-	
-	
-	//Retornar respuesta
-	echo('<?xml version="1.0" encoding="ISO-8859-1"?>'); 
-	echo "<rows id='datos'>".$retVal."</rows>";
-	exit;
-	
+//Retornar respuesta
+echo('<?xml version="1.0" encoding="ISO-8859-1"?>');
+echo "<rows id='datos'>" . $retVal . "</rows>";
+exit;
 ?>

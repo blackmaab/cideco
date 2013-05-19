@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Nombre de Archivo: banco_delete.php
- * Fecha Creación: 05-18-2013 
- * Hora: 03:53:36 PM
+ * Nombre de Archivo: estado_donacion_delete.php
+ * Fecha Creación: 05-19-2013 
+ * Hora: 02:03:13 AM
  * @author Mario Alvarado
  */
 include_once '../../../class/Conexion.class.php';
-include_once '../../../class/Banco.class.php';
+include_once '../../../class/EstadoDonacion.class.php';
 
 
 
@@ -17,17 +17,17 @@ $xmlvar .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n";
 $xmlvar .= "<item>\n";
 if (isset($_POST)):
     $array_key = array_keys($_POST);
-    $obj_banco = new Banco();
+    $obj_estado_donacion = new EstadoDonacion();
     //array del where
-    $arrayWhere["id_banco"] = ":id_banco";
+    $arrayWhere["id_est_donacion"] = ":id_est_donacion";
     //array de los valores del campo
-    $arrayValue[":id_banco"] = $_POST[$array_key[0]];
-    $obj_banco->delete_Banco($arrayValue, $arrayWhere);
+    $arrayValue[":id_est_donacion"] = $_POST[$array_key[0]];
+    $obj_estado_donacion->delete_EstadoDonacion($arrayValue, $arrayWhere);
 
-    if ($obj_banco->bandera == 1):
+    if ($obj_estado_donacion->bandera == 1):
         $xmlvar .= "<field id='type'>Delete</field>\n";
     else:
-         $xmlvar .= "<field id='type'>Error Delete</field>\n";
+        $xmlvar .= "<field id='type'>Error Delete</field>\n";
     endif;
 
 else:
@@ -37,4 +37,5 @@ endif;
 
 $xmlvar .= "</item>";
 echo $xmlvar;
+
 ?>

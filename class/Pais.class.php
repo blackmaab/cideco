@@ -21,6 +21,7 @@ class Pais extends Conexion {
     public function insert_Pais() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO pais VALUES(:id_pais,:nombre_pais,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_pais", $this->id_pais);
@@ -40,6 +41,7 @@ class Pais extends Conexion {
     public function update_Pais($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

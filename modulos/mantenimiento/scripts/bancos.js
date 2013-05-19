@@ -60,6 +60,7 @@ function DoEvent(data) {
                     
             if(mygrid.getSelectedId())
             {
+                idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
                 document.getElementById('msj_show').click();
             }
             else
@@ -71,18 +72,18 @@ function DoEvent(data) {
                     
             break;
         //        
-//        case "export":
-//                    
-//            var url="../actions/usuarios_export.php";
-//                    
-//            var window_width = 10;
-//            var window_height = 10;
-//            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-//            var window_top = (screen.height-window_height)/2;
-//            var window_left = (screen.width-window_width)/2;
-//            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
-//                    
-//            break;
+        //        case "export":
+        //                    
+        //            var url="../actions/usuarios_export.php";
+        //                    
+        //            var window_width = 10;
+        //            var window_height = 10;
+        //            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+        //            var window_top = (screen.height-window_height)/2;
+        //            var window_left = (screen.width-window_width)/2;
+        //            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+        //                    
+        //            break;
         
         default:
             alert('Opcion aun en desarrollo.... ' + data);
@@ -148,6 +149,7 @@ var estado;
 
 
 // funcion para guardar los registros
+var mensaje_error;
 function SaveData()
 {
  
@@ -177,7 +179,7 @@ function SaveData()
             else
             {
                 // si es un update entra aqui               
-                parameters+="&p3="+idReg;
+                parameters+="&p2="+idReg;
                 loader = dhtmlxAjax.post( "../actions/bancos_update.php",encodeURI(parameters), function(){
                     ReadXml()
                 } );               
@@ -188,7 +190,7 @@ function SaveData()
         {
             
             // mensaje de llenar los campos obligatorios
-            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos Obligatorios</td></tr></table>");
+            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;"+mensaje_error+"</td></tr></table>");
             Msjbox.show();
         
         }
@@ -212,9 +214,17 @@ function SaveData()
 function CheckParam()
 {
     var Val = true
-    
-    if(document.getElementById('tipo_pago').value==""){
+    var dato=document.getElementById('tipo_pago').value;
+    if(dato==""){
         Val=false;
+        mensaje_error="Debe llenar los campos Obligatorios";
+    }
+    if(dato!=""){
+        patron=/^([A-Za-zñÑáéíóúÁÉÍÓÚ]{2})+([A-Za-zñÑáéíóúÁÉÍÓÚ\s ]{1,})$/;
+        if(!patron.test(dato)){
+            Val=false;
+            mensaje_error="En el campo: Nombre Banco solo se permiten letras";
+        }
     }
         
     return Val;
@@ -260,7 +270,7 @@ function DeleteData()
     var parameters = ""; 
     parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),0).getValue();
     
-    if (idReg==0)
+    if (idReg>0)
     {
         loader = dhtmlxAjax.post( "../actions/bancos_delete.php",encodeURI(parameters), function(){
             ReadXml()
@@ -316,6 +326,15 @@ function ReadXml(){
                 LoadGrid();
                 
                 
+                break;
+                
+            case "Error Update":
+            case "Error Insert":
+                alert("Compruebe que los datos ingresados son los correctos");
+                break;
+                
+            case "Error Delete":
+                alert("Compruebe que no existan datos que dependan de este registro");
                 break;
         
         }

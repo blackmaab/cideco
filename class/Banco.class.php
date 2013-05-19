@@ -21,6 +21,7 @@ class Banco extends Conexion {
     public function insert_Banco() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO banco VALUES(:id_banco,:nombre_banco,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_banco", $this->id_banco);
@@ -40,6 +41,7 @@ class Banco extends Conexion {
     public function update_Banco($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

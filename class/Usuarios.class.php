@@ -26,6 +26,7 @@ class Usuarios extends Conexion {
     public function insert_Usuarios() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO usuarios VALUES(:id_usuario,:nombre_usuario,:clave_acceso,:fecha_caducidad,:pregunta_secreta,:respuesta_secreta,:id_perfil,:estado_usuario)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_usuario", $this->id_usuario);
@@ -50,6 +51,7 @@ class Usuarios extends Conexion {
     public function update_Usuarios($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

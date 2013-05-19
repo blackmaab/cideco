@@ -22,6 +22,7 @@ class FrecuenciaBeca extends Conexion {
     public function insert_FrecuenciaBeca() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO frecuencia_beca VALUES(:id_frec_beca,:descripcion,:aplica_renovacion,:numero_cuotas)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_frec_beca", $this->id_frec_beca);
@@ -42,6 +43,7 @@ class FrecuenciaBeca extends Conexion {
     public function update_FrecuenciaBeca($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

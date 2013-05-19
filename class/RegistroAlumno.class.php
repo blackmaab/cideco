@@ -26,6 +26,7 @@ class RegistroAlumno extends Conexion {
     public function insert_RegistroAlumno() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO registro_alumno VALUES(:id_registro,:id_alumno,:id_donante,:id_institucion_edu,:id_grado,:seccion,:nota_promedio,:fecha_creacion)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_registro", $this->id_registro);
@@ -50,6 +51,7 @@ class RegistroAlumno extends Conexion {
     public function update_RegistroAlumno($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

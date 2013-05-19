@@ -23,6 +23,7 @@ class TarjetasCobro extends Conexion {
     public function insert_TarjetasCobro() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO tarjetas_cobro VALUES(:id_tarjeta,:id_donante,:numero_tarjeta,:fecha_expiracion,:nombre_titular)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_tarjeta", $this->id_tarjeta);
@@ -44,6 +45,7 @@ class TarjetasCobro extends Conexion {
     public function update_TarjetasCobro($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

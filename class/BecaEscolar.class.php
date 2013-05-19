@@ -27,6 +27,7 @@ class BecaEscolar extends Conexion {
     public function insert_BecaEscolar() {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO beca_escolar VALUES(:id_beca,:id_tipo_beca,:id_frecuencia_beca,:id_registro_alumno,:porcentaje_beca,:fecha_inicio_beca,:fecha_fin_beca,:activo,:beca_escolarcol)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_beca", $this->id_beca);
@@ -52,6 +53,7 @@ class BecaEscolar extends Conexion {
     public function update_BecaEscolar($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
+            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";
