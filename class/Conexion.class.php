@@ -3,7 +3,7 @@
 
 /**
  * Nombre de Archivo: Conexion.class.php
- * Fecha Creaci�n: 04-07-2013 
+ * Fecha Creacion: 04-07-2013 
  */
 class Conexion {
 
@@ -23,7 +23,5 @@ class Conexion {
     }
 
 }
+
 ?>
-
-
-

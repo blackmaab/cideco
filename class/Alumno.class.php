@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Alumno.class.php
- * Fecha Creación: 18-May-2013
- * Hora: 22:54:41
+ * Fecha Creación: 19-May-2013
+ * Hora: 03:20:18
  * @author Mario Alvarado
  */
 class Alumno extends Conexion {

@@ -202,7 +202,8 @@ function SaveData()
             else
             {
                 // si es un update entra aqui
-                loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){
+                parameters+="&p3="+idReg;
+                loader = dhtmlxAjax.post( "../actions/pais_update.php",encodeURI(parameters), function(){
                     ReadXml()
                 } );
             }
@@ -256,7 +257,7 @@ function LoadParam()
 	
     // llenamos las cajas
     idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
-    document.getElementById('txtPais').valuemygrid.cells(mygrid.getSelectedId(),0).getValue();
+    document.getElementById('txtPais').value=mygrid.cells(mygrid.getSelectedId(),1).getValue();
     if(mygrid.cells(mygrid.getSelectedId(),2).getValue()=="Si"){
         document.getElementById('rd_si').checked=true;
     }else{
