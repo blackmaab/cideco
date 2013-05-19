@@ -71,18 +71,18 @@ function DoEvent(data) {
                     
             break;
         //        
-        case "export":
-                    
-            var url="../actions/usuarios_export.php";
-                    
-            var window_width = 10;
-            var window_height = 10;
-            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-            var window_top = (screen.height-window_height)/2;
-            var window_left = (screen.width-window_width)/2;
-            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
-                    
-            break;
+//        case "export":
+//                    
+//            var url="../actions/usuarios_export.php";
+//                    
+//            var window_width = 10;
+//            var window_height = 10;
+//            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+//            var window_top = (screen.height-window_height)/2;
+//            var window_left = (screen.width-window_width)/2;
+//            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+//                    
+//            break;
         
         default:
             alert('Opcion aun en desarrollo.... ' + data);
@@ -178,7 +178,7 @@ function SaveData()
             {
                 // si es un update entra aqui               
                 parameters+="&p3="+idReg;
-                loader = dhtmlxAjax.post( "../actions/banco_update.php",encodeURI(parameters), function(){
+                loader = dhtmlxAjax.post( "../actions/bancos_update.php",encodeURI(parameters), function(){
                     ReadXml()
                 } );               
             }
@@ -262,7 +262,7 @@ function DeleteData()
     
     if (idReg==0)
     {
-        loader = dhtmlxAjax.post( "../actions/banco_delete.php",encodeURI(parameters), function(){
+        loader = dhtmlxAjax.post( "../actions/bancos_delete.php",encodeURI(parameters), function(){
             ReadXml()
         } );
     }

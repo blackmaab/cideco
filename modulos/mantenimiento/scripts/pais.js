@@ -57,21 +57,21 @@ function DoEvent(data) {
             }
         			
             break;		
-        //		
-        //        case "delete":
-        //		
-        //            if(mygrid.getSelectedId())
-        //            {
-        //                document.getElementById('msj_show').click();
-        //            }
-        //            else
-        //            {
-        //                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-        //                Msjbox.show();
-        //            }		
-        //			
-        //
-        //            break;
+        		
+        case "delete":
+        		
+            if(mygrid.getSelectedId())
+            {
+                document.getElementById('msj_show').click();
+            }
+            else
+            {
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+                Msjbox.show();
+            }		
+        			
+        
+            break;
         //		
         //        case "export":
         //		
@@ -202,7 +202,7 @@ function SaveData()
             else
             {
                 // si es un update entra aqui
-                parameters+="&p3="+idReg;
+                parameters+="&p3="+idReg;                
                 loader = dhtmlxAjax.post( "../actions/pais_update.php",encodeURI(parameters), function(){
                     ReadXml()
                 } );
@@ -286,7 +286,9 @@ function DeleteData()
 
     if (idReg==0)
     {
-    //loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
+        loader = dhtmlxAjax.post( "../actions/pais_delete.php",encodeURI(parameters), function(){
+            ReadXml()
+        } );
     }
 			
 }
@@ -339,13 +341,21 @@ function ReadXml(){
 				
 			
                 break;
-		
+            case "Error Update":
+            case "Error Insert":
+                alert("Compruebe que los datos ingresados son los correctos");
+                break;
+            case "Error Delete":
+                alert("Compruebe que no existan datos que dependan de este registro");
+                break;
+            
         }
     }
     else
     {
         // en el caso q haya sucedido un error.
         alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
+        
   
     }
  
