@@ -37,7 +37,7 @@ function DoEvent(data) {
 	
 		case "add":
 			idReg=0;
-			ClearParam()
+			ClearParam();
 			document.getElementById('frm_show').click();
 			//document.getElementById('cbo_donate').focus();
 		break;
@@ -239,12 +239,12 @@ function SaveData()
 			if (idReg==0)
 			{
 				// si es nuevo entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml()} );
+				loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml();} );
 			}
 			else
 			{
 				// si es un update entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml()} );
+				loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml();} );
 			}
 
 		}
@@ -275,7 +275,7 @@ function SaveData()
 
 function CheckParam()
 {
-	var Val = true
+	var Val = true;
 	
 	
 	
@@ -348,7 +348,7 @@ function DeleteData()
 	var parameters = ""; 
 	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),0).getValue();
 
-	if (idReg==0)
+	if (idReg == 0)
 	{
 		//loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
 	}
