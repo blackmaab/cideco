@@ -1,4 +1,27 @@
 
+var loader;
+
+HBI.example.init = function () {
+
+	var bt_getPreg = new HBI.widget.Button({ label:"Obtener Pregunta", id:"btn_get", container:"getPreg", onclick: { fn: GetPregunta } });
+
+
+} ();
+
+
+function GetPregunta()
+{
+
+
+	var parameters = ""; 
+	parameters = parameters + "?p0=" + document.getElementById("usuario").value;
+	
+	loader = dhtmlxAjax.post( "../actions/get_pregunta.php",encodeURI(parameters), function(){ReadXml()} );
+	
+	
+}
+
+
 
 // funcion para cargar las cookies
 
@@ -36,6 +59,36 @@ function ReadInfo(){
 
 }
 
+
+function checkNoChars(evt) {
+
+    evt = (evt) ? evt : window.event
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+	if ((charCode >= 48 && charCode <= 57) || (charCode >= 65 && charCode <= 90)|| (charCode >= 97 && charCode <= 122)) 
+	{
+        status = "";
+        return true;
+    }
+	else
+	{
+		status = "Este campo unicamente acepta letras y numeros.";
+        return false;
+	}
+
+}
+
+
+function NoPass()
+{
+
+	document.getElementById('show').click();
+	document.getElementById('usuario').value = document.getElementById('user').value;
+	document.getElementById('pregunta').value = '';
+	document.getElementById('usuario').focus();
+
+}
+
+
 // funcion para enviar a la pagina que vefirica el usuario
 function SendData()
 {
@@ -67,6 +120,7 @@ function SendData()
 	var param = "";
 	param = param + "user=" + document.getElementById('user').value;
 	param = param + "&pass=" + document.getElementById('pass').value;
+	param = param + "&resp=" + document.getElementById('respuesta').value;
 	
 	
 	// se envian los datos para verificacion
@@ -75,6 +129,51 @@ function SendData()
 
 
 }
+
+
+
+
+
+// lectura del xml de respuesta
+function ReadXml(){
+
+	
+	if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
+	{
+		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+		xmlDoc.async = false;
+		xmlDoc.loadXML(loader.doSerialization());
+		
+		switch(xmlDoc.documentElement.childNodes[0].text)
+		{
+		
+			// si fue un insert
+			case "getPregunta":
+				
+				document.getElementById('pregunta').value = xmlDoc.documentElement.childNodes[1].text
+				
+			break;
+			
+			
+			default:
+			
+			
+				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Error en la Base de Datos, Contacte a su Administrado!!!</td></tr></table>");
+				Msjbox.show();
+			
+			break;
+		
+		}
+	}
+	else
+	{
+		// en el caso q haya sucedido un error.
+		alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
+  
+	}
+ 
+}
+			
 
 // funcion para verificar que no hayan caracteres especiales solo acepta numeros y letras
 
@@ -127,4 +226,46 @@ function readCookie(name) {
 // funcion para eliminar cookie
 function eraseCookie(name) {
 	createCookie(name,"",-1);
+}
+
+
+
+
+// Funciones de los Formularios
+var Submit = function() { SendData();};
+var Cancel = function() { document.getElementById('hide').click();};	
+
+
+function Init() {
+
+	try
+	{
+	
+	
+		// Mensaje Personalizado. ****************************************
+		
+		Msjbox = new HBI.widget.Panel("panel1", { width:"500px",  visible:false, draggable:true, close:true, modal: true, fixedcenter : true});
+		Msjbox.setHeader("Atenci&oacute;n... <br>");
+		Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Prueba de Mensaje</td></tr></table>");
+		Msjbox.render(document.body);
+		
+		
+		
+		// Fromulario Cambio de Contraseña . ************************
+		
+		FormPass = new HBI.widget.Dialog("NoPass", { width : "500px", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
+									buttons : [ { text:"Login", handler:Submit, isDefault:true }, { text:"Cancelar", handler:Cancel } ]});
+		FormPass.render();
+		HBI.util.Event.addListener("show", "click", FormPass.show, FormPass, true);
+		HBI.util.Event.addListener("hide", "click", FormPass.hide, FormPass, true);
+		
+		
+	}
+	catch(err)
+	{
+
+		alert(err.message );
+		
+	}
+	
 }

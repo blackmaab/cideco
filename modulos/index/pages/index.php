@@ -10,7 +10,7 @@
 	$id = session_id();
 	
 	
-	if(!isset($_SESSION['CIDECO']) || $_SESSION['EXPIRE'] == 999) 
+	if(!isset($_SESSION['CIDECO'])) 
 	{
 	  header ("location: ../../login/pages/default.php"); 
 	}
@@ -24,7 +24,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
 <head>
- <title>CIDECO - Sistema de Gestion de Donaciones</title>
+ <title>FUNDACION CIDECO - Sistema de Gestion de Donaciones</title>
  <meta http-equiv="content-type" content="application/xhtml; charset=UTF-8" />
  <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
  
@@ -65,7 +65,7 @@
 				<ul>
 					<li class="menu_active" ><a href="index.html">HOME</a></li>
 					<li><a href="about.html">CONTACTENOS</a></li>
-					<li><a href="../../../index.php">SALIR</a></li>
+					<li><a href="../../login/pages/logout.php">SALIR</a></li>
 					
 				</ul>
 			</div>
@@ -142,7 +142,7 @@
 					Contraseña:
 				</td>
 				<td>
-					<input name="contrasena" id="contrasena" type="password" class="small" onfocus="jform.col(this);" >
+					<input name="contrasena" id="contrasena" type="password" class="small" onfocus="jform.col(this);" onKeyPress="return checkNoChars(event);" >
 				</td>
 			</tr>
 			<tr>
@@ -153,7 +153,7 @@
 					Confirmar:
 				</td>
 				<td>
-					<input name="confirmar" id="confirmar" type="password" class="small" onfocus="jform.col(this);" >
+					<input name="confirmar" id="confirmar" type="password" class="small" onfocus="jform.col(this);" onKeyPress="return checkNoChars(event);" >
 				</td>
 			</tr>
 			</table>
@@ -194,6 +194,9 @@
 	
 	<!-- Focus a Objetos -->
 	<script type="text/javascript" src = '../../../script/functions.fields.js'></script>
+	
+	<!-- Ajax -->
+	<script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 	
 	
 	

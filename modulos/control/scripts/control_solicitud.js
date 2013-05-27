@@ -36,11 +36,23 @@ function DoEvent(data) {
 	{
 	
 		case "apr":
-			idReg=0;
-			ClearParam()
-			document.getElementById('frm_show').click();
-			//document.getElementById('cbo_donate').focus();
+			//idReg=0;
+			//ClearParam()
+			//document.getElementById('frm_show').click();
+			//document.getElementById('usuario').focus();
+			
+			 AprobarSolicitud();
+			 
 		break;
+		
+		
+		case "rec":
+
+			
+			RechazarSolicitud();
+			 
+		break;
+		
 		
 		
 		case "dona":
@@ -49,6 +61,8 @@ function DoEvent(data) {
 			
 		break;
 		
+		
+		/*
 		
 		case "save":
 		
@@ -97,6 +111,8 @@ function DoEvent(data) {
 			window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
 		
 		break;
+		
+		*/
 		
 		default:
 			alert('Opcion aun en desarrollo.... ' + data);
@@ -172,15 +188,9 @@ function LoadCombos()
 	alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
 	alumno.enableFilteringMode(true);	
 	//alumno.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	//alumno.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
+	alumno.loadXML("../actions/control_combo_alumno.php?p0=" , function(){});
 	//alumno.attachEvent("onBlur", Validacion1);
 	
-
-	
-
- 
-
-
 }
 
 
@@ -206,6 +216,47 @@ function Validacion2() {
 }
 */
 
+
+function AprobarSolicitud()
+{
+
+
+	if (mygrid.getSelectedId())
+	{
+		var parameters = ""; 
+		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+		parameters = parameters + "&p1=2";
+		
+		MsjWait.show();
+		
+		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
+
+		
+	}
+
+
+}
+
+
+function RechazarSolicitud()
+{
+
+
+	if (mygrid.getSelectedId())
+	{
+		var parameters = ""; 
+		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+		parameters = parameters + "&p1=5";
+		
+		MsjWait.show();
+		
+		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
+
+		
+	}
+
+
+}
 
 // funcion para guardar los registros
 function SaveData()
@@ -361,6 +412,16 @@ function ReadXml(){
 		switch(xmlDoc.documentElement.childNodes[0].text)
 		{
 		
+			
+			
+			// si fue un insert
+			case "Estado":
+				
+				LoadGrid();
+				
+				
+			break;
+			
 			// si fue un insert
 			case "Insert":
 				

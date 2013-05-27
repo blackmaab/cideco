@@ -45,8 +45,10 @@ function DoEvent(data) {
 		case "save":
 		
 			SaveData();
-			//Msjbox.show();
+
 		break;
+		
+		/*
 		
 		case "edit":
 		
@@ -90,6 +92,8 @@ function DoEvent(data) {
 		
 		break;
 		
+		*/
+		
 		default:
 			alert('Opcion aun en desarrollo.... ' + data);
 		break;
@@ -103,7 +107,7 @@ function DoEvent(data) {
 function doCalendar()
 {
 
-	myCalendar = new dhtmlXCalendarObject(["fechacad"]);
+	myCalendar = new dhtmlXCalendarObject(["fecha_nac"]);
 
 }
 
@@ -134,7 +138,7 @@ function LoadGrid()
 		function()
 		{
 			// Para agregar los filtros del grid.
-			mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,#text_filter,,,");
+			mygrid.attachHeader(",#text_filter,,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,");
 			// finalizamos el mensaje de espere
 			MsjWait.hide();
 		}
@@ -152,6 +156,7 @@ var tipo_pago;
 var genero;
 var pais;
 var municipio;
+var promotor;
 
 function LoadCombos()
 {
@@ -159,30 +164,35 @@ function LoadCombos()
 	// directorio de las imagenes del combo (no tocar)
 	window.dhx_globalImgPath = "../../../components/select/imgs/";
 	
-	
-	// creacion del combo tipo donacion
-	tipo_donacion = new dhtmlXCombo("cbo_tipo_donacion","cbo_tipo_donacion",150);
-	tipo_donacion.enableFilteringMode(true);	
-	//combo_perfil.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	//combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
-	//combo_perfil.attachEvent("onBlur", Validacion1);
-	
-	// creacion del combo tipo pago
+		// creacion del combo tipo pago
 	tipo_pago = new dhtmlXCombo("cbo_tipo_pago","cbo_tipo_pago",150);
-	tipo_pago.enableFilteringMode(true);	
+	tipo_pago.enableFilteringMode(true);
+	tipo_pago.loadXML("../actions/solicitud_combo_tipo_pago.php?p0=" , function(){});
 	
 	// creacion del combo genero
 	genero = new dhtmlXCombo("cbo_genero","cbo_genero",150);
 	genero.enableFilteringMode(true);	
+	genero.loadXML("../actions/solicitud_combo_genero.php?p0=" , function(){});
+	
 	
 	// creacion del combo pais
 	pais = new dhtmlXCombo("cbo_pais","cbo_pais",150);
 	pais.enableFilteringMode(true);	
+	pais.loadXML("../actions/solicitud_combo_pais.php?p0=" , function(){});
+	
+	
 
 	// creacion del combo municipio
 	municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
 	municipio.enableFilteringMode(true);	
- 
+	municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" , function(){});
+	
+	
+	
+	// creacion del combo promotor
+	promotor = new dhtmlXCombo("cbo_promotor","cbo_promotor",150);
+	promotor.enableFilteringMode(true);	
+	promotor.loadXML("../actions/solicitud_combo_promotor.php?p0=" , function(){});
 
 
 }
@@ -224,23 +234,39 @@ function SaveData()
 		
 			// guardamos los parametros en un arreglo post
 			
-			//var parameters = ""; 
-			//parameters = parameters + "?p0=" + idReg;
-			//parameters = parameters + "&p1=" + document.getElementById("usuario").value;
+			var parameters = ""; 
+			parameters = parameters + "?p0=" + idReg;
+			parameters = parameters + "&p1=" + document.getElementById("nombre").value;
+			parameters = parameters + "&p2=" + document.getElementById("apellido1").value;
+			parameters = parameters + "&p3=" + document.getElementById("apellido2").value;
+			parameters = parameters + "&p4=" + document.getElementById("direccion").value;
+			parameters = parameters + "&p5=" + municipio.getSelectedValue();
+			parameters = parameters + "&p6=" + pais.getSelectedValue();
+			parameters = parameters + "&p7=" + document.getElementById("telefono_casa").value;
+			parameters = parameters + "&p8=" + document.getElementById("telefono_movil").value;
+			parameters = parameters + "&p9=" + document.getElementById("telefono_trabajo").value;
+			parameters = parameters + "&p10=" + document.getElementById("nit").value;
+			parameters = parameters + "&p11=" + document.getElementById("fecha_nac").value;
+			parameters = parameters + "&p12=" + genero.getSelectedValue();
+			parameters = parameters + "&p13=" + document.getElementById("correo").value;
 
+			parameters = parameters + "&p14=" + tipo_pago.getSelectedValue();
+			parameters = parameters + "&p15=" + document.getElementById("monto").value;
+			parameters = parameters + "&p16=" + promotor.getSelectedValue();
+	
+			MsjWait.show();
 			
-		
-
 			if (idReg==0)
 			{
 				// si es nuevo entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml()} );
+				loader = dhtmlxAjax.post( "../actions/solicitud_donante_save.php",encodeURI(parameters), function(){ReadXml()} );
 			}
 			else
 			{
 				// si es un update entra aqui
-				loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml()} );
+				loader = dhtmlxAjax.post( "../actions/solicitud_donante_update.php",encodeURI(parameters), function(){ReadXml()} );
 			}
+		
 
 		}
 		else
@@ -270,25 +296,64 @@ function SaveData()
 
 function CheckParam()
 {
-	var Val = true
+	var Val = true;
 	
-	
-	
-	/*if (document.getElementById('usuario').value == '')
+	if (document.getElementById('nombre').value == '')
 	{
 		Val = false;
 	}
 	
-	if (document.getElementById('contrasena').value == '')
+	if (document.getElementById('apellido1').value == '')
 	{
 		Val = false;
 	}
 	
-	if (document.getElementById('fechacad').value == '')
+	if (document.getElementById('direccion').value == '')
 	{
 		Val = false;
 	}
-	*/
+	
+	
+	if (document.getElementById('fecha_nac').value == '')
+	{
+		Val = false;
+	}
+	
+	if (document.getElementById('nit').value == '')
+	{
+		Val = false;
+	}
+	
+	if (document.getElementById('monto').value == '')
+	{
+		Val = false;
+	}	
+	
+	if (municipio.getSelectedValue()=='null' && municipio.getSelectedValue()=='')
+	{
+		Val = false;
+	}
+	
+	if (pais.getSelectedValue()=='null' && pais.getSelectedValue()=='')
+	{
+		Val = false;
+	}
+	
+	if (genero.getSelectedValue()=='null' && genero.getSelectedValue()=='')
+	{
+		Val = false;
+	}
+	
+	if (tipo_pago.getSelectedValue()=='null' && tipo_pago.getSelectedValue()=='')
+	{
+		Val = false;
+	}
+	
+	if (promotor.getSelectedValue()=='null' && promotor.getSelectedValue()=='')
+	{
+		Val = false;
+	}
+	
 	
 	
 	return Val;
@@ -355,7 +420,7 @@ function DeleteData()
 // lectura del xml de respuesta
 function ReadXml(){
 
- //alert(loader.doSerialization());
+
 	if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
 	{
 		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -368,7 +433,7 @@ function ReadXml(){
 			// si fue un insert
 			case "Insert":
 				
-				MsjWait.show();
+				
 				document.getElementById('frm_hide').click();
 				LoadGrid();
 				

@@ -24,7 +24,6 @@
 	
 	$execQuery = " Select 
 						id_usuario,
-						codigo_usuario,
 						nombre_usuario,
 						clave_acceso,
 						fecha_caducidad,
@@ -59,10 +58,10 @@
 	$objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
 	
 	//Encabezado y Titulo
-	$objPHPExcel->getActiveSheet()->mergeCells('A1:I1');
+	$objPHPExcel->getActiveSheet()->mergeCells('A1:H1');
 	$objPHPExcel->getDefaultStyle()->getFont()->setSize(12);
 	$objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - REPORTE - USUARIOS DE SISTEMAS ');
-	$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+	$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
 	
 	//Contenido
@@ -81,31 +80,29 @@
 	$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
 	
 	
 	//Encabezado
 	$objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A2', 'Correlativo')
-			->setCellValue('B2', 'Codigo Usuario')
-			->setCellValue('C2', 'Usuario')
-			->setCellValue('D2', 'Contrasenia')
-			->setCellValue('E2', 'Fecha Caducidad')
-			->setCellValue('F2', 'Pregunta Secreta')
-			->setCellValue('G2', 'Respuesta Secreta')
-			->setCellValue('H2', 'Perfil')
-			->setCellValue('I2', 'Estatus');
+			->setCellValue('B2', 'Usuario')
+			->setCellValue('C2', 'Contrasenia')
+			->setCellValue('D2', 'Fecha Caducidad')
+			->setCellValue('E2', 'Pregunta Secreta')
+			->setCellValue('F2', 'Respuesta Secreta')
+			->setCellValue('G2', 'Perfil')
+			->setCellValue('H2', 'Estatus');
 	
-	$objPHPExcel->getActiveSheet()->getStyle('A2:I2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-	$objPHPExcel->getActiveSheet()->getStyle('A2:I2')->applyFromArray(array('fill'=> array('type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR,'rotation'   => 90,'startcolor' => array('argb' => 'FFFFFFFF'),'endcolor'   => array('argb' => 'FFCDE3FE'))));
+	$objPHPExcel->getActiveSheet()->getStyle('A2:H2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+	$objPHPExcel->getActiveSheet()->getStyle('A2:H2')->applyFromArray(array('fill'=> array('type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR,'rotation'   => 90,'startcolor' => array('argb' => 'FFFFFFFF'),'endcolor'   => array('argb' => 'FFCDE3FE'))));
 	
 	
 	$counter = 3;
 	
 	while($row = $database -> database_array($result))
 	{
-		$objPHPExcel->getActiveSheet()->getStyle('A'.$counter.':I'.$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-		$objPHPExcel->getActiveSheet()->getStyle('A'.$counter.':I'.$counter)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('argb' => 'FF999999'),),),));
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$counter.':H'.$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$counter.':H'.$counter)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('argb' => 'FF999999'),),),));
 		
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$counter, $row[0]);
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$counter, $row[1]);
@@ -115,13 +112,12 @@
 		$objPHPExcel->getActiveSheet()->setCellValue('F'.$counter, $row[5]);
 		$objPHPExcel->getActiveSheet()->setCellValue('G'.$counter, $row[6]);
 		$objPHPExcel->getActiveSheet()->setCellValue('H'.$counter, $row[7]);
-		$objPHPExcel->getActiveSheet()->setCellValue('I'.$counter, $row[8]);
 		
 		$counter++;
 
 	}
 
-	$objPHPExcel->getActiveSheet()->setAutoFilter('A2:I'.$counter);
+	$objPHPExcel->getActiveSheet()->setAutoFilter('A2:H'.$counter);
 	
 	$database -> database_close();
 	

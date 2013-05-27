@@ -9,8 +9,8 @@ class Conexion {
 
     //variables de conexion
     private $hostname = "localhost";
-    private $userData = "admin";
-    private $passwordData = "admin";
+    private $userData = "root";
+    private $passwordData = "";
     protected $database = "gd_cideco_es";
     public $conection;
 

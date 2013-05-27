@@ -128,6 +128,12 @@
 						<td >Pais:</td>
 						<td ><div id='cbo_pais'></div></td>
 					</tr>					
+
+					<tr>
+						<td  align="center"><div class="fieldsetTitle">*</div></td>
+						<td >Fecha Nacimiento:</td>
+						<td ><input name="fecha_nac" id="fecha_nac" class="small" onfocus="jform.col(this);" ></td>
+					</tr>	
 					
 					<tr>
 						<td >&nbsp;</td>
@@ -153,11 +159,7 @@
 						<td ><input name="nit" id="nit" class="small" onfocus="jform.col(this);" ></td>
 					</tr>	
 
-					<tr>
-						<td  align="center"><div class="fieldsetTitle">*</div></td>
-						<td >Fecha Nacimiento:</td>
-						<td ><input name="fecha_nac" id="fecha_nac" class="small" onfocus="jform.col(this);" ></td>
-					</tr>		
+	
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Genero:</td>
@@ -182,12 +184,7 @@
 						<td width="3%"></td>
 						<td width="40%"></td>
 						<td width="57%"></td>
-					</tr>
-					<tr>
-						<td  align="center"><div class="fieldsetTitle">*</div></td>
-						<td >Tipo Donacion</td>
-						<td ><div id='cbo_tipo_donacion'></div></td>
-					</tr>					
+					</tr>						
 					<tr>
 						<td align="center" ><div class="fieldsetTitle">*</div></td>
 						<td >Tipo pago</td>
@@ -196,14 +193,20 @@
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Monto ($ USD)</td>
-						<td ><input name="Monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
+						<td ><input name="monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
 					</tr>	
 					<tr>
 						<td >&nbsp;</td>
 						<td >Renovacion Automatica</td>
 						<td ><input type="checkbox" name="renovacion" id="renovacion" ></td>
 					</tr>		
+					<tr>
+						<td align="center" ><div class="fieldsetTitle">*</div></td>
+						<td >Promotor</td>
+						<td ><div id='cbo_promotor'></div></td>
+					</tr>
 
+					<tr><td></td><td>&nbsp;</td></tr>
 					<tr><td></td><td>&nbsp;</td></tr>
 					<tr><td></td><td>&nbsp;</td></tr>
 					<tr><td></td><td>&nbsp;</td></tr>

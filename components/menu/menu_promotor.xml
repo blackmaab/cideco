@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<menu>
+	
+	<item id="Admin" text="Administracion" img="application.png" >
+		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>
+		<item id="Ad_sep1" type="separator"/>
+		<item id="Ad_Salir" text="Salir" img="door_in.png"/>
+	</item>
+	
+	<item id="Sep1" type="separator"/>
+	
+	<item id="Control" text="Control" img="shape_move_forwards.png">
+		<item id="Ctr_Solicitud" text="Solicitud Donante(Promotor)" img="shape_move_back.png"/>
+	</item>
+	
+	<item id="Sep2" type="separator"/>
+	
+	<item id="Consultas" text="Consultas" img="table.png">
+		<item id="Con_Donaciones" text="Donaciones" img="table_multiple.png"/>
+	</item>
+
+	
+</menu>
