@@ -2,15 +2,14 @@
 
 /**
  * Nombre de Archivo: RegistroAlumno.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class RegistroAlumno extends Conexion {
 
     public $id_registro = "";
     public $id_alumno = "";
-    public $id_donante = "";
     public $id_institucion_edu = "";
     public $id_grado = "";
     public $seccion = "";
@@ -26,12 +25,10 @@ class RegistroAlumno extends Conexion {
     public function insert_RegistroAlumno() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
-            $sql = "INSERT INTO registro_alumno VALUES(:id_registro,:id_alumno,:id_donante,:id_institucion_edu,:id_grado,:seccion,:nota_promedio,:fecha_creacion)";
+            $sql = "INSERT INTO registro_alumno VALUES(:id_registro,:id_alumno,:id_institucion_edu,:id_grado,:seccion,:nota_promedio,:fecha_creacion)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_registro", $this->id_registro);
             $resultSet->bindParam(":id_alumno", $this->id_alumno);
-            $resultSet->bindParam(":id_donante", $this->id_donante);
             $resultSet->bindParam(":id_institucion_edu", $this->id_institucion_edu);
             $resultSet->bindParam(":id_grado", $this->id_grado);
             $resultSet->bindParam(":seccion", $this->seccion);
@@ -51,7 +48,6 @@ class RegistroAlumno extends Conexion {
     public function update_RegistroAlumno($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";
@@ -143,7 +139,6 @@ class RegistroAlumno extends Conexion {
                     $array_data[$i] = array(
                         "id_registro" => $row["id_registro"],
                         "id_alumno" => $row["id_alumno"],
-                        "id_donante" => $row["id_donante"],
                         "id_institucion_edu" => $row["id_institucion_edu"],
                         "id_grado" => $row["id_grado"],
                         "seccion" => $row["seccion"],

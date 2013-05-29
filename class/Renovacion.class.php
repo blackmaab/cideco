@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Renovacion.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Renovacion extends Conexion {
@@ -22,7 +22,6 @@ class Renovacion extends Conexion {
     public function insert_Renovacion() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO renovacion VALUES(:id_renovacion,:id_donacion,:fecha_renovacion,:documento_renovacion_img)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_renovacion", $this->id_renovacion);
@@ -43,7 +42,6 @@ class Renovacion extends Conexion {
     public function update_Renovacion($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

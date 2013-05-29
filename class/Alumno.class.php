@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Alumno.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:18
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Alumno extends Conexion {
@@ -31,7 +31,6 @@ class Alumno extends Conexion {
     public function insert_Alumno() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO alumno VALUES(:id_alumno,:id_persona,:nie,:destacado_en,:necesidades_medicas,:numero_hermanos,:vive_con,:grande_quiere_ser,:juego_favorito,:materia_favorita,:ayuda_en_casa,:fecha_creacion,:fotografia)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_alumno", $this->id_alumno);
@@ -61,7 +60,6 @@ class Alumno extends Conexion {
     public function update_Alumno($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

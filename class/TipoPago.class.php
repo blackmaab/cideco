@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: TipoPago.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class TipoPago extends Conexion {
@@ -22,7 +22,6 @@ class TipoPago extends Conexion {
     public function insert_TipoPago() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO tipo_pago VALUES(:id_tipo_pago,:descripcion,:meses,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_tipo_pago", $this->id_tipo_pago);
@@ -43,7 +42,6 @@ class TipoPago extends Conexion {
     public function update_TipoPago($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

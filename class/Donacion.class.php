@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Donacion.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Donacion extends Conexion {
@@ -12,6 +12,7 @@ class Donacion extends Conexion {
     public $id_donante = "";
     public $id_tipo_pago = "";
     public $id_promotor = "";
+    public $id_registro_alumno = "";
     public $Monto = "";
     public $fecha_creacion = "";
     public $estado = "";
@@ -25,13 +26,13 @@ class Donacion extends Conexion {
     public function insert_Donacion() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
-            $sql = "INSERT INTO donacion VALUES(:id_donacion,:id_donante,:id_tipo_pago,:id_promotor,:Monto,:fecha_creacion,:estado)";
+            $sql = "INSERT INTO donacion VALUES(:id_donacion,:id_donante,:id_tipo_pago,:id_promotor,:id_registro_alumno,:Monto,:fecha_creacion,:estado)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_donacion", $this->id_donacion);
             $resultSet->bindParam(":id_donante", $this->id_donante);
             $resultSet->bindParam(":id_tipo_pago", $this->id_tipo_pago);
             $resultSet->bindParam(":id_promotor", $this->id_promotor);
+            $resultSet->bindParam(":id_registro_alumno", $this->id_registro_alumno);
             $resultSet->bindParam(":Monto", $this->Monto);
             $resultSet->bindParam(":fecha_creacion", $this->fecha_creacion);
             $resultSet->bindParam(":estado", $this->estado);
@@ -49,7 +50,6 @@ class Donacion extends Conexion {
     public function update_Donacion($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";
@@ -143,6 +143,7 @@ class Donacion extends Conexion {
                         "id_donante" => $row["id_donante"],
                         "id_tipo_pago" => $row["id_tipo_pago"],
                         "id_promotor" => $row["id_promotor"],
+                        "id_registro_alumno" => $row["id_registro_alumno"],
                         "Monto" => $row["Monto"],
                         "fecha_creacion" => $row["fecha_creacion"],
                         "estado" => $row["estado"]

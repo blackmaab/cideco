@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Pais.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Pais extends Conexion {
@@ -21,7 +21,6 @@ class Pais extends Conexion {
     public function insert_Pais() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO pais VALUES(:id_pais,:nombre_pais,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_pais", $this->id_pais);
@@ -41,7 +40,6 @@ class Pais extends Conexion {
     public function update_Pais($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

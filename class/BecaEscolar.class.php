@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: BecaEscolar.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class BecaEscolar extends Conexion {
@@ -27,7 +27,6 @@ class BecaEscolar extends Conexion {
     public function insert_BecaEscolar() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO beca_escolar VALUES(:id_beca,:id_tipo_beca,:id_frecuencia_beca,:id_registro_alumno,:porcentaje_beca,:fecha_inicio_beca,:fecha_fin_beca,:activo,:beca_escolarcol)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_beca", $this->id_beca);
@@ -53,7 +52,6 @@ class BecaEscolar extends Conexion {
     public function update_BecaEscolar($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

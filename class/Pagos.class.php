@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Pagos.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Pagos extends Conexion {
@@ -29,7 +29,6 @@ class Pagos extends Conexion {
     public function insert_Pagos() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO pagos VALUES(:id_pago,:fecha,:id_donacion,:numero_cuota,:monto,:id_banco,:numero_recibo,:fecha_creacion,:usuario_creacion,:fecha_mod,:usuario_mod)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_pago", $this->id_pago);
@@ -57,7 +56,6 @@ class Pagos extends Conexion {
     public function update_Pagos($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

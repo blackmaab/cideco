@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Perfil.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Perfil extends Conexion {
@@ -23,7 +23,6 @@ class Perfil extends Conexion {
     public function insert_Perfil() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO perfil VALUES(:id_perfil,:perfil,:menu,:comentario,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_perfil", $this->id_perfil);
@@ -45,7 +44,6 @@ class Perfil extends Conexion {
     public function update_Perfil($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";
