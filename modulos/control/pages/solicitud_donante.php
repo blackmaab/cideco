@@ -132,7 +132,7 @@
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Fecha Nacimiento:</td>
-						<td ><input name="fecha_nac" id="fecha_nac" class="small" onfocus="jform.col(this);" ></td>
+						<td ><input name="fecha_nac" id="fecha_nac" class="small" onfocus="jform.col(this);" readonly></td>
 					</tr>	
 					
 					<tr>
@@ -195,11 +195,6 @@
 						<td >Monto ($ USD)</td>
 						<td ><input name="monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
 					</tr>	
-					<tr>
-						<td >&nbsp;</td>
-						<td >Renovacion Automatica</td>
-						<td ><input type="checkbox" name="renovacion" id="renovacion" ></td>
-					</tr>		
 					<tr>
 						<td align="center" ><div class="fieldsetTitle">*</div></td>
 						<td >Promotor</td>

@@ -168,24 +168,28 @@ function LoadCombos()
 	tipo_pago = new dhtmlXCombo("cbo_tipo_pago","cbo_tipo_pago",150);
 	tipo_pago.enableFilteringMode(true);
 	tipo_pago.loadXML("../actions/solicitud_combo_tipo_pago.php?p0=" , function(){});
+	tipo_pago.readonly(1);
 	
 	// creacion del combo genero
 	genero = new dhtmlXCombo("cbo_genero","cbo_genero",150);
-	genero.enableFilteringMode(true);	
+	genero.enableFilteringMode(false);	
 	genero.loadXML("../actions/solicitud_combo_genero.php?p0=" , function(){});
+	genero.readonly(1);
+	
 	
 	
 	// creacion del combo pais
 	pais = new dhtmlXCombo("cbo_pais","cbo_pais",150);
 	pais.enableFilteringMode(true);	
 	pais.loadXML("../actions/solicitud_combo_pais.php?p0=" , function(){});
-	
+	pais.attachEvent("onBlur", ValidarPais);
 	
 
 	// creacion del combo municipio
 	municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
 	municipio.enableFilteringMode(true);	
 	municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" , function(){});
+	municipio.attachEvent("onBlur", ValidarMunicipio);
 	
 	
 	
@@ -193,22 +197,49 @@ function LoadCombos()
 	promotor = new dhtmlXCombo("cbo_promotor","cbo_promotor",150);
 	promotor.enableFilteringMode(true);	
 	promotor.loadXML("../actions/solicitud_combo_promotor.php?p0=" , function(){});
+	promotor.attachEvent("onBlur", ValidarPromotor);
 
 
 }
 
 
-/*
-// validacion del combo perfil
-function Validacion1() {
 
-	if (combo_perfil.getSelectedValue()==null)
+// validacion del combo Pais
+
+function ValidarPais() {
+
+	if (pais.getSelectedValue()==null)
 	{
-		combo_perfil.setComboText('');
+		pais.setComboText('');
 	}
     return true;
 }
 
+
+// validacion del combo Municipio
+
+function ValidarMunicipio() {
+
+	if (municipio.getSelectedValue()==null)
+	{
+		municipio.setComboText('');
+	}
+    return true;
+}
+
+
+function ValidarPromotor() {
+
+	if (promotor.getSelectedValue()==null)
+	{
+		promotor.setComboText('');
+	}
+    return true;
+}
+
+
+
+/*
 // validacion del combo status
 function Validacion2() {
 
@@ -463,6 +494,14 @@ function ReadXml(){
 				
 			
 			break;
+			
+			
+			default: 
+			
+				document.getElementById('msj_hide').click();
+				alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
+
+			break
 		
 		}
 	}

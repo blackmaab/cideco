@@ -11,8 +11,6 @@
 	include("../../../class/database.class.php");
 	
 	
-	
-	
 	//Creacion de Objetos
 	
 	$Per = new Persona;
@@ -61,11 +59,22 @@
 	{
 	
 		$execQuery = " Select Max(id_persona) from persona ";
+		
+		/*
 		$Don->id_persona = $database -> database_scalar ($execQuery);
 		$Don->estado = "1";
+		$Don->id_usuario = "NULL";
 		
 		$Don->insert_Donante();
-	
+		*/
+		
+		
+		$id_persona = $database -> database_scalar ($execQuery);
+		$execQuery = " INSERT INTO donante (id_usuario,id_persona,estado) VALUES(NULL,$id_persona,1) ";
+		$database -> database_query ($execQuery);
+		$Don->bandera = 1;
+
+		
 		if ($Don->bandera == 0)
 		{
 			$Err -> GuardarError('solicitud_donante_save.php',$Don->mensaje);
@@ -76,7 +85,7 @@
 		
 			$execQuery = " Select max(id_donante) From donante ";
 			$Dona->id_donante = $database -> database_scalar ($execQuery);
-			$Dona->fecha_creacion = "CURRENT_TIMESTAMP";
+			$Dona->fecha_creacion = "NOW()";
 			$Dona->estado = "1";
 		
 			$Dona->insert_Donacion();
