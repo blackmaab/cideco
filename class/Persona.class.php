@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Persona.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Persona extends Conexion {
@@ -32,7 +32,6 @@ class Persona extends Conexion {
     public function insert_Persona() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO persona VALUES(:id_persona,:nombres,:apellido_pri,:apellido_seg,:Direccion,:id_municipio,:id_pais,:telefono_casa,:telefono_movil,:telefono_trabajo,:nit,:fecha_nacimiento,:Genero,:correo_electronico)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_persona", $this->id_persona);
@@ -63,7 +62,6 @@ class Persona extends Conexion {
     public function update_Persona($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

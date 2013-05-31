@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Promotor.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Promotor extends Conexion {
@@ -24,7 +24,6 @@ class Promotor extends Conexion {
     public function insert_Promotor() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO promotor VALUES(:id_promotor,:id_usuario,:id_persona,:fecha_inicio,:fecha_fin,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_promotor", $this->id_promotor);
@@ -47,7 +46,6 @@ class Promotor extends Conexion {
     public function update_Promotor($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";

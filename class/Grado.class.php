@@ -2,8 +2,8 @@
 
 /**
  * Nombre de Archivo: Grado.class.php
- * Fecha Creación: 19-May-2013
- * Hora: 03:20:19
+ * Fecha Creación: 29-May-2013
+ * Hora: 05:32:41
  * @author Mario Alvarado
  */
 class Grado extends Conexion {
@@ -21,7 +21,6 @@ class Grado extends Conexion {
     public function insert_Grado() {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $sql = "INSERT INTO grado VALUES(:id_grado,:grado,:activo)";
             $resultSet = $this->conection->prepare($sql);
             $resultSet->bindParam(":id_grado", $this->id_grado);
@@ -41,7 +40,6 @@ class Grado extends Conexion {
     public function update_Grado($arrayCampos, $arrayValue, $arrayWhere) {
         try {
             $this->conection->beginTransaction();
-            $this->conection->query("SET NAMES 'utf8'");
             $where = "";
             $campos = "";
             $value = "";
