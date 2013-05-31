@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2013 at 12:38 AM
+-- Generation Time: May 31, 2013 at 03:23 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -39,10 +39,18 @@ CREATE TABLE IF NOT EXISTS `alumno` (
   `materia_favorita` varchar(100) DEFAULT NULL,
   `ayuda_en_casa` varchar(100) DEFAULT NULL,
   `fecha_creacion` varchar(255) NOT NULL,
-  `fotografia` varchar(100) NOT NULL,
   PRIMARY KEY (`id_alumno`),
   KEY `Fkey_alumno_persona` (`id_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `alumno`
+--
+
+INSERT INTO `alumno` (`id_alumno`, `id_persona`, `nie`, `destacado_en`, `necesidades_medicas`, `numero_hermanos`, `vive_con`, `grande_quiere_ser`, `juego_favorito`, `materia_favorita`, `ayuda_en_casa`, `fecha_creacion`) VALUES
+(1, 13, 6045, 'Matematica', NULL, 3, 'Padres', 'Doctor', 'Futbol', 'Matematicas', 'Si', '2013-06-01'),
+(2, 14, 4025, '', '', 3, '', '', '', '', '', '2013-05-30 18:52:05'),
+(3, 15, 6256, '', '', 5, '', '', '', '', '', '2013-05-30 18:59:04');
 
 -- --------------------------------------------------------
 
@@ -103,14 +111,12 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `beca_escolar` (
   `id_beca` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tipo_beca` int(11) NOT NULL,
-  `id_frecuencia_beca` int(11) NOT NULL,
   `id_registro_alumno` int(11) NOT NULL,
-  `porcentaje_beca` decimal(10,2) NOT NULL,
+  `Monto` decimal(10,2) NOT NULL DEFAULT '0.00',
   `fecha_inicio_beca` date NOT NULL,
   `fecha_fin_beca` date NOT NULL,
-  `activo` varchar(255) NOT NULL,
-  `beca_escolarcol` varchar(45) DEFAULT NULL,
+  `comentario` varchar(255) DEFAULT NULL,
+  `activo` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id_beca`),
   KEY `fk_registro_alumno_idx` (`id_registro_alumno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -207,15 +213,16 @@ CREATE TABLE IF NOT EXISTS `donacion` (
   KEY `Fkey_donacion_promotor` (`id_promotor`),
   KEY `fk_estado_idx` (`estado`),
   KEY `Fkey_donacion_registro_alumno` (`id_registro_alumno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `donacion`
 --
 
 INSERT INTO `donacion` (`id_donacion`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `fecha_creacion`, `estado`) VALUES
-(1, 6, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 1),
-(3, 8, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 1);
+(1, 6, 1, 1, 1, 30.00, '2013-05-28 00:00:00', 2),
+(3, 8, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 1),
+(5, 13, 1, 1, NULL, 30.00, '2013-05-29 15:04:17', 5);
 
 -- --------------------------------------------------------
 
@@ -232,15 +239,16 @@ CREATE TABLE IF NOT EXISTS `donante` (
   KEY `Fkey_donante_estado` (`estado`),
   KEY `Fkey_donante_persona` (`id_persona`),
   KEY `Fkey_donante_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `donante`
 --
 
 INSERT INTO `donante` (`id_donante`, `id_usuario`, `id_persona`, `estado`) VALUES
-(6, NULL, 6, 1),
-(8, NULL, 7, 1);
+(6, 5, 6, 1),
+(8, NULL, 7, 1),
+(13, NULL, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -253,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `estado_donacion` (
   `estado_donacion` varchar(60) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_est_donacion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `estado_donacion`
@@ -264,7 +272,8 @@ INSERT INTO `estado_donacion` (`id_est_donacion`, `estado_donacion`, `activo`) V
 (2, 'Activa', 1),
 (3, 'Vencida', 1),
 (4, 'Cancelada', 1),
-(5, 'Eliminada', 1);
+(5, 'Eliminada', 1),
+(6, 'Rechazada', 1);
 
 -- --------------------------------------------------------
 
@@ -298,7 +307,14 @@ CREATE TABLE IF NOT EXISTS `grado` (
   `grado` varchar(50) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_grado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `grado`
+--
+
+INSERT INTO `grado` (`id_grado`, `grado`, `activo`) VALUES
+(1, 'Parvularia', 1);
 
 -- --------------------------------------------------------
 
@@ -313,7 +329,14 @@ CREATE TABLE IF NOT EXISTS `institucion_educativa` (
   `telefono` varchar(10) DEFAULT NULL,
   `nombre_director` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id_institucion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `institucion_educativa`
+--
+
+INSERT INTO `institucion_educativa` (`id_institucion`, `nombre_institucion`, `direccion`, `telefono`, `nombre_director`) VALUES
+(1, 'Colegio Mano Amiga San Antonio', 'La Herradura', '2222-2222', 'Lic. Raul Martinez');
 
 -- --------------------------------------------------------
 
@@ -754,7 +777,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `apellido_seg` varchar(60) DEFAULT NULL,
   `Direccion` varchar(250) NOT NULL,
   `id_municipio` int(11) NOT NULL,
-  `id_pais` int(11) NOT NULL,
+  `id_pais` int(11) DEFAULT NULL,
   `telefono_casa` varchar(15) DEFAULT NULL,
   `telefono_movil` varchar(15) DEFAULT NULL,
   `telefono_trabajo` varchar(15) DEFAULT NULL,
@@ -765,7 +788,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`id_persona`),
   KEY `Fkey_persona_pais` (`id_pais`),
   KEY `Fkey_persona_municipio_idx` (`id_municipio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `persona`
@@ -773,9 +796,12 @@ CREATE TABLE IF NOT EXISTS `persona` (
 
 INSERT INTO `persona` (`id_persona`, `nombres`, `apellido_pri`, `apellido_seg`, `Direccion`, `id_municipio`, `id_pais`, `telefono_casa`, `telefono_movil`, `telefono_trabajo`, `nit`, `fecha_nacimiento`, `Genero`, `correo_electronico`) VALUES
 (1, 'Pedro', 'Molina', NULL, 'Soyapango', 1, 1, NULL, NULL, NULL, '0614-010170-112-1', '1970-01-01', 'M', NULL),
-(2, 'Jose', 'Perez', '', 'San Salvador', 1, 1, '', '', '', '0614-050880-112-1', '2013-05-08', 'M', 'jose.perez@hotmail.com'),
 (6, 'Jose', 'Perez', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', 'jose.perez@hotmail.com'),
-(7, 'Juan', 'Rivera', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', '');
+(7, 'Juan', 'Rivera', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', ''),
+(12, 'Luis', 'Gonzales', '', 'Soyapango', 4, 1, '', '', '', '0614-010180-112-3', '2013-05-29', 'M', ''),
+(13, 'David', 'Martines', 'Romero', 'San Salvador', 1, 1, NULL, NULL, NULL, '0000-000000-000-0', '2005-01-01', 'M', NULL),
+(14, 'Marvin', 'Venegas', '', 'Soyapango', 4, NULL, '', '', NULL, '0000-000000-000-0', '2005-05-01', 'M', NULL),
+(15, 'Daniel', 'Navas', '', 'San Salvador', 1, NULL, '', '', NULL, '0000-000000-000-0', '2005-04-26', 'M', NULL);
 
 --
 -- Triggers `persona`
@@ -1066,7 +1092,14 @@ CREATE TABLE IF NOT EXISTS `registro_alumno` (
   KEY `Fkey_registro_alumno` (`id_alumno`),
   KEY `Fkey_registro_institucion` (`id_institucion_edu`),
   KEY `Fkey_registro_grado` (`id_grado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `registro_alumno`
+--
+
+INSERT INTO `registro_alumno` (`id_registro`, `id_alumno`, `id_institucion_edu`, `id_grado`, `seccion`, `nota_promedio`, `fecha_creacion`) VALUES
+(1, 1, 1, 1, 'A', 9.00, '2013-06-01 00:00:00');
 
 --
 -- Triggers `registro_alumno`
@@ -1267,7 +1300,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `estado_usuario` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`id_usuario`),
   KEY `Fkey_usuarios_perfil` (`id_perfil`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `usuarios`
@@ -1276,7 +1309,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `clave_acceso`, `fecha_caducidad`, `pregunta_secreta`, `respuesta_secreta`, `id_perfil`, `estado_usuario`) VALUES
 (1, 'Administrador', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2014-01-01', 'Pelicula Favorita', 'Batman', 1, 'A'),
 (2, 'Promotor', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2014-03-20', '', '', 2, 'A'),
-(4, 'pedro.molina', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2015-01-01', NULL, NULL, 2, 'A');
+(4, 'pedro.molina', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2015-01-01', NULL, NULL, 2, 'A'),
+(5, 'jose.perez', 'mwpYCZtYBOWjZ5N7jr8VQSukOwtBGOaNBL83CkIG/3g=', '2014-05-30', '', '', 3, 'A');
 
 --
 -- Constraints for dumped tables
@@ -1367,3 +1401,4 @@ ALTER TABLE `usuarios`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ 
