@@ -1,20 +1,4 @@
-﻿<?php
-
-
-	include("../../../class/database.class.php");
-
-	
-	$execQuery = "        Select Sum(Monto) As Donaciones From donacion Where estado = 2 ";
-	$Monto = $database -> database_scalar ($execQuery);
-	
-	$database -> database_close();
-
-
-?>
-
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
@@ -61,14 +45,13 @@
 
 <br/>
 <fieldset style="width: 99%;">
-	<legend class="fieldsetTitle">&nbsp;Registro de Donaciones</legend>
+	<legend class="fieldsetTitle">&nbsp;Nota Promedio Alumno</legend>
 	
 	<br />
 	<table width="100%">
 		<tr>
 			<td width="2%">&nbsp;</td>
 			<td width="96%">
-				<div class="fieldsetTitle" align="right">Donaciones $ <?php echo $Monto; ?>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 				<div style="width:99%;"><div id="toolbarObj"></div></div>
 				<div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
 			</td>
@@ -98,57 +81,26 @@
 		<div class="label">
 		
 
-		<fieldset style="width: 99%;">
-		<legend class="fieldsetTitle">&nbsp;Datos Donacion</legend>
-		
-		<table width="100%" >
-			<tr>
-				<td width="3%"></td>
-				<td width="40%"></td>
-				<td width="57%"></td>
-			</tr>
-			<tr>
-				<td  align="center"><div class="fieldsetTitle">*</div></td>
-				<td >Donante:</td>
-				<td ><div id='cbo_donante'></div></td>
-			</tr>	
-			<tr>
-				<td  align="center"><div class="fieldsetTitle">*</div></td>
-				<td >Tipo Donacion</td>
-				<td ><div id='cbo_tipo_donacion'></div></td>
-			</tr>					
-			<tr>
-				<td align="center" ><div class="fieldsetTitle">*</div></td>
-				<td >Tipo pago</td>
-				<td ><div id='cbo_tipo_pago'></div></td>
-			</tr>	
-			<tr>
-				<td  align="center"><div class="fieldsetTitle">*</div></td>
-				<td >Monto ($ USD)</td>
-				<td ><input name="Monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
-			</tr>	
-			<tr>
-				<td >&nbsp;</td>
-				<td >Renovacion Automatica</td>
-				<td ><input type="checkbox" name="renovacion" id="renovacion" ></td>
-			</tr>	
-			<tr>
-				<td align="center" ><div class="fieldsetTitle">*</div></td>
-				<td >Alumno:</td>
-				<td ><div id='cbo_alumno'></div></td>
-			</tr>
+				
+			<table width="100%" CellSpacing = 0 >
+				<tr>
+					<td width="3%"></td>
+					<td width="30%"></td>
+					<td width="67%"></td>
+				</tr>
+				<tr>
+					<td  align="center"><div class="fieldsetTitle">*</div></td>
+					<td >Nota Promedio</td>
+					<td ><input name="nota_promedio" id="nota_promedio" class="small" onfocus="jform.col(this);" ></td>
+				</tr>	
 
-		</table>
-		
-		</fieldset>
-
-		
-
+			</table>
+				
 			
 		</div>
 		</div>
 		</div>
-		</div>
+	</div>
 		
 		
 		
@@ -213,7 +165,7 @@
 <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
 <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-<script type="text/javascript" src = '../scripts/donacion.js'></script>
+<script type="text/javascript" src = '../scripts/nota_promedio.js'></script>
 
 
 

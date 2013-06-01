@@ -2,10 +2,10 @@
 -- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: May 31, 2013 at 03:23 AM
--- Server version: 5.5.27
--- PHP Version: 5.4.7
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 01-06-2013 a las 19:32:34
+-- Versión del servidor: 5.5.27
+-- Versión de PHP: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `gd_cideco_es`
+-- Base de datos: `gd_cideco_es`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alumno`
+-- Estructura de tabla para la tabla `alumno`
 --
 
 CREATE TABLE IF NOT EXISTS `alumno` (
@@ -44,18 +44,38 @@ CREATE TABLE IF NOT EXISTS `alumno` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `alumno`
+-- Volcado de datos para la tabla `alumno`
 --
 
 INSERT INTO `alumno` (`id_alumno`, `id_persona`, `nie`, `destacado_en`, `necesidades_medicas`, `numero_hermanos`, `vive_con`, `grande_quiere_ser`, `juego_favorito`, `materia_favorita`, `ayuda_en_casa`, `fecha_creacion`) VALUES
 (1, 13, 6045, 'Matematica', NULL, 3, 'Padres', 'Doctor', 'Futbol', 'Matematicas', 'Si', '2013-06-01'),
-(2, 14, 4025, '', '', 3, '', '', '', '', '', '2013-05-30 18:52:05'),
+(2, 14, 4025, '', '', 4, '', '', '', '', '', '2013-05-30 18:52:05'),
 (3, 15, 6256, '', '', 5, '', '', '', '', '', '2013-05-30 18:59:04');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banco`
+-- Estructura de tabla para la tabla `año_transacciones`
+--
+
+CREATE TABLE IF NOT EXISTS `año_transacciones` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `año_trans` int(11) NOT NULL DEFAULT '0',
+  `activo` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `año_transacciones`
+--
+
+INSERT INTO `año_transacciones` (`Id`, `año_trans`, `activo`) VALUES
+(1, 2013, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `banco`
 --
 
 CREATE TABLE IF NOT EXISTS `banco` (
@@ -66,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `banco` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Triggers `banco`
+-- Disparadores `banco`
 --
 DROP TRIGGER IF EXISTS `trg_banco_insert`;
 DELIMITER //
@@ -106,7 +126,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `beca_escolar`
+-- Estructura de tabla para la tabla `beca_escolar`
 --
 
 CREATE TABLE IF NOT EXISTS `beca_escolar` (
@@ -119,43 +139,52 @@ CREATE TABLE IF NOT EXISTS `beca_escolar` (
   `activo` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id_beca`),
   KEY `fk_registro_alumno_idx` (`id_registro_alumno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `beca_escolar`
+--
+
+INSERT INTO `beca_escolar` (`id_beca`, `id_registro_alumno`, `Monto`, `fecha_inicio_beca`, `fecha_fin_beca`, `comentario`, `activo`) VALUES
+(1, 1, 50.00, '2013-01-01', '2013-12-31', NULL, '1'),
+(2, 2, 35.00, '2013-01-01', '2013-12-31', '', '1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `departamento`
+-- Estructura de tabla para la tabla `departamento`
 --
 
 CREATE TABLE IF NOT EXISTS `departamento` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pais` int(11) NOT NULL DEFAULT '0',
   `departamento` varchar(50) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_departamento`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
--- Dumping data for table `departamento`
+-- Volcado de datos para la tabla `departamento`
 --
 
-INSERT INTO `departamento` (`id_departamento`, `departamento`, `activo`) VALUES
-(1, 'SAN SALVADOR', 1),
-(2, 'SANTA ANA', 1),
-(3, 'SAN MIGUEL', 1),
-(4, 'LA LIBERTAD', 1),
-(5, 'USULUTAN', 1),
-(6, 'SONSONATE', 1),
-(7, 'LA UNION', 1),
-(8, 'LA PAZ', 1),
-(9, 'CHALATENANGO', 1),
-(10, 'CUSCATLAN', 1),
-(11, 'AHUACHAPAN', 1),
-(12, 'MORAZAN', 1),
-(13, 'SAN VICENTE', 1),
-(14, 'CABAÑAS', 1);
+INSERT INTO `departamento` (`id_departamento`, `id_pais`, `departamento`, `activo`) VALUES
+(1, 1, 'SAN SALVADOR', 1),
+(2, 1, 'SANTA ANA', 1),
+(3, 1, 'SAN MIGUEL', 1),
+(4, 1, 'LA LIBERTAD', 1),
+(5, 1, 'USULUTAN', 1),
+(6, 1, 'SONSONATE', 1),
+(7, 1, 'LA UNION', 1),
+(8, 1, 'LA PAZ', 1),
+(9, 1, 'CHALATENANGO', 1),
+(10, 1, 'CUSCATLAN', 1),
+(11, 1, 'AHUACHAPAN', 1),
+(12, 1, 'MORAZAN', 1),
+(13, 1, 'SAN VICENTE', 1),
+(14, 1, 'CABAÑAS', 1);
 
 --
--- Triggers `departamento`
+-- Disparadores `departamento`
 --
 DROP TRIGGER IF EXISTS `trg_departamento_insert`;
 DELIMITER //
@@ -195,11 +224,12 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donacion`
+-- Estructura de tabla para la tabla `donacion`
 --
 
 CREATE TABLE IF NOT EXISTS `donacion` (
   `id_donacion` int(11) NOT NULL AUTO_INCREMENT,
+  `año` int(11) NOT NULL DEFAULT '0',
   `id_donante` int(11) NOT NULL,
   `id_tipo_pago` int(11) NOT NULL,
   `id_promotor` int(11) NOT NULL,
@@ -213,21 +243,25 @@ CREATE TABLE IF NOT EXISTS `donacion` (
   KEY `Fkey_donacion_promotor` (`id_promotor`),
   KEY `fk_estado_idx` (`estado`),
   KEY `Fkey_donacion_registro_alumno` (`id_registro_alumno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `donacion`
+-- Volcado de datos para la tabla `donacion`
 --
 
-INSERT INTO `donacion` (`id_donacion`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `fecha_creacion`, `estado`) VALUES
-(1, 6, 1, 1, 1, 30.00, '2013-05-28 00:00:00', 2),
-(3, 8, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 1),
-(5, 13, 1, 1, NULL, 30.00, '2013-05-29 15:04:17', 5);
+INSERT INTO `donacion` (`id_donacion`, `año`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `fecha_creacion`, `estado`) VALUES
+(1, 2013, 6, 1, 1, 1, 30.00, '2013-05-28 00:00:00', 2),
+(3, 2013, 8, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 6),
+(5, 2013, 13, 1, 1, NULL, 30.00, '2013-05-29 15:04:17', 5),
+(6, 2013, 14, 1, 1, 2, 30.00, '2013-05-31 18:13:53', 2),
+(7, 2013, 15, 1, 1, 2, 30.00, '2013-05-31 20:33:26', 2),
+(8, 2013, 16, 1, 1, 2, 30.00, '2013-05-31 21:05:37', 2),
+(9, 2013, 17, 1, 1, NULL, 30.00, '2013-05-31 21:10:47', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donante`
+-- Estructura de tabla para la tabla `donante`
 --
 
 CREATE TABLE IF NOT EXISTS `donante` (
@@ -239,21 +273,25 @@ CREATE TABLE IF NOT EXISTS `donante` (
   KEY `Fkey_donante_estado` (`estado`),
   KEY `Fkey_donante_persona` (`id_persona`),
   KEY `Fkey_donante_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
--- Dumping data for table `donante`
+-- Volcado de datos para la tabla `donante`
 --
 
 INSERT INTO `donante` (`id_donante`, `id_usuario`, `id_persona`, `estado`) VALUES
 (6, 5, 6, 1),
-(8, NULL, 7, 1),
-(13, NULL, 12, 1);
+(8, 7, 7, 1),
+(13, NULL, 12, 1),
+(14, 6, 16, 1),
+(15, 9, 17, 1),
+(16, 10, 18, 1),
+(17, NULL, 19, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `estado_donacion`
+-- Estructura de tabla para la tabla `estado_donacion`
 --
 
 CREATE TABLE IF NOT EXISTS `estado_donacion` (
@@ -264,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `estado_donacion` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `estado_donacion`
+-- Volcado de datos para la tabla `estado_donacion`
 --
 
 INSERT INTO `estado_donacion` (`id_est_donacion`, `estado_donacion`, `activo`) VALUES
@@ -278,7 +316,7 @@ INSERT INTO `estado_donacion` (`id_est_donacion`, `estado_donacion`, `activo`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `estado_donante`
+-- Estructura de tabla para la tabla `estado_donante`
 --
 
 CREATE TABLE IF NOT EXISTS `estado_donante` (
@@ -289,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `estado_donante` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `estado_donante`
+-- Volcado de datos para la tabla `estado_donante`
 --
 
 INSERT INTO `estado_donante` (`id_est_donante`, `estado_donante`, `activo`) VALUES
@@ -299,7 +337,7 @@ INSERT INTO `estado_donante` (`id_est_donante`, `estado_donante`, `activo`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `grado`
+-- Estructura de tabla para la tabla `grado`
 --
 
 CREATE TABLE IF NOT EXISTS `grado` (
@@ -310,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `grado` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `grado`
+-- Volcado de datos para la tabla `grado`
 --
 
 INSERT INTO `grado` (`id_grado`, `grado`, `activo`) VALUES
@@ -319,7 +357,7 @@ INSERT INTO `grado` (`id_grado`, `grado`, `activo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `institucion_educativa`
+-- Estructura de tabla para la tabla `institucion_educativa`
 --
 
 CREATE TABLE IF NOT EXISTS `institucion_educativa` (
@@ -332,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `institucion_educativa` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `institucion_educativa`
+-- Volcado de datos para la tabla `institucion_educativa`
 --
 
 INSERT INTO `institucion_educativa` (`id_institucion`, `nombre_institucion`, `direccion`, `telefono`, `nombre_director`) VALUES
@@ -341,7 +379,7 @@ INSERT INTO `institucion_educativa` (`id_institucion`, `nombre_institucion`, `di
 -- --------------------------------------------------------
 
 --
--- Table structure for table `municipio`
+-- Estructura de tabla para la tabla `municipio`
 --
 
 CREATE TABLE IF NOT EXISTS `municipio` (
@@ -354,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `municipio` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=263 ;
 
 --
--- Dumping data for table `municipio`
+-- Volcado de datos para la tabla `municipio`
 --
 
 INSERT INTO `municipio` (`id_municipio`, `municipio`, `id_departamento`, `activo`) VALUES
@@ -622,7 +660,7 @@ INSERT INTO `municipio` (`id_municipio`, `municipio`, `id_departamento`, `activo
 (262, 'GUACOTECTI', 14, 1);
 
 --
--- Triggers `municipio`
+-- Disparadores `municipio`
 --
 DROP TRIGGER IF EXISTS `trg_municipio_insert`;
 DELIMITER //
@@ -662,14 +700,14 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pagos`
+-- Estructura de tabla para la tabla `pagos`
 --
 
 CREATE TABLE IF NOT EXISTS `pagos` (
   `id_pago` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
   `id_donacion` int(11) NOT NULL,
-  `numero_cuota` int(11) NOT NULL,
+  `mes_pago` int(11) NOT NULL DEFAULT '0',
   `monto` decimal(10,2) NOT NULL,
   `id_banco` int(11) NOT NULL,
   `numero_recibo` int(11) NOT NULL,
@@ -685,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pais`
+-- Estructura de tabla para la tabla `pais`
 --
 
 CREATE TABLE IF NOT EXISTS `pais` (
@@ -696,7 +734,7 @@ CREATE TABLE IF NOT EXISTS `pais` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `pais`
+-- Volcado de datos para la tabla `pais`
 --
 
 INSERT INTO `pais` (`id_pais`, `nombre_pais`, `activo`) VALUES
@@ -705,7 +743,7 @@ INSERT INTO `pais` (`id_pais`, `nombre_pais`, `activo`) VALUES
 (3, 'Canada', 1);
 
 --
--- Triggers `pais`
+-- Disparadores `pais`
 --
 DROP TRIGGER IF EXISTS `trg_pais_insert`;
 DELIMITER //
@@ -743,7 +781,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `perfil`
+-- Estructura de tabla para la tabla `perfil`
 --
 
 CREATE TABLE IF NOT EXISTS `perfil` (
@@ -756,18 +794,18 @@ CREATE TABLE IF NOT EXISTS `perfil` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `perfil`
+-- Volcado de datos para la tabla `perfil`
 --
 
 INSERT INTO `perfil` (`id_perfil`, `perfil`, `menu`, `comentario`, `activo`) VALUES
-(1, 'Administrador', '<?xml version="1.0" encoding="iso-8859-1" ?>\r\n<menu>\r\n	<item id="Admin" text="Administracion" img="application.png" >\r\n		<item id="Ad_Usuarios" text="Usuarios" img="group.png"/>\r\n		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>\r\n		<item id="Ad_sep1" type="separator"/>\r\n		<item id="Ad_Salir" text="Salir" img="door_in.png"/>\r\n	</item>\r\n	<item id="Sep1" type="separator"/>\r\n	<item id="Control" text="Control" img="shape_move_forwards.png">\r\n		<item id="Ctr_Solicitud" text="Solicitud Donante(Promotor)" img="shape_move_back.png"/>\r\n		<item id="Ctr_Donaciones" text="Donaciones" img="creditcards.png"/>\r\n		<item id="Ctr_Becas" text="Becas" img="vcard.png"/>\r\n		<item id="Ctr_sep1" type="separator"/>\r\n		<item id="Ctr_Pagos" text="Realizar Pago Donacion" img="money.png"/>\r\n		<item id="Ctr_Notas" text="Nota Promedio Alumno" img="page_white_database_yellow.png"/>\r\n	</item>\r\n	<item id="Sep2" type="separator"/>\r\n	<item id="Consultas" text="Consultas" img="table.png">\r\n		<item id="Con_Donaciones" text="Donaciones" img="table_multiple.png"/>\r\n		<item id="Con_Becas" text="Becas" img="table_multiple.png"/>\r\n		<item id="Con_Notas" text="Notas" img="table_multiple.png"/>\r\n	</item>\r\n	<item id="Sep3" type="separator" />\r\n	<item id="Mantenimientos" text="Mantenimientos" img="database.png" >\r\n		<item id="Man_Tipo_Beca" text="Tipos de Beca" img="database_wrench.png"/>\r\n		<item id="Man_Tipo_Donacion" text="Tipos de Donacion" img="database_wrench.png"/>\r\n		<item id="Man_Tipo_Pago" text="Tipo de Pagos" img="database_wrench.png"/>\r\n		<item id="Man_sep_1" type="separator"/>\r\n		<item id="Man_Institucion" text="Institucion Educativas" img="database_wrench.png"/>\r\n		<item id="Man_Bancos" text="Bancos" img="database_wrench.png"/>\r\n		<item id="Man_Pais" text="Paises" img="database_wrench.png"/>\r\n	</item>\r\n	<item id="Sep4" type="separator"/>\r\n	<item id="Reportes" text="Reportes" img="report.png">\r\n		<item id="Rep_01" text="Reporte de Pagos" img="folder_page_white.png"/>\r\n		<item id="Rep_02" text="Reporte Pagos Pendientes" img="folder_page_white.png"/>\r\n	</item>	\r\n</menu>', '', '1'),
-(2, 'Promotor', '', '', '1'),
-(3, 'Donante', '', '', '1');
+(1, 'Administrador', '<?xml version="1.0" encoding="iso-8859-1" ?>\r\n<menu>\r\n	<item id="Admin" text="Administracion" img="application.png" >\r\n		<item id="Ad_Usuarios" text="Usuarios" img="group.png"/>\r\n		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>\r\n		<item id="Ad_sep1" type="separator"/>\r\n		<item id="Ad_Salir" text="Salir" img="door_in.png"/>\r\n	</item>\r\n	<item id="Sep1" type="separator"/>\r\n	<item id="Control" text="Control" img="shape_move_forwards.png">\r\n		<item id="Ctr_Solicitud" text="Solicitud Donante(Promotor)" img="shape_move_back.png"/>\r\n		<item id="Ctr_Donaciones" text="Donaciones" img="creditcards.png"/>\r\n		<item id="Ctr_Becas" text="Becas" img="vcard.png"/>\r\n		<item id="Ctr_sep1" type="separator"/>\r\n		<item id="Ctr_Pagos" text="Realizar Pago Donacion" img="money.png"/>\r\n		<item id="Ctr_Notas" text="Nota Promedio Alumno" img="page_white_database_yellow.png"/>\r\n	</item>\r\n	<item id="Sep2" type="separator"/>\r\n	<item id="Consultas" text="Consultas" img="table.png">\r\n		<item id="Con_Donaciones" text="Donaciones" img="table_multiple.png"/>\r\n		<item id="Con_Becas" text="Becas" img="table_multiple.png"/>\r\n		<item id="Con_Notas" text="Notas" img="table_multiple.png"/>\r\n	</item>\r\n	<item id="Sep3" type="separator" />\r\n	<item id="Mantenimientos" text="Mantenimientos" img="database.png" >\r\n		<item id="Man_Tipo_Beca" text="Tipos de Beca" img="database_wrench.png"/>\r\n		<item id="Man_Tipo_Donacion" text="Tipos de Donacion" img="database_wrench.png"/>\r\n		<item id="Man_Tipo_Pago" text="Tipo de Pagos" img="database_wrench.png"/>\r\n		<item id="Man_sep_1" type="separator"/>\r\n		<item id="Man_Institucion" text="Institucion Educativas" img="database_wrench.png"/>\r\n		<item id="Man_Bancos" text="Bancos" img="database_wrench.png"/>\r\n		<item id="Man_Pais" text="Paises" img="database_wrench.png"/>\r\n	</item>\r\n</menu>', '', '1'),
+(2, 'Promotor', '<?xml version="1.0" encoding="iso-8859-1" ?>\r\n<menu>\r\n	<item id="Admin" text="Administracion" img="application.png" >\r\n		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>\r\n		<item id="Ad_sep1" type="separator"/>\r\n		<item id="Ad_Salir" text="Salir" img="door_in.png"/>\r\n	</item>\r\n	<item id="Sep1" type="separator"/>\r\n	<item id="Control" text="Control" img="shape_move_forwards.png">\r\n		<item id="Ctr_Solicitud" text="Solicitud Donante(Promotor)" img="shape_move_back.png"/>\r\n	</item>\r\n</menu>', '', '1'),
+(3, 'Donante', '<?xml version="1.0" encoding="iso-8859-1" ?>\r\n<menu>\r\n	<item id="Admin" text="Administracion" img="application.png" >\r\n		<item id="Ad_Cambiar" text="Cambiar Contraseña" img="arrow_ew.png"/>\r\n		<item id="Ad_sep1" type="separator"/>\r\n		<item id="Ad_Salir" text="Salir" img="door_in.png"/>\r\n	</item>\r\n	<item id="Consultas" text="Consultas" img="table.png">\r\n		<item id="Con_Notas" text="Notas" img="table_multiple.png"/>\r\n	</item>\r\n\r\n</menu>', '', '1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `persona`
+-- Estructura de tabla para la tabla `persona`
 --
 
 CREATE TABLE IF NOT EXISTS `persona` (
@@ -788,10 +826,10 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`id_persona`),
   KEY `Fkey_persona_pais` (`id_pais`),
   KEY `Fkey_persona_municipio_idx` (`id_municipio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Dumping data for table `persona`
+-- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`id_persona`, `nombres`, `apellido_pri`, `apellido_seg`, `Direccion`, `id_municipio`, `id_pais`, `telefono_casa`, `telefono_movil`, `telefono_trabajo`, `nit`, `fecha_nacimiento`, `Genero`, `correo_electronico`) VALUES
@@ -800,11 +838,15 @@ INSERT INTO `persona` (`id_persona`, `nombres`, `apellido_pri`, `apellido_seg`, 
 (7, 'Juan', 'Rivera', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', ''),
 (12, 'Luis', 'Gonzales', '', 'Soyapango', 4, 1, '', '', '', '0614-010180-112-3', '2013-05-29', 'M', ''),
 (13, 'David', 'Martines', 'Romero', 'San Salvador', 1, 1, NULL, NULL, NULL, '0000-000000-000-0', '2005-01-01', 'M', NULL),
-(14, 'Marvin', 'Venegas', '', 'Soyapango', 4, NULL, '', '', NULL, '0000-000000-000-0', '2005-05-01', 'M', NULL),
-(15, 'Daniel', 'Navas', '', 'San Salvador', 1, NULL, '', '', NULL, '0000-000000-000-0', '2005-04-26', 'M', NULL);
+(14, 'Marvin', 'Venegas', '', 'Soyapango', 4, NULL, '', '', NULL, '0000-000000-000-0', '2005-04-01', 'M', NULL),
+(15, 'Daniel', 'Navas', '', 'San Salvador', 1, NULL, '', '', NULL, '0000-000000-000-0', '2005-04-26', 'M', NULL),
+(16, 'Sofia', 'Perez', 'Martines', 'San salvador', 1, 1, '', '', '', '0614-010580-112-5', '1980-05-01', 'F', 'sofia@hotmail.com'),
+(17, 'Luis', 'Mejia', '', 'los angeles', 82, 2, '', '', '', '0614-010980-122-1', '2013-06-01', 'M', ''),
+(18, 'Luis', 'Mejia', '', 'San salvador', 1, 2, '', '', '', '0614-010980-112-1', '2013-06-01', 'M', ''),
+(19, 'Luis', 'mejia', '', 'los angeles', 100, 1, '909-2221-3435', '', '', '0614-010980-112-1', '2013-06-01', 'M', 'Luis@hotmail.com');
 
 --
--- Triggers `persona`
+-- Disparadores `persona`
 --
 DROP TRIGGER IF EXISTS `trg_persona_insert`;
 DELIMITER //
@@ -1006,7 +1048,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotor`
+-- Estructura de tabla para la tabla `promotor`
 --
 
 CREATE TABLE IF NOT EXISTS `promotor` (
@@ -1021,14 +1063,14 @@ CREATE TABLE IF NOT EXISTS `promotor` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `promotor`
+-- Volcado de datos para la tabla `promotor`
 --
 
 INSERT INTO `promotor` (`id_promotor`, `id_usuario`, `id_persona`, `fecha_inicio`, `fecha_fin`, `activo`) VALUES
 (1, 4, 1, '2013-01-01', '2014-01-01', 1);
 
 --
--- Triggers `promotor`
+-- Disparadores `promotor`
 --
 DROP TRIGGER IF EXISTS `trg_promotor_insert`;
 DELIMITER //
@@ -1077,32 +1119,35 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registro_alumno`
+-- Estructura de tabla para la tabla `registro_alumno`
 --
 
 CREATE TABLE IF NOT EXISTS `registro_alumno` (
   `id_registro` int(11) NOT NULL AUTO_INCREMENT,
+  `año_trans` int(11) NOT NULL DEFAULT '0',
   `id_alumno` int(11) NOT NULL,
   `id_institucion_edu` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
   `seccion` char(1) NOT NULL,
   `nota_promedio` decimal(10,2) DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL,
+  `activa` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id_registro`),
   KEY `Fkey_registro_alumno` (`id_alumno`),
   KEY `Fkey_registro_institucion` (`id_institucion_edu`),
   KEY `Fkey_registro_grado` (`id_grado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `registro_alumno`
+-- Volcado de datos para la tabla `registro_alumno`
 --
 
-INSERT INTO `registro_alumno` (`id_registro`, `id_alumno`, `id_institucion_edu`, `id_grado`, `seccion`, `nota_promedio`, `fecha_creacion`) VALUES
-(1, 1, 1, 1, 'A', 9.00, '2013-06-01 00:00:00');
+INSERT INTO `registro_alumno` (`id_registro`, `año_trans`, `id_alumno`, `id_institucion_edu`, `id_grado`, `seccion`, `nota_promedio`, `fecha_creacion`, `activa`) VALUES
+(1, 2013, 1, 1, 1, 'A', 9.00, '2013-06-01 00:00:00', '1'),
+(2, 2013, 2, 1, 1, 'A', 10.00, '2013-05-31 09:14:55', '1');
 
 --
--- Triggers `registro_alumno`
+-- Disparadores `registro_alumno`
 --
 DROP TRIGGER IF EXISTS `trg_registro_alumno_insert`;
 DELIMITER //
@@ -1168,7 +1213,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `renovacion`
+-- Estructura de tabla para la tabla `renovacion`
 --
 
 CREATE TABLE IF NOT EXISTS `renovacion` (
@@ -1183,7 +1228,7 @@ CREATE TABLE IF NOT EXISTS `renovacion` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tarjetas_cobro`
+-- Estructura de tabla para la tabla `tarjetas_cobro`
 --
 
 CREATE TABLE IF NOT EXISTS `tarjetas_cobro` (
@@ -1197,7 +1242,7 @@ CREATE TABLE IF NOT EXISTS `tarjetas_cobro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Triggers `tarjetas_cobro`
+-- Disparadores `tarjetas_cobro`
 --
 DROP TRIGGER IF EXISTS `trg_tarjetas_cobro_insert`;
 DELIMITER //
@@ -1261,7 +1306,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_pago`
+-- Estructura de tabla para la tabla `tipo_pago`
 --
 
 CREATE TABLE IF NOT EXISTS `tipo_pago` (
@@ -1273,7 +1318,7 @@ CREATE TABLE IF NOT EXISTS `tipo_pago` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `tipo_pago`
+-- Volcado de datos para la tabla `tipo_pago`
 --
 
 INSERT INTO `tipo_pago` (`id_tipo_pago`, `descripcion`, `meses`, `activo`) VALUES
@@ -1286,7 +1331,7 @@ INSERT INTO `tipo_pago` (`id_tipo_pago`, `descripcion`, `meses`, `activo`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -1300,46 +1345,51 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `estado_usuario` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`id_usuario`),
   KEY `Fkey_usuarios_perfil` (`id_perfil`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `usuarios`
+-- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `clave_acceso`, `fecha_caducidad`, `pregunta_secreta`, `respuesta_secreta`, `id_perfil`, `estado_usuario`) VALUES
 (1, 'Administrador', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2014-01-01', 'Pelicula Favorita', 'Batman', 1, 'A'),
 (2, 'Promotor', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2014-03-20', '', '', 2, 'A'),
 (4, 'pedro.molina', 'lAzQ2he4onIP/0Zo9dMZGruvwtoImgqtQirxCWgk+oA=', '2015-01-01', NULL, NULL, 2, 'A'),
-(5, 'jose.perez', 'mwpYCZtYBOWjZ5N7jr8VQSukOwtBGOaNBL83CkIG/3g=', '2014-05-30', '', '', 3, 'A');
+(5, 'jose.perez', 'mwpYCZtYBOWjZ5N7jr8VQSukOwtBGOaNBL83CkIG/3g=', '2014-05-30', '', '', 3, 'A'),
+(6, 'sofia.perez', 'mwpYCZtYBOWjZ5N7jr8VQSukOwtBGOaNBL83CkIG/3g=', '2013-06-01', '', '', 3, 'A'),
+(7, '5', '25u1QytEq31DZpbHFLo6TBwa3bKMxDIh0CSXemPXP2o=', '2013-06-01', '', '', 3, 'A'),
+(8, '5', '25u1QytEq31DZpbHFLo6TBwa3bKMxDIh0CSXemPXP2o=', '2013-06-01', '', '', 3, 'A'),
+(9, 'luis.mejia', '5LejbVIW/55nzMjFQFWQQ1C1FNHK2yh9NHXXw881FmM=', '2013-06-01', '', '', 3, 'A'),
+(10, 'luis.mejia', '5LejbVIW/55nzMjFQFWQQ1C1FNHK2yh9NHXXw881FmM=', '2013-06-01', '', '', 3, 'A');
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `alumno`
+-- Filtros para la tabla `alumno`
 --
 ALTER TABLE `alumno`
   ADD CONSTRAINT `Fkey_alumno_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `beca_escolar`
+-- Filtros para la tabla `beca_escolar`
 --
 ALTER TABLE `beca_escolar`
   ADD CONSTRAINT `fk_registro_alumno` FOREIGN KEY (`id_registro_alumno`) REFERENCES `registro_alumno` (`id_registro`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `donacion`
+-- Filtros para la tabla `donacion`
 --
 ALTER TABLE `donacion`
-  ADD CONSTRAINT `Fkey_donacion_registro_alumno` FOREIGN KEY (`id_registro_alumno`) REFERENCES `registro_alumno` (`id_registro`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `Fkey_donacion_donante` FOREIGN KEY (`id_donante`) REFERENCES `donante` (`id_donante`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_donacion_promotor` FOREIGN KEY (`id_promotor`) REFERENCES `promotor` (`id_promotor`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Fkey_donacion_registro_alumno` FOREIGN KEY (`id_registro_alumno`) REFERENCES `registro_alumno` (`id_registro`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `Fkey_donacion_tipo_pago` FOREIGN KEY (`id_tipo_pago`) REFERENCES `tipo_pago` (`id_tipo_pago`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_estado` FOREIGN KEY (`estado`) REFERENCES `estado_donacion` (`id_est_donacion`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `donante`
+-- Filtros para la tabla `donante`
 --
 ALTER TABLE `donante`
   ADD CONSTRAINT `Fkey_donante_estado` FOREIGN KEY (`estado`) REFERENCES `estado_donante` (`id_est_donante`) ON UPDATE CASCADE,
@@ -1347,53 +1397,53 @@ ALTER TABLE `donante`
   ADD CONSTRAINT `Fkey_donante_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `municipio`
+-- Filtros para la tabla `municipio`
 --
 ALTER TABLE `municipio`
   ADD CONSTRAINT `Fkey_municipio_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamento` (`id_departamento`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `pagos`
+-- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
   ADD CONSTRAINT `fk_banco` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_id_donacion` FOREIGN KEY (`id_donacion`) REFERENCES `donacion` (`id_donacion`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `persona`
+-- Filtros para la tabla `persona`
 --
 ALTER TABLE `persona`
   ADD CONSTRAINT `Fkey_persona_municipio` FOREIGN KEY (`id_municipio`) REFERENCES `municipio` (`id_municipio`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_persona_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `promotor`
+-- Filtros para la tabla `promotor`
 --
 ALTER TABLE `promotor`
   ADD CONSTRAINT `fk_promotor_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `registro_alumno`
+-- Filtros para la tabla `registro_alumno`
 --
 ALTER TABLE `registro_alumno`
-  ADD CONSTRAINT `Fkey_registro_grado` FOREIGN KEY (`id_grado`) REFERENCES `grado` (`id_grado`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_registro_alumno` FOREIGN KEY (`id_alumno`) REFERENCES `alumno` (`id_alumno`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Fkey_registro_grado` FOREIGN KEY (`id_grado`) REFERENCES `grado` (`id_grado`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Fkey_registro_institucion` FOREIGN KEY (`id_institucion_edu`) REFERENCES `institucion_educativa` (`id_institucion`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `renovacion`
+-- Filtros para la tabla `renovacion`
 --
 ALTER TABLE `renovacion`
   ADD CONSTRAINT `fk_donacion` FOREIGN KEY (`id_donacion`) REFERENCES `donacion` (`id_donacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `tarjetas_cobro`
+-- Filtros para la tabla `tarjetas_cobro`
 --
 ALTER TABLE `tarjetas_cobro`
   ADD CONSTRAINT `Fkey_tarjeta_donante` FOREIGN KEY (`id_donante`) REFERENCES `donante` (`id_donante`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `usuarios`
+-- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `Fkey_usuarios_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON UPDATE CASCADE;

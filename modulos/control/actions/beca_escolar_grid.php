@@ -23,25 +23,30 @@
 	/*
 	$p0 = $_GET['p0'];
 	$p1 = $_GET['p1'];
-*/
+	*/
 	$execQuery = "";
 	$retVal = ""; 
 	
 	
-	$execQuery = " Select 
-	
-						id_donante,
-						per.id_persona
-						nombres,
-						apellido_pri,
-						apellido_seg,    
-						direccion,
-						'Municipio',
-						'Pais',
-						Telefono_casa
-						
-				   From donante don
-				   Left Join persona per On per.id_persona = don.id_persona
+	$execQuery = "             
+			Select 
+				   id_beca,
+				   nombres,
+				   apellido_pri,
+				   apellido_seg,
+				   d.Direccion,
+				   Monto,
+				   nombre_institucion
+				   
+				   From beca_escolar a
+				   Left Join registro_alumno b
+							 On id_registro_alumno = id_registro
+				   Left Join alumno c
+							 On c.id_alumno = b.id_alumno
+				   Left join persona d
+							 On d.id_persona = c.id_persona
+				   Left Join institucion_educativa
+							 On id_institucion_edu = id_institucion
         ";
 			
 			
@@ -56,9 +61,7 @@
 	//Inicia encabezado
 	$head = "";
 
-	$head .="<head>";
-		$head .="<column width='0' type='ro' align='left' sort='str'>id_donate</column> \n";
-		$head .="<column width='0' type='ro' align='left' sort='str'>id_persona</column> \n";
+	$head .="<head>";		
 		$head .="<column width='100' type='ro' align='left' sort='str'>No. Beca Escolar</column> \n";
 		$head .="<column width='100' type='ro' align='left' sort='str'>Nombre Alumno</column> \n";
 		$head .="<column width='100' type='ro' align='left' sort='str'>Primer Apellido</column> \n";
@@ -66,7 +69,6 @@
 		$head .="<column width='300' type='ro' align='left' sort='str'>Direccion</column> \n";
 		$head .="<column width='100' type='ro' align='left' sort='str'>Monto Beca</column> \n";
 		$head .="<column width='100' type='ro' align='left' sort='str'>Centro Escolar</column> \n";
-		$head .="<column width='100' type='ro' align='center' sort='str'></column> \n";
 		
 		$head .="<settings> \n";
 		    $head .="<colwidth>px</colwidth> \n";
@@ -80,20 +82,18 @@
 	//Bucle para armar la tabla a mostrar
 	while($row = $database -> database_array($result))
 	{	
-	
+
 		$counter++;
 
-			$retVal .= "<row id='$counter'> \n"; 
-			$retVal .= "<cell >".trim($row[0])."</cell> \n";
-			$retVal .= "<cell >".trim($row[1])."</cell> \n";
-			$retVal .= "<cell >".trim($row[2])."</cell> \n";
-			$retVal .= "<cell >".trim($row[2])."</cell> \n";
-			$retVal .= "<cell >".trim($row[3])."</cell> \n";
-			$retVal .= "<cell >".trim($row[4])."</cell> \n";
-			$retVal .= "<cell >".trim($row[5])."</cell> \n";
-			$retVal .= "<cell >".trim($row[6])."</cell> \n";
-			$retVal .= "<cell >".trim($row[7])."</cell> \n";
-			$retVal .= "</row>";
+		$retVal .= "<row id='$counter'> \n"; 
+		$retVal .= "<cell >".trim($row[0])."</cell> \n";
+		$retVal .= "<cell >".trim($row[1])."</cell> \n";
+		$retVal .= "<cell >".trim($row[2])."</cell> \n";
+		$retVal .= "<cell >".trim($row[3])."</cell> \n";
+		$retVal .= "<cell >".trim($row[4])."</cell> \n";
+		$retVal .= "<cell >".trim($row[5])."</cell> \n";
+		$retVal .= "<cell >".trim($row[6])."</cell> \n";
+		$retVal .= "</row>";
 
 	}
 	

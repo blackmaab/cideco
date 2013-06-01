@@ -40,8 +40,11 @@
 				   Left Join donante b On b.id_donante = a.id_donante
 				   Left Join persona c On c.id_persona = b.id_persona
 				   Left Join promotor d On a.id_promotor = d.id_promotor
-				   Left Join persona e On e.id_persona = b.id_persona
-                   Left Join estado_donacion On a.estado = id_est_donacion ";
+				   Left Join persona e On e.id_persona = d.id_persona
+                   Left Join estado_donacion On a.estado = id_est_donacion 
+				   
+				   Where a.estado <> 5
+				   ";
 			
 			
 

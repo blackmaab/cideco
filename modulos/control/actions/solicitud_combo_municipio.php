@@ -10,7 +10,7 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
 	$execQuery = " Select id_municipio,municipio from municipio where activo = 1 order by municipio ";
 			  

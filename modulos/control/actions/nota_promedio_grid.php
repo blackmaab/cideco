@@ -9,6 +9,12 @@
 	
 	$id = session_id();
 	
+	/*
+	if(!isset($_SESSION['PLANNING_SYSTEM']) || $_SESSION['EXPIRE'] == 999) 
+	{
+	  header ("location: ../../login/pages/default.php"); 
+	}
+	*/
 	
 	//Inicia
 	include("../../../class/database.class.php");
@@ -17,30 +23,31 @@
 	/*
 	$p0 = $_GET['p0'];
 	$p1 = $_GET['p1'];
-	*/
+*/
 	$execQuery = "";
 	$retVal = ""; 
 	
 	
-	$execQuery = " Select 
+	$execQuery = " 
+				Select 
 
-				   fecha_creacion,
-				   a.id_donacion,
-				   estado_donacion,
-				   monto,
-				   c.nombres,
-				   c.apellido_pri,
-				   c.apellido_seg,
-				   CONCAT(e.nombres , ' ' , e.apellido_pri) As Promotor
-					
-				   From donacion a
-				   Left Join donante b On b.id_donante = a.id_donante
-				   Left Join persona c On c.id_persona = b.id_persona
-				   Left Join promotor d On a.id_promotor = d.id_promotor
-				   Left Join persona e On e.id_persona = d.id_persona
-                   Left Join estado_donacion On a.estado = id_est_donacion
-				   
-				   Where a.estado in(1,6) ";
+					   id_registro,
+					   nie,
+					   nombres,
+					   apellido_pri,
+					   apellido_seg,
+					   nombre_institucion,
+					   nota_promedio
+					   
+					   From registro_alumno a
+					   Left Join alumno b
+							On b.id_alumno = a.id_alumno
+					   LEFT JOIN persona c
+							On c.id_persona = b.id_persona
+					   Left Join institucion_educativa
+							On id_institucion_edu = id_institucion ";
+			
+			
 
 	//consulta a base de datos
 	$result = $database -> database_query ($execQuery);
@@ -53,14 +60,13 @@
 	$head = "";
 
 	$head .="<head>";
-		$head .="<column width='100' type='ro' align='center' sort='str'>Fecha</column> \n";
-		$head .="<column width='90' type='ro' align='center' sort='str'>No Solicitud</column> \n";
-		$head .="<column width='80' type='ro' align='center' sort='str'>Estado</column> \n";
-		$head .="<column width='100' type='ro' align='right' sort='str'>Monto</column> \n";
-		$head .="<column width='130' type='ro' align='left' sort='str'>Nombres</column> \n";
-		$head .="<column width='100' type='ro' align='left' sort='str'>Primer Apellido</column> \n";
-		$head .="<column width='100' type='ro' align='left' sort='str'>Segundo Apellido</column> \n";
-		$head .="<column width='130' type='ro' align='left' sort='str'>Promotor</column> \n";
+		$head .="<column width='0' type='ro' align='left' sort='str'>id_donate</column> \n";
+		$head .="<column width='100' type='ro' align='left' sort='str'>NIE</column> \n";
+		$head .="<column width='125' type='ro' align='left' sort='str'>Nombre Alumno</column> \n";
+		$head .="<column width='125' type='ro' align='left' sort='str'>Primer Apellido</column> \n";
+		$head .="<column width='125' type='ro' align='center' sort='str'>Segundo Apellido</column> \n";
+		$head .="<column width='250' type='ro' align='left' sort='str'>Centro Escolar</column> \n";
+		$head .="<column width='100' type='ro' align='center' sort='str'>Nota Promedio</column> \n";
 		
 		$head .="<settings> \n";
 		    $head .="<colwidth>px</colwidth> \n";
@@ -85,7 +91,6 @@
 			$retVal .= "<cell >".trim($row[4])."</cell> \n";
 			$retVal .= "<cell >".trim($row[5])."</cell> \n";
 			$retVal .= "<cell >".trim($row[6])."</cell> \n";
-			$retVal .= "<cell >".trim($row[7])."</cell> \n";
 			$retVal .= "</row>";
 
 	}

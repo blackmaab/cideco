@@ -55,7 +55,7 @@
 						From usuarios a
 						LEFT Join perfil b On  a.id_perfil = b.id_perfil
 
-						Where nombre_usuario = '$usr' And (clave_acceso = '$pwd' Or respuesta_secreta = '$res') And estado_usuario = 'A'";
+						Where nombre_usuario = '$usr' And (clave_acceso = '$pwd' Or (respuesta_secreta = '$res' and respuesta_secreta <> '')) And estado_usuario = 'A'";
 
 
 

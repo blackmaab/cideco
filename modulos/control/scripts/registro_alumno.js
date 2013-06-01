@@ -447,8 +447,7 @@ function init() {
 		MsjDelete.render();
 		HBI.util.Event.addListener("msj_show", "click", MsjDelete.show, MsjDelete, true);
 		HBI.util.Event.addListener("msj_hide", "click", MsjDelete.hide, MsjDelete, true);
-		
-		
+
 		
 	}
 	catch(err)

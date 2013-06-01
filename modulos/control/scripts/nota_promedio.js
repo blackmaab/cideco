@@ -16,7 +16,7 @@ function doOnLoad() {
 	// Direccion de iconos
     toolbar.setIconsPath("../../../images/icons/");
 	// xml a cargar, este es fijo en la direccion q aparece
-    toolbar.loadXML("../../../components/toolbar/Control_Solicitud_Apr.xml?etc=" + new Date().getTime());
+    toolbar.loadXML("../../../components/toolbar/Control_Nota_Promedio.xml?etc=" + new Date().getTime());
 	
 	
 	// Funcion cuando el usuario da click en el toolbar
@@ -35,43 +35,24 @@ function DoEvent(data) {
 	switch(data)
 	{
 	
-		case "apr":
+
+		case "editar_nota":
 			
+
 			if(mygrid.getSelectedId())
 			{
-			
-				idReg=0;
-				ClearParam()
 				document.getElementById('frm_show').click();
-				document.getElementById('usuario').focus();
+				document.getElementById('nota_promedio').value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
+				document.getElementById('nota_promedio').focus();
 				
 			}
 			else
 			{
 				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
 				Msjbox.show();
-			}			
-			 
-		break;
-		
-		
-		case "rec":
-
-			
-			RechazarSolicitud();
-			 
-		break;
-		
-		
-		
-		case "dona":
-
-			document.location.href = "donacion.php";
+			}
 			
 		break;
-		
-		
-		/*
 		
 		case "save":
 		
@@ -121,8 +102,6 @@ function DoEvent(data) {
 		
 		break;
 		
-		*/
-		
 		default:
 			alert('Opcion aun en desarrollo.... ' + data);
 		break;
@@ -163,11 +142,11 @@ function LoadGrid()
 	mygrid.setSkin("dhx_skyblue");
 
 	// direccion de la pagina que hace el xml de forma dinamica
-	mygrid.loadXML("../actions/control_solicitud_grid.php",
+	mygrid.loadXML("../actions/nota_promedio_grid.php",
 		function()
 		{
 			// Para agregar los filtros del grid.
-			mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,,");
+			mygrid.attachHeader(",#text_filter,#text_filter,#text_filter,#text_filter,,");
 			// finalizamos el mensaje de espere
 			MsjWait.hide();
 		}
@@ -181,10 +160,8 @@ function LoadGrid()
 // funcion q carga los combos. perfil y estatus
 
 
-var alumno;
-	
-
-
+var municipio;
+var genero;
 
 function LoadCombos()
 {
@@ -193,13 +170,18 @@ function LoadCombos()
 	window.dhx_globalImgPath = "../../../components/select/imgs/";
 	
 	
-	// creacion del combo tipo donacion
-	alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
-	alumno.enableFilteringMode(true);	
+	// creacion del combo alumno
+	municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
+	municipio.enableFilteringMode(true);	
 	//alumno.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-	alumno.loadXML("../actions/control_combo_alumno.php?p0=" , function(){});
+	//alumno.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
 	//alumno.attachEvent("onBlur", Validacion1);
 	
+	
+	// creacion del combo estado
+	genero = new dhtmlXCombo("cbo_genero","cbo_genero",150);
+	genero.enableFilteringMode(true);	
+
 }
 
 
@@ -226,89 +208,46 @@ function Validacion2() {
 */
 
 
-function AprobarSolicitud()
-{
-
-
-	if (mygrid.getSelectedId())
-	{
-		var parameters = ""; 
-		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
-		parameters = parameters + "&p1=2";
-		
-		MsjWait.show();
-		
-		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
-
-		
-	}
-
-
-}
-
-
-function RechazarSolicitud()
-{
-
-
-	if (mygrid.getSelectedId())
-	{
-		var parameters = ""; 
-		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
-		parameters = parameters + "&p1=5";
-		
-		MsjWait.show();
-		
-		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
-
-		
-	}
-
-
-}
-
 // funcion para guardar los registros
 function SaveData()
 {
 
-
-	// verificamos q los parametros obligatorios esten llenos
-	if(CheckParam())
+	try
 	{
-	
-		// guardamos los parametros en un arreglo post
-		
-		var parameters = ""; 
-		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
-		parameters = parameters + "&p1=" + document.getElementById("usuario").value;
-		parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
-		parameters = parameters + "&p3=" + alumno.getSelectedValue();
-		
-		//MsjWait.show();
-		
-		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
-	
 
-		if (idReg==0)
+		
+		// verificamos q los parametros obligatorios esten llenos
+		if(CheckParam())
 		{
-			// si es nuevo entra aqui
-			// loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml()} );
+		
+			// guardamos los parametros en un arreglo post
+			idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
+			
+			var parameters = ""; 
+			parameters = parameters + "?p0=" + idReg;
+			parameters = parameters + "&p1=" + document.getElementById("nota_promedio").value;
+
+			loader = dhtmlxAjax.post( "../actions/nota_promedio_update.php",encodeURI(parameters), function(){ReadXml()} );
+			MsjWait.show();
+
 		}
 		else
 		{
-			// si es un update entra aqui
-			// loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml()} );
+		
+			// mensaje de llenar los campos obligatorios
+			Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos Obligatorios</td></tr></table>");
+			Msjbox.show();
+		
 		}
 
 	}
-	else
+	catch(err)
 	{
-	
-		// mensaje de llenar los campos obligatorios
-		Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos Obligatorios</td></tr></table>");
-		Msjbox.show();
-	
+
+		alert(err.message );
+		
 	}
+
 
 
 }
@@ -323,7 +262,7 @@ function CheckParam()
 	
 	
 	
-	if (document.getElementById('usuario').value == '')
+	/*if (document.getElementById('usuario').value == '')
 	{
 		Val = false;
 	}
@@ -333,10 +272,12 @@ function CheckParam()
 		Val = false;
 	}
 	
-	if ( alumno.getSelectedValue() == '' || alumno.getSelectedValue() == null)
+	if (document.getElementById('fechacad').value == '')
 	{
 		Val = false;
 	}
+	*/
+	
 	
 	return Val;
 
@@ -402,10 +343,7 @@ function DeleteData()
 // lectura del xml de respuesta
 function ReadXml(){
 
- 
  //alert(loader.doSerialization());
- 
- 
 	if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
 	{
 		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -415,18 +353,6 @@ function ReadXml(){
 		switch(xmlDoc.documentElement.childNodes[0].text)
 		{
 		
-			
-			
-			// si fue un insert
-			case "Estado":
-				
-				document.getElementById('frm_hide').click();
-				LoadGrid();
-				MsjWait.hide();
-				
-				
-			break;
-			
 			// si fue un insert
 			case "Insert":
 				
@@ -436,6 +362,17 @@ function ReadXml(){
 				
 				
 			break;
+			
+			
+			case "cambiar_nota":
+
+				document.getElementById('frm_hide').click();
+				LoadGrid();
+				MsjWait.hide();
+				
+			break;			
+			
+			
 		
 		
 			// si fue un update
@@ -460,6 +397,8 @@ function ReadXml(){
 				
 			
 			break;
+			
+			
 		
 		}
 	}
@@ -511,8 +450,8 @@ function init() {
 		
 		// Fromulario de Nuevo Registro y Edicion. ************************
 		
-		FormRegistro = new HBI.widget.Dialog("RegNew", { width : "40em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
-									buttons : [ { text:"Aceptar", handler:RegNew_Submit, isDefault:true }, { text:"Cancelar", handler:RegNew_Cancel } ]});
+		FormRegistro = new HBI.widget.Dialog("RegNew", { width : "30em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
+									buttons : [ { text:"Guardar", handler:RegNew_Submit, isDefault:true }, { text:"Cancelar", handler:RegNew_Cancel } ]});
 		FormRegistro.render();
 		HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);
 		HBI.util.Event.addListener("frm_hide", "click", FormRegistro.hide, FormRegistro, true);
@@ -524,8 +463,7 @@ function init() {
 		MsjDelete.render();
 		HBI.util.Event.addListener("msj_show", "click", MsjDelete.show, MsjDelete, true);
 		HBI.util.Event.addListener("msj_hide", "click", MsjDelete.hide, MsjDelete, true);
-		
-		
+
 		
 	}
 	catch(err)

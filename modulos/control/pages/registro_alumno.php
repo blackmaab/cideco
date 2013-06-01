@@ -45,7 +45,7 @@
 
 <br/>
 <fieldset style="width: 99%;">
-	<legend class="fieldsetTitle">&nbsp;Registro de Alumnos</legend>
+	<legend class="fieldsetTitle">&nbsp;Nota Promedio Alumno</legend>
 	
 	<br />
 	<table width="100%">

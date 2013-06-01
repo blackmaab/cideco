@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<toolbar>
+
+	<item id="sep1" type="separator"/>
+	<item id="editar_nota" type="button" text="Editar Nota"  img="page_edit.png" imgdis="page_edit.png"/> 
+	<item id="sep1" type="separator"/>
+	<item id="info" type="text" text=""/>
+	
+</toolbar>

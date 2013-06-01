@@ -75,6 +75,7 @@
 		$Don->bandera = 1;
 
 		
+		
 		if ($Don->bandera == 0)
 		{
 			$Err -> GuardarError('solicitud_donante_save.php',$Don->mensaje);
@@ -85,20 +86,37 @@
 		
 			$execQuery = " Select max(id_donante) From donante ";
 			$Dona->id_donante = $database -> database_scalar ($execQuery);
+			
+			/*
+			$Dona->id_registro_alumno = "NULL";
 			$Dona->fecha_creacion = "NOW()";
 			$Dona->estado = "1";
-		
-			$Dona->insert_Donacion();
 			
+			$Dona->insert_Donacion();
+						
 			if ($Dona->bandera == 0)
 			{
 				$Err -> GuardarError('solicitud_donante_save.php',$Dona->mensaje);
 				$msj = 'error';
 			}
-		
+			*/
+			
+
+			$id_donante = $Dona->id_donante;
+			$id_tipo_pago = $Dona -> id_tipo_pago;
+			$id_promotor = $Dona -> id_promotor;
+			$Monto = $Dona -> Monto;
+
+			
+			$execQuery = " INSERT INTO donacion 
+								(id_donante,id_tipo_pago,id_promotor,id_registro_alumno,Monto,fecha_creacion,estado)
+								VALUES($id_donante,$id_tipo_pago,$id_promotor,NULL,$Monto,Now(),1) ";
+								
+			$database -> database_query ($execQuery);
+			
+
 		}
-	
-	
+
 	}
 	
 	//Retornar respuesta XML

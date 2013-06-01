@@ -10,23 +10,15 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
-	$execQuery = " 
-					Select 
-						   id_registro,
-						   CONCAT(nombres,' ',apellido_pri,' ',apellido_seg) As Nombres
-						   
-						   From registro_alumno a
-						   Inner Join alumno b 
-									  On b.id_alumno = a.id_alumno
-						   Inner Join persona c
-									  On c.id_persona = b.id_persona ";
+	$execQuery = " Select id_institucion As Id ,nombre_institucion As Centro from institucion_educativa ";
 			  
 			 
 	$result = $database -> database_query ($execQuery);
 	
 	$retVal = "<complete>";
+	
 	while($row = $database -> database_array($result))
 	{
 		if ($selValue == '')

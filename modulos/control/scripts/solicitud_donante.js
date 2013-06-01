@@ -48,6 +48,37 @@ function DoEvent(data) {
 
 		break;
 		
+		
+		
+		case "delete":
+		
+			if(mygrid.getSelectedId())
+			{
+				document.getElementById('msj_show').click();
+			}
+			else
+			{
+				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+				Msjbox.show();
+			}		
+			
+
+		break;		
+		
+		case "export":
+		
+			var url="../actions/solicitud_donante_export.php";
+			
+			var window_width = 10;
+			var window_height = 10;
+			var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+			var window_top = (screen.height-window_height)/2;
+			var window_left = (screen.width-window_width)/2;
+			window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+		
+		break;
+		
+		
 		/*
 		
 		case "edit":
@@ -63,34 +94,6 @@ function DoEvent(data) {
 			}
 			
 		break;		
-		
-		case "delete":
-		
-			if(mygrid.getSelectedId())
-			{
-				document.getElementById('msj_show').click();
-			}
-			else
-			{
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-				Msjbox.show();
-			}		
-			
-
-		break;
-		
-		case "export":
-		
-			var url="../actions/usuarios_export.php";
-			
-			var window_width = 10;
-			var window_height = 10;
-			var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-			var window_top = (screen.height-window_height)/2;
-			var window_left = (screen.width-window_width)/2;
-			window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
-		
-		break;
 		
 		*/
 		
@@ -437,13 +440,10 @@ function DeleteData()
 
 
 	var parameters = ""; 
-	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),0).getValue();
-
-	if (idReg==0)
-	{
-		//loader = dhtmlxAjax.post( "../actions/usuarios_delete.php",encodeURI(parameters), function(){ReadXml()} );
-	}
-			
+	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+	loader = dhtmlxAjax.post( "../actions/solicitud_donante_delete.php",encodeURI(parameters), function(){ReadXml()} );
+	
 }
 
 
@@ -498,7 +498,7 @@ function ReadXml(){
 			
 			default: 
 			
-				document.getElementById('msj_hide').click();
+				MsjWait.hide();
 				alert('No se Pudo Realizar la Operacion, Contacte a su Administrador!!!');
 
 			break

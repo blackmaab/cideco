@@ -10,23 +10,22 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
 	$execQuery = " 
-					Select 
-						   id_registro,
-						   CONCAT(nombres,' ',apellido_pri,' ',apellido_seg) As Nombres
-						   
-						   From registro_alumno a
-						   Inner Join alumno b 
-									  On b.id_alumno = a.id_alumno
-						   Inner Join persona c
-									  On c.id_persona = b.id_persona ";
+					Select id_alumno as Id,              
+					   concat(nombres,' ',apellido_pri,' ',apellido_seg) as Alumno
+					   From alumno a
+					   Left Join persona b
+							On b.id_persona = a.id_persona ";
 			  
 			 
 	$result = $database -> database_query ($execQuery);
 	
 	$retVal = "<complete>";
+	
+	$retVal .= "<option value='-1'>(Nuevo)</option>";
+	
 	while($row = $database -> database_array($result))
 	{
 		if ($selValue == '')

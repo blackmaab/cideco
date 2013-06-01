@@ -96,6 +96,13 @@ function menuClick(id) {
 		break;				
 		
 		
+		case "Ctr_Notas":
+		
+			document.getElementById('contenido').src = "../../control/pages/nota_promedio.php";
+		
+		break;	
+		
+		
 		
 		
 		
