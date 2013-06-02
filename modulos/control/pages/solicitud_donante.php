@@ -95,6 +95,11 @@
 					</tr>
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
+						<td >Numero Nit:</td>
+						<td ><input name="nit" id="nit" class="small" onfocus="jform.col(this);" onChange="getDonante()" ></td>
+					</tr>
+					<tr>
+						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Nombre</td>
 						<td ><input name="nombre" id="nombre" class="small" onfocus="jform.col(this);" ></td>
 					</tr>	
@@ -116,19 +121,16 @@
 						</td>
 					</tr>
 					<tr><td></td><td>&nbsp;</td></tr>
-
+					<tr>
+						<td  align="center"><div class="fieldsetTitle">*</div></td>
+						<td >Pais:</td>
+						<td ><div id='cbo_pais'></div></td>
+					</tr>
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Municipio:</td>
 						<td ><div id='cbo_municipio'></div></td>
 					</tr>
-					
-					<tr>
-						<td  align="center"><div class="fieldsetTitle">*</div></td>
-						<td >Pais:</td>
-						<td ><div id='cbo_pais'></div></td>
-					</tr>					
-
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Fecha Nacimiento:</td>
@@ -153,13 +155,6 @@
 						<td ><input name="telefono_trabajo" id="telefono_trabajo" class="small" onfocus="jform.col(this);" ></td>
 					</tr>	
 
-					<tr>
-						<td  align="center"><div class="fieldsetTitle">*</div></td>
-						<td >Numero Nit:</td>
-						<td ><input name="nit" id="nit" class="small" onfocus="jform.col(this);" ></td>
-					</tr>	
-
-	
 					<tr>
 						<td  align="center"><div class="fieldsetTitle">*</div></td>
 						<td >Genero:</td>

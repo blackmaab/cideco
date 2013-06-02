@@ -7,6 +7,7 @@ var myCalendar;
 var loader;
 
 var idReg=0;
+var idper=0;
 
 // Funcion para cargar el menu
 function doOnLoad() {
@@ -37,6 +38,7 @@ function DoEvent(data) {
 	
 		case "new":
 			idReg=0;
+			idper=0;
 			ClearParam()
 			document.getElementById('frm_show').click();
 			document.getElementById('nombre').focus();
@@ -191,7 +193,6 @@ function LoadCombos()
 	// creacion del combo municipio
 	municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
 	municipio.enableFilteringMode(true);	
-	municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" , function(){});
 	municipio.attachEvent("onBlur", ValidarMunicipio);
 	
 	
@@ -206,6 +207,14 @@ function LoadCombos()
 }
 
 
+function CargarMunicipio()
+{
+
+	municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" + pais.getSelectedValue(), function(){});
+
+}
+
+
 
 // validacion del combo Pais
 
@@ -214,6 +223,12 @@ function ValidarPais() {
 	if (pais.getSelectedValue()==null)
 	{
 		pais.setComboText('');
+	}
+	else
+	{
+		municipio.setComboText('');
+		CargarMunicipio();
+	
 	}
     return true;
 }
@@ -255,6 +270,19 @@ function Validacion2() {
 */
 
 
+
+function getDonante()
+{
+
+	var parameters = ""; 
+	parameters = parameters + "?p0=" + document.getElementById("nit").value;
+	
+	loader = dhtmlxAjax.post( "../actions/solicitud_get_donante.php",encodeURI(parameters), function(){ReadXml()} );
+	MsjWait.show();
+
+}
+
+
 // funcion para guardar los registros
 function SaveData()
 {
@@ -287,13 +315,22 @@ function SaveData()
 			parameters = parameters + "&p14=" + tipo_pago.getSelectedValue();
 			parameters = parameters + "&p15=" + document.getElementById("monto").value;
 			parameters = parameters + "&p16=" + promotor.getSelectedValue();
+			parameters = parameters + "&p17=" + idper
 	
 			MsjWait.show();
 			
 			if (idReg==0)
 			{
-				// si es nuevo entra aqui
-				loader = dhtmlxAjax.post( "../actions/solicitud_donante_save.php",encodeURI(parameters), function(){ReadXml()} );
+				if (idper == 0)
+				{
+					// si es nuevo entra aqui
+					loader = dhtmlxAjax.post( "../actions/solicitud_donante_save.php",encodeURI(parameters), function(){ReadXml()} );
+				}
+				else
+				{
+					// si es nuevo entra aqui
+					loader = dhtmlxAjax.post( "../actions/solicitud_donante_save_ex.php",encodeURI(parameters), function(){ReadXml()} );
+				}
 			}
 			else
 			{
@@ -492,6 +529,31 @@ function ReadXml(){
 				document.getElementById('msj_hide').click();
 				LoadGrid();
 				
+			
+			break;
+			
+			
+			case "get_donante":
+			
+				if (xmlDoc.documentElement.childNodes[1].text=="1")
+				{
+					document.getElementById("nombre").value = xmlDoc.documentElement.childNodes[2].text;
+					document.getElementById("apellido1").value = xmlDoc.documentElement.childNodes[3].text;
+					document.getElementById("apellido2").value = xmlDoc.documentElement.childNodes[4].text;
+					document.getElementById("direccion").value = xmlDoc.documentElement.childNodes[5].text;
+					pais.getSelectedValue();
+					municipio.getSelectedValue();
+					document.getElementById("fecha_nac").value = xmlDoc.documentElement.childNodes[8].text;
+					document.getElementById("telefono_casa").value = xmlDoc.documentElement.childNodes[9].text;
+					document.getElementById("telefono_movil").value = xmlDoc.documentElement.childNodes[10].text;
+					document.getElementById("telefono_trabajo").value = xmlDoc.documentElement.childNodes[11].text;
+					genero.getSelectedValue();
+					document.getElementById("correo").value= xmlDoc.documentElement.childNodes[13].text;
+					idper = xmlDoc.documentElement.childNodes[14].text;
+					
+				}
+				
+				MsjWait.hide();
 			
 			break;
 			

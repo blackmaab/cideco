@@ -12,7 +12,12 @@
 	
 	$selValue = $_GET['p0'];
 	
-	$execQuery = " Select id_municipio,municipio from municipio where activo = 1 order by municipio ";
+	$execQuery = " Select id_municipio,municipio
+						from municipio a
+						inner join departamento b
+							  On a.id_departamento = b.id_departamento
+						Where id_pais = $selValue and
+						a.activo = 1 and b.activo = 1 order by municipio ";
 			  
 			 
 	$result = $database -> database_query ($execQuery);

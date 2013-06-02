@@ -3,9 +3,10 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2013 a las 14:32:46
+-- Tiempo de generación: 02-06-2013 a las 16:05:12
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
+
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -235,6 +236,7 @@ CREATE TABLE IF NOT EXISTS `donacion` (
   `id_promotor` int(11) NOT NULL,
   `id_registro_alumno` int(11) DEFAULT NULL,
   `Monto` decimal(10,2) NOT NULL,
+  `mes_inicio` int(11) DEFAULT '1',
   `fecha_creacion` datetime NOT NULL,
   `estado` int(1) NOT NULL,
   PRIMARY KEY (`id_donacion`),
@@ -249,14 +251,14 @@ CREATE TABLE IF NOT EXISTS `donacion` (
 -- Volcado de datos para la tabla `donacion`
 --
 
-INSERT INTO `donacion` (`id_donacion`, `año`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `fecha_creacion`, `estado`) VALUES
-(1, 2013, 6, 1, 1, 1, 30.00, '2013-05-28 00:00:00', 2),
-(3, 2013, 8, 1, 1, NULL, 30.00, '2013-05-28 00:00:00', 6),
-(5, 2013, 13, 1, 1, NULL, 30.00, '2013-05-29 15:04:17', 5),
-(6, 2013, 14, 1, 1, 2, 30.00, '2013-05-31 18:13:53', 2),
-(7, 2013, 15, 1, 1, 2, 30.00, '2013-05-31 20:33:26', 2),
-(8, 2013, 16, 1, 1, 2, 30.00, '2013-05-31 21:05:37', 2),
-(9, 2013, 17, 1, 1, NULL, 30.00, '2013-05-31 21:10:47', 1);
+INSERT INTO `donacion` (`id_donacion`, `año`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `mes_inicio`, `fecha_creacion`, `estado`) VALUES
+(1, 2013, 6, 1, 1, 1, 30.00, 6, '2013-05-28 00:00:00', 2),
+(3, 2013, 8, 1, 1, NULL, 30.00, 6, '2013-05-28 00:00:00', 6),
+(5, 2013, 13, 1, 1, NULL, 30.00, 6, '2013-05-29 15:04:17', 5),
+(6, 2013, 14, 1, 1, 2, 30.00, 6, '2013-05-31 18:13:53', 2),
+(7, 2013, 15, 1, 1, 2, 30.00, 6, '2013-05-31 20:33:26', 2),
+(8, 2013, 16, 1, 1, 2, 30.00, 6, '2013-05-31 21:05:37', 2),
+(9, 2013, 17, 1, 1, NULL, 30.00, 6, '2013-05-31 21:10:47', 1);
 
 -- --------------------------------------------------------
 
@@ -709,17 +711,23 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `id_donacion` int(11) NOT NULL,
   `mes_pago` int(11) NOT NULL DEFAULT '0',
   `monto` decimal(10,2) NOT NULL,
-  `id_banco` int(11) NOT NULL,
+  `valor_cuota` decimal(10,2) DEFAULT NULL,
   `numero_recibo` int(11) NOT NULL,
   `fecha_creacion` datetime NOT NULL,
   `usuario_creacion` int(11) NOT NULL,
   `fecha_mod` datetime DEFAULT NULL,
   `usuario_mod` int(11) DEFAULT NULL,
-  `valor_cuota` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id_pago`),
-  KEY `fk_banco_idx` (`id_banco`),
   KEY `fk_id_donacion_idx` (`id_donacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `pagos`
+--
+
+INSERT INTO `pagos` (`id_pago`, `fecha`, `id_donacion`, `mes_pago`, `monto`, `valor_cuota`, `numero_recibo`, `fecha_creacion`, `usuario_creacion`, `fecha_mod`, `usuario_mod`) VALUES
+(3, '2013-05-30', 6, 6, 30.00, 30.00, 20, '2013-05-31 00:00:00', 1, NULL, NULL),
+(4, '2013-05-30', 6, 7, 20.00, 30.00, 21, '2013-05-31 00:00:00', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1407,7 +1415,6 @@ ALTER TABLE `municipio`
 -- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  ADD CONSTRAINT `fk_banco` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_id_donacion` FOREIGN KEY (`id_donacion`) REFERENCES `donacion` (`id_donacion`) ON UPDATE CASCADE;
 
 --
