@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2013 a las 19:32:34
+-- Tiempo de generación: 02-06-2013 a las 14:32:46
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -715,6 +715,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `usuario_creacion` int(11) NOT NULL,
   `fecha_mod` datetime DEFAULT NULL,
   `usuario_mod` int(11) DEFAULT NULL,
+  `valor_cuota` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id_pago`),
   KEY `fk_banco_idx` (`id_banco`),
   KEY `fk_id_donacion_idx` (`id_donacion`)
