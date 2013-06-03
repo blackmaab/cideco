@@ -6,8 +6,7 @@
  * Hora: 03:59:01 PM
  * @author Mario Alvarado
  */
-
-/******LIBERERIAS PARA EXPORTAR LA TABLA******/
+/* * ****LIBERERIAS PARA EXPORTAR LA TABLA***** */
 require_once '../../../components/excel/PHPExcel.php';
 require_once '../../../components/excel/PHPExcel/IOFactory.php';
 require_once '../../../components/excel/PHPExcel/RichText.php';

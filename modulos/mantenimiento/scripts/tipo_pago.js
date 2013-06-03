@@ -335,7 +335,7 @@ function DeleteData()
     {
         loader = dhtmlxAjax.post( "../actions/tipo_pago_delete.php",encodeURI(parameters), function(){
             ReadXml()
-            } );
+        } );
     }
 			
 }

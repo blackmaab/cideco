@@ -1,9 +1,9 @@
 ﻿* {margin: auto;padding: 0;}
 
 body {background:#c5dbea url(../images/main_bg.gif) repeat-x top left; font-family:arial; font-size:11px; color:#666666;text-align:center;}
-  
+
 p {margin-top:0px;padding-top:0px;margin-bottom:0px;padding-bottom:0px;}
- 
+
 a img{border: 0px;}
 
 .left{float:left;}
@@ -13,11 +13,11 @@ a img{border: 0px;}
 .right{float:right;}
 
 :focus{outline:none;}
- 
+
 a {text-decoration:none;cursor:pointer;}
- 
+
 #main_body {width:960px;margin-top:18px;text-align:left;padding-bottom:15px;}
- 
+
 /* Header Style Starts Here */
 #header{ padding:0px 0px 0px 0px; color:#0b4067; text-align:left;height:50px; }
 
@@ -116,7 +116,7 @@ li.menu_active a{color:#1a75bc;padding:5px 15px 5px 15px;border-right:1px solid 
 label.error {color: red; padding-left: 20px; }
 textarea{width:400px;height:100px;background:#eaeaea;margin-top:2px;}
 textarea:hover{width:400px;height:100px;background:#f1f1f1;margin-top:2px;}
- 
+
 /* Contact From */
 
 
@@ -134,4 +134,3 @@ textarea:hover{width:400px;height:100px;background:#f1f1f1;margin-top:2px;}
 
 /* Footer Ends Here */
 
- 

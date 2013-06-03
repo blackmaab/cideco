@@ -27,7 +27,7 @@ if (isset($_POST)):
     if ($obj_banco->bandera == 1):
         $xmlvar .= "<field id='type'>Delete</field>\n";
     else:
-         $xmlvar .= "<field id='type'>Error Delete</field>\n";
+        $xmlvar .= "<field id='type'>Error Delete</field>\n";
     endif;
 
 else:

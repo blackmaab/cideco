@@ -85,7 +85,7 @@
                                 <td width="72%"></td>
                             </tr>
                             <tr>
-                                
+
                                 <td  align="center"><div class="fieldsetTitle">*</div></td>
                                 <td>Nombre Banco:</td>
                                 <td><input name="tipo_pago" id="tipo_pago" class="medium" onfocus="jform.col(this);" /></td>

@@ -2,17 +2,17 @@
 
 function LoadMenu() {
 	
-	//menu ppal
-	menu = new dhtmlXMenuObject("menuObj");
-	menu.setSkin("dhx_skyblue");
-	menu.setIconsPath("../../../images/icons/");
-	// menu.setTopText(document.getElementById("usr").value);
-	menu.loadXML("../../../components/menu/menu.xml?e="+new Date().getTime());
-	//menu.loadXML("../../../tmp/"+document.getElementById("mnu").value+"?e="+new Date().getTime());
+    //menu ppal
+    menu = new dhtmlXMenuObject("menuObj");
+    menu.setSkin("dhx_skyblue");
+    menu.setIconsPath("../../../images/icons/");
+    // menu.setTopText(document.getElementById("usr").value);
+    menu.loadXML("../../../components/menu/menu.xml?e="+new Date().getTime());
+    //menu.loadXML("../../../tmp/"+document.getElementById("mnu").value+"?e="+new Date().getTime());
 	
-	menu.attachEvent("onClick", menuClick);
+    menu.attachEvent("onClick", menuClick);
 	
-	/*
+/*
 	//menu logout
 	menu = new dhtmlXMenuObject("menuObj2");
 	menu.setIconsPath("../../../images/icons/");
@@ -26,57 +26,57 @@ function LoadMenu() {
 
 function menuClick(id) {
 	
-	switch(id)
-	{
+    switch(id)
+    {
 		
-		//-------------------
-		//menu Sistema
-		//-------------------
-		case "ayuda": 
+        //-------------------
+        //menu Sistema
+        //-------------------
+        case "ayuda":
 		
-			ModalAlert("Secci&oacute;n en Mantenimiento...");
+            ModalAlert("Secci&oacute;n en Mantenimiento...");
 			
-		break;
+            break;
 		
 		
-		case "bugs":
+        case "bugs":
 			
-			url = "../../bugs/pages/bugreport.php?ids=new";
-			OpenWindow(url,'Reporte de Bugs del Sistema.',740,410,40,20);
+            url = "../../bugs/pages/bugreport.php?ids=new";
+            OpenWindow(url,'Reporte de Bugs del Sistema.',740,410,40,20);
 			
-		break;
-		case "mapa":
-			//Nothing
-		break;
-		case "cerrar":
+            break;
+        case "mapa":
+            //Nothing
+            break;
+        case "cerrar":
 			
-			document.location.href = "../../login/pages/logout.php?ids=new";
+            document.location.href = "../../login/pages/logout.php?ids=new";
 			
-		break;
+            break;
 	
 
 	
-		case "Dye_Rep1": // Desarrollo de Color por Libras
+        case "Dye_Rep1": // Desarrollo de Color por Libras
 			  
-			  var url="../../dye/actions/rep_desarrollo_colores_lib.php";
+            var url="../../dye/actions/rep_desarrollo_colores_lib.php";
 		  
-			  var window_width = 10;
-			  var window_height = 10;
-			  var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-			  var window_top = (screen.height-window_height)/2;
-			  var window_left = (screen.width-window_width)/2;
-			  window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+            var window_width = 10;
+            var window_height = 10;
+            var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+            var window_top = (screen.height-window_height)/2;
+            var window_left = (screen.width-window_width)/2;
+            window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
 		
-		break;
+            break;
 	
 
 					
-		default:
-			alert("Secci&oacute;n en Mantenimiento...(Id Key: <b>"+id+"</b>)");
-		break;
+        default:
+            alert("Secci&oacute;n en Mantenimiento...(Id Key: <b>"+id+"</b>)");
+            break;
 		
-	}
+    }
 	
 	
-	return true;
+    return true;
 }

@@ -343,7 +343,7 @@ function DeleteData()
     {
         loader = dhtmlxAjax.post( "../actions/institucion_delete.php",encodeURI(parameters), function(){
             ReadXml()
-            } );
+        } );
     }
 			
 }

@@ -6,7 +6,6 @@
  * Hora: 01:51:53 AM
  * @author Mario Alvarado
  */
-
 include_once '../../../class/Conexion.class.php';
 include_once '../../../class/EstadoDonacion.class.php';
 

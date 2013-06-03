@@ -4,17 +4,17 @@ function LoadGrid()
 {
 
 
-	mygrid = new dhtmlXGridObject('gridbox');
-	mygrid.setImagePath("../../../components/grid/imgs/");
-	mygrid.init();
-	mygrid.setSkin("dhx_skyblue");
-	//mygrid.loadXML("../../../components/grid/grid.xml");
+    mygrid = new dhtmlXGridObject('gridbox');
+    mygrid.setImagePath("../../../components/grid/imgs/");
+    mygrid.init();
+    mygrid.setSkin("dhx_skyblue");
+    //mygrid.loadXML("../../../components/grid/grid.xml");
 	
-	mygrid.loadXML("../actions/municipio_grid.php");
+    mygrid.loadXML("../actions/municipio_grid.php");
 	
 	
 	
-	/*
+/*
 	
 	
 	mygrid = new dhtmlXGridObject('gridbox');
@@ -31,9 +31,9 @@ function LoadGrid()
 	
 	*/
 	
-	//mygrid.loadXML("../common/grid.xml");
+//mygrid.loadXML("../common/grid.xml");
 
-	// 
+// 
 
 
 }

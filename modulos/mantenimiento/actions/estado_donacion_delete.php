@@ -37,5 +37,4 @@ endif;
 
 $xmlvar .= "</item>";
 echo $xmlvar;
-
 ?>

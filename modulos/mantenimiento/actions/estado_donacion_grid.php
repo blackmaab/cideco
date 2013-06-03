@@ -6,7 +6,6 @@
  * Hora: 01:54:09 AM
  * @author Mario Alvarado
  */
-
 include_once '../../../class/Conexion.class.php';
 include_once '../../../class/EstadoDonacion.class.php';
 header("Content-type: text/xml");

@@ -27,9 +27,9 @@ if (isset($_POST)):
     $arrayValue[":id_banco"] = $_POST[$array_key[2]];
     $arrayValue[":nombre_banco"] = $_POST[$array_key[0]];
     $arrayValue[":activo"] = $_POST[$array_key[1]];
-    
+
     $obj_banco->update_Banco($arrayCampos, $arrayValue, $arrayWhere);
-    
+
 
     if ($obj_banco->bandera == 1):
         $xmlvar .= "<field id='type'>Update</field>\n";

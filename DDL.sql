@@ -908,46 +908,7 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 		END IF;
 
 
-		/*VALIDACION DEL CAMPO TELEFONO_CASA
-		IF NEW.telefono_casa <> null OR NEW.telefono_casa<>"" THEN
-		SET validar_telefono=(SELECT NEW.telefono_casa REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
-			IF validar_telefono<>1 THEN
-				SET msg = concat('El formato del TELEFONO DE CASA no coicide. Ejemplo: 2894-1245');
-				SIGNAL sqlstate '45000' SET message_text = msg;     
-			END IF;
-		END IF;
-        */
-
-		/*VALIDACION DEL CAMPO TELEFONO_MOVIL
-		IF NEW.telefono_movil <> null OR NEW.telefono_movil<>"" THEN
-		SET validar_telefono=(SELECT NEW.telefono_movil REGEXP '[78][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
-			IF validar_telefono<>1 THEN
-				SET msg = concat('El formato del TELEFONO MOVIL no coicide. Ejemplo: 7894-1245');
-				SIGNAL sqlstate '45000' SET message_text = msg;     
-			END IF;
-		END IF;
-
-        */
-		/*VALIDACION DEL CAMPO TELEFONO_TRABAJO
-		IF NEW.telefono_trabajo <> null OR NEW.telefono_trabajo<>"" THEN
-		SET validar_telefono=(SELECT NEW.telefono_trabajo REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
-			IF validar_telefono<>1 THEN
-				SET msg = concat('El formato del TELEFONO DE TRABAJO no coicide. Ejemplo: 2894-1245');
-				SIGNAL sqlstate '45000' SET message_text = msg;     
-			END IF;
-		END IF;
-    
-        */
-
-		/*VALIDACION DEL CAMPO NIT
-		IF NEW.nit<>null OR NEW.nit<>"" THEN			
-			SET validar_nit=(SELECT NEW.nit REGEXP '[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9]');
-			IF validar_nit<>1 THEN
-				SET msg = concat('El formato del NIT no coicide. Ejemplo: 0614-100389-134-7');
-				SIGNAL sqlstate '45000' SET message_text = msg;     
-			END IF;        			
-		END IF;
-        */
+		
 
 		/*VALIDACION DEL CAMPO GENERO*/
 		IF NEW.genero <> null OR NEW.genero <>"" THEN

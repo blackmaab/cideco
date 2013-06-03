@@ -188,7 +188,7 @@ function SaveData()
 		
             // guardamos los parametros en un arreglo post
 			
-             var valor=0;
+            var valor=0;
             var parameters="?p0="+document.getElementById('txtDescripcion').value;            
             if(document.getElementById('rd_si').checked==true){
                 valor=1;

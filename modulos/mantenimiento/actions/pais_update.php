@@ -6,7 +6,6 @@
  * Hora: 05:14:16 PM
  * @author Mario Alvarado
  */
-
 include_once '../../../class/Conexion.class.php';
 include_once '../../../class/Pais.class.php';
 
@@ -28,9 +27,9 @@ if (isset($_POST)):
     $arrayValue[":id_pais"] = $_POST[$array_key[2]];
     $arrayValue[":nombre_pais"] = $_POST[$array_key[0]];
     $arrayValue[":activo"] = $_POST[$array_key[1]];
-    
+
     $obj_pais->update_Pais($arrayCampos, $arrayValue, $arrayWhere);
-    
+
 
     if ($obj_pais->bandera == 1):
         $xmlvar .= "<field id='type'>Update</field>\n";
