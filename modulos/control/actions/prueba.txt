@@ -1,0 +1,66 @@
+ 	Update persona                            
+
+						Set nombres = 'Christian',
+							apellido_pri = 'Cordova',
+							apellido_seg = 'Mendez',
+							Direccion = 'Long beach',
+							id_municipio = null,
+							id_pais = 2,
+							telefono_casa = '901-223-2345',
+							telefono_movil = '901-723-2345',
+							telefono_trabajo = '901-723-6239',
+							nit = '0614-010983-112-1',
+							fecha_nacimiento = '1983-09-01',
+							Genero = 'M',
+							correo_electronico ='cordova10@hotmail.com'
+						 
+						 where id_persona = 1 
+ Update donacion
+					   set id_tipo_pago = 1,
+						   id_promotor = 1,
+						   Monto = 50.00
+					Where id_donacion =  14 
+ 	Update persona                            
+
+						Set nombres = 'Christian',
+							apellido_pri = 'Cordova',
+							apellido_seg = 'Mendez',
+							Direccion = 'Long beach',
+							id_municipio = null,
+							id_pais = 2,
+							telefono_casa = '901-223-2345',
+							telefono_movil = '901-723-2345',
+							telefono_trabajo = '901-723-6239',
+							nit = '0614-010983-112-1',
+							fecha_nacimiento = '1983-09-01',
+							Genero = 'M',
+							correo_electronico ='cordova10@hotmail.com'
+						 
+						 where id_persona = Christian 
+ Update donacion
+					   set id_tipo_pago = 1,
+						   id_promotor = 1,
+						   Monto = 50.00
+					Where id_donacion =  14 
+ 	Update persona                            
+
+						Set nombres = 'Christian',
+							apellido_pri = 'Cordova',
+							apellido_seg = 'Mendez',
+							Direccion = 'Long beach',
+							id_municipio = null,
+							id_pais = 2,
+							telefono_casa = '901-223-2345',
+							telefono_movil = '901-723-2345',
+							telefono_trabajo = '901-723-6239',
+							nit = '0614-010983-112-1',
+							fecha_nacimiento = '1983-09-01',
+							Genero = 'M',
+							correo_electronico ='cordova10@hotmail.com'
+						 
+						 where id_persona = 20 
+ Update donacion
+					   set id_tipo_pago = 1,
+						   id_promotor = 1,
+						   Monto = 50.00
+					Where id_donacion =  14 

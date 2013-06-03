@@ -71,57 +71,7 @@ function DoEvent(data) {
 		break;
 		
 		
-		/*
-		
-		case "save":
-		
-			SaveData();
-			//Msjbox.show();
-		break;
-		
-		case "edit":
-		
-			if(mygrid.getSelectedId())
-			{
-				LoadParam();
-			}
-			else
-			{
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-				Msjbox.show();
-			}
-			
-		break;		
-		
-		case "delete":
-		
-			if(mygrid.getSelectedId())
-			{
-				document.getElementById('msj_show').click();
-			}
-			else
-			{
-				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
-				Msjbox.show();
-			}		
-			
 
-		break;
-		
-		case "export":
-		
-			var url="../actions/usuarios_export.php";
-			
-			var window_width = 10;
-			var window_height = 10;
-			var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
-			var window_top = (screen.height-window_height)/2;
-			var window_left = (screen.width-window_width)/2;
-			window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
-		
-		break;
-		
-		*/
 		
 		default:
 			alert('Opcion aun en desarrollo.... ' + data);
@@ -255,11 +205,11 @@ function RechazarSolicitud()
 	{
 		var parameters = ""; 
 		parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
-		parameters = parameters + "&p1=5";
+		parameters = parameters + "&p1=6";
 		
 		MsjWait.show();
 		
-		loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ReadXml()} );
+		loader = dhtmlxAjax.post( "../actions/control_solicitud_rechazar.php",encodeURI(parameters), function(){ReadXml()} );
 
 		
 	}

@@ -21,6 +21,22 @@
 	$msj = 'Insert';
 	
 	
+	$nombres = '';
+    $apellido_pri = '';
+    $apellido_seg = '';
+    $Direccion = '';
+    $id_municipio = '';
+    $id_pais = '';
+    $telefono_casa = '';
+    $telefono_movil = '';
+    $telefono_trabajo = '';
+    $nit = '';
+    $fecha_nacimiento = '';
+    $Genero = '';
+    $correo_electronico = '';
+	$anio = '';
+	
+	
 	// Llenamos las variables
 	
 	$pKeys = array_keys($_POST);
@@ -46,10 +62,11 @@
 	
 	
 	// Ejecutamos el Metodo Insert de la Clase
-	$Per->insert_Persona();
+	//$Per->insert_Persona();
 	
 	
 	// Si Hubo Un error lo guardamos
+	/*
 	if ($Per->bandera == 0)
 	{
 		$Err -> GuardarError('solicitud_donante_save.php',$Per->mensaje);
@@ -57,6 +74,56 @@
 	}
 	else
 	{
+	*/
+	
+	/*
+	$Per->nombres = trim($_POST[$pKeys[1]]);
+    $Per->apellido_pri = trim($_POST[$pKeys[2]]);
+    $Per->apellido_seg = trim($_POST[$pKeys[3]]);
+    $Per->Direccion = trim($_POST[$pKeys[4]]);
+    $Per->id_municipio = trim($_POST[$pKeys[5]]);
+    $Per->id_pais = trim($_POST[$pKeys[6]]);
+    $Per->telefono_casa = trim($_POST[$pKeys[7]]);
+    $Per->telefono_movil = trim($_POST[$pKeys[8]]);
+    $Per->telefono_trabajo = trim($_POST[$pKeys[9]]);
+    $Per->nit = trim($_POST[$pKeys[10]]);
+    $Per->fecha_nacimiento = trim($_POST[$pKeys[11]]);
+    $Per->Genero = trim($_POST[$pKeys[12]]);
+    $Per->correo_electronico = trim($_POST[$pKeys[13]]);
+	*/
+	
+	
+	$nombres = trim($_POST[$pKeys[1]]);
+    $apellido_pri = trim($_POST[$pKeys[2]]);
+    $apellido_seg = trim($_POST[$pKeys[3]]);
+    $Direccion = trim($_POST[$pKeys[4]]);
+    $id_municipio = trim($_POST[$pKeys[5]]);
+    $id_pais = trim($_POST[$pKeys[6]]);
+    $telefono_casa = trim($_POST[$pKeys[7]]);
+    $telefono_movil = trim($_POST[$pKeys[8]]);
+    $telefono_trabajo = trim($_POST[$pKeys[9]]);
+    $nit = trim($_POST[$pKeys[10]]);
+    $fecha_nacimiento = trim($_POST[$pKeys[11]]);
+    $Genero = trim($_POST[$pKeys[12]]);
+    $correo_electronico = trim($_POST[$pKeys[13]]);
+	
+	
+	if ($id_municipio=='')
+	{
+		$id_municipio = 'NULL';
+	}
+	
+	
+	$execQuery = " 	Insert into persona
+					   (nombres,apellido_pri,apellido_seg,Direccion,id_municipio,id_pais,telefono_casa,
+						telefono_movil,telefono_trabajo,nit,fecha_nacimiento,Genero,correo_electronico)
+						
+						Values ('$nombres','$apellido_pri','$apellido_seg','$Direccion',$id_municipio,
+								$id_pais,'$telefono_casa','$telefono_movil','$telefono_trabajo','$nit','$fecha_nacimiento',
+								'$Genero','$correo_electronico') ";
+						
+	$database -> database_query ($execQuery);
+	
 	
 		$execQuery = " Select Max(id_persona) from persona ";
 		
@@ -106,16 +173,19 @@
 			$id_tipo_pago = $Dona -> id_tipo_pago;
 			$id_promotor = $Dona -> id_promotor;
 			$Monto = $Dona -> Monto;
+			
+			$execQuery = " Select anio_trans from anio_transacciones where activo = 1 ";
+			$anio = $database -> database_scalar ($execQuery);
 
 			
 			$execQuery = " INSERT INTO donacion 
-								(id_donante,id_tipo_pago,id_promotor,id_registro_alumno,Monto,fecha_creacion,estado)
-								VALUES($id_donante,$id_tipo_pago,$id_promotor,NULL,$Monto,Now(),1) ";
+								(anio,id_donante,id_tipo_pago,id_promotor,id_registro_alumno,Monto,fecha_creacion,estado)
+								VALUES($anio,$id_donante,$id_tipo_pago,$id_promotor,NULL,$Monto,Now(),1) ";
 								
 			$database -> database_query ($execQuery);
 			
 
-		}
+		//}
 
 	}
 	

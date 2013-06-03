@@ -41,7 +41,7 @@ function DoEvent(data) {
 			idper=0;
 			ClearParam()
 			document.getElementById('frm_show').click();
-			document.getElementById('nombre').focus();
+			document.getElementById('nit').focus();
 		break;
 		
 		case "save":
@@ -52,11 +52,49 @@ function DoEvent(data) {
 		
 		
 		
+		case "edit":
+		
+			if(mygrid.getSelectedId())
+			{
+			
+				if (mygrid.cells(mygrid.getSelectedId(),2).getValue()=='En Proceso')
+				{	
+					idReg=0;
+					idper=0;
+					ClearParam()
+					document.getElementById('frm_show').click();
+					getDonacion();
+				}
+				else
+				{
+					Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;El estado no es valido para Editar la solicitud </td></tr></table>");
+					Msjbox.show();
+				
+				}
+			}
+			else
+			{
+				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+				Msjbox.show();
+			}		
+			
+
+		break;		
+		
 		case "delete":
 		
 			if(mygrid.getSelectedId())
 			{
-				document.getElementById('msj_show').click();
+			
+				if (mygrid.cells(mygrid.getSelectedId(),2).getValue()=='En Proceso')
+				{	
+					document.getElementById('msj_show').click();
+				}
+				else
+				{
+					Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;El estado no es valido para Eliminar </td></tr></table>");
+					Msjbox.show();
+				}
 			}
 			else
 			{
@@ -283,6 +321,19 @@ function getDonante()
 }
 
 
+function getDonacion()
+{
+
+	var parameters = ""; 
+	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+	loader = dhtmlxAjax.post( "../actions/solicitud_get_donacion.php",encodeURI(parameters), function(){ReadXml()} );
+	MsjWait.show();
+
+
+}
+
+
 // funcion para guardar los registros
 function SaveData()
 {
@@ -321,6 +372,7 @@ function SaveData()
 			
 			if (idReg==0)
 			{
+
 				if (idper == 0)
 				{
 					// si es nuevo entra aqui
@@ -331,9 +383,11 @@ function SaveData()
 					// si es nuevo entra aqui
 					loader = dhtmlxAjax.post( "../actions/solicitud_donante_save_ex.php",encodeURI(parameters), function(){ReadXml()} );
 				}
+
 			}
 			else
 			{
+
 				// si es un update entra aqui
 				loader = dhtmlxAjax.post( "../actions/solicitud_donante_update.php",encodeURI(parameters), function(){ReadXml()} );
 			}
@@ -398,11 +452,6 @@ function CheckParam()
 	if (document.getElementById('monto').value == '')
 	{
 		Val = false;
-	}	
-	
-	if (municipio.getSelectedValue()=='null' && municipio.getSelectedValue()=='')
-	{
-		Val = false;
 	}
 	
 	if (pais.getSelectedValue()=='null' && pais.getSelectedValue()=='')
@@ -432,41 +481,28 @@ function CheckParam()
 }
 
 
-// Catgando los campos del grid hacia las cajas del formulario
-function LoadParam()
-{
-
-	// limpiamos las cajas
-	ClearParam();
-	
-	// llenamos las cajas
-	idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
-	
-	/*
-	document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
-	document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
-	document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
-	document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
-	document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
-	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),7).getValue());
-	combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
-	*/
-	
-	document.getElementById('frm_show').click();
-
-}
-
 
 // funcion para limpiar las cajas
 
-function ClearParam(){
+function ClearParam()
+{
 
-
-
-	//document.getElementById("usuario").value = "";	
-	//combo_perfil.setComboText('');
-
-	
+	document.getElementById("nombre").value = '';
+	document.getElementById("apellido1").value = '';
+	document.getElementById("apellido2").value = '';
+	document.getElementById("direccion").value = '';
+	municipio.setComboText('');
+	pais.setComboText('');
+	document.getElementById("telefono_casa").value = '';
+	document.getElementById("telefono_movil").value = '';
+	document.getElementById("telefono_trabajo").value = '';
+	document.getElementById("nit").value = '';
+	document.getElementById("fecha_nac").value = '';
+	genero.setComboText('');
+	document.getElementById("correo").value = '';
+	tipo_pago.setComboText('');
+	document.getElementById("monto").value = '30.00';
+	promotor.setComboText('');
 	
 }
 
@@ -480,6 +516,8 @@ function DeleteData()
 	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
 	
 	loader = dhtmlxAjax.post( "../actions/solicitud_donante_delete.php",encodeURI(parameters), function(){ReadXml()} );
+	
+	MsjWait.show();
 	
 }
 
@@ -525,9 +563,10 @@ function ReadXml(){
 			case "Delete":
 			
 				
-				MsjWait.show();
+				
 				document.getElementById('msj_hide').click();
 				LoadGrid();
+				MsjWait.hide();
 				
 			
 			break;
@@ -541,21 +580,52 @@ function ReadXml(){
 					document.getElementById("apellido1").value = xmlDoc.documentElement.childNodes[3].text;
 					document.getElementById("apellido2").value = xmlDoc.documentElement.childNodes[4].text;
 					document.getElementById("direccion").value = xmlDoc.documentElement.childNodes[5].text;
-					pais.getSelectedValue();
+					pais.loadXML("../actions/solicitud_combo_pais.php?p0=" + xmlDoc.documentElement.childNodes[6].text , function(){});
 					municipio.getSelectedValue();
 					document.getElementById("fecha_nac").value = xmlDoc.documentElement.childNodes[8].text;
 					document.getElementById("telefono_casa").value = xmlDoc.documentElement.childNodes[9].text;
 					document.getElementById("telefono_movil").value = xmlDoc.documentElement.childNodes[10].text;
 					document.getElementById("telefono_trabajo").value = xmlDoc.documentElement.childNodes[11].text;
-					genero.getSelectedValue();
+					genero.loadXML("../actions/solicitud_combo_genero.php?p0="+xmlDoc.documentElement.childNodes[12].text , function(){});
 					document.getElementById("correo").value= xmlDoc.documentElement.childNodes[13].text;
 					idper = xmlDoc.documentElement.childNodes[14].text;
 					
 				}
 				
 				MsjWait.hide();
+				document.getElementById("nombre").focus();
 			
 			break;
+			
+			
+			case "get_donacion":
+			
+				document.getElementById("nit").value = xmlDoc.documentElement.childNodes[1].text
+				idper = xmlDoc.documentElement.childNodes[2].text;
+				document.getElementById("nombre").value = xmlDoc.documentElement.childNodes[3].text;
+				document.getElementById("apellido1").value = xmlDoc.documentElement.childNodes[4].text;
+				document.getElementById("apellido2").value = xmlDoc.documentElement.childNodes[5].text;
+				document.getElementById("direccion").value = xmlDoc.documentElement.childNodes[6].text;
+				pais.loadXML("../actions/solicitud_combo_pais.php?p0=" + xmlDoc.documentElement.childNodes[7].text , function(){});
+				municipio.getSelectedValue();
+				document.getElementById("fecha_nac").value = xmlDoc.documentElement.childNodes[9].text;
+				document.getElementById("telefono_casa").value = xmlDoc.documentElement.childNodes[10].text;
+				document.getElementById("telefono_movil").value = xmlDoc.documentElement.childNodes[11].text;
+				document.getElementById("telefono_trabajo").value = xmlDoc.documentElement.childNodes[12].text;
+				genero.loadXML("../actions/solicitud_combo_genero.php?p0="+xmlDoc.documentElement.childNodes[13].text , function(){});
+				document.getElementById("correo").value= xmlDoc.documentElement.childNodes[14].text;
+				tipo_pago.loadXML("../actions/solicitud_combo_tipo_pago.php?p0="+xmlDoc.documentElement.childNodes[15].text , function(){});
+				document.getElementById("monto").value = xmlDoc.documentElement.childNodes[16].text;
+				promotor.loadXML("../actions/solicitud_combo_promotor.php?p0="+xmlDoc.documentElement.childNodes[17].text , function(){});
+				idReg = xmlDoc.documentElement.childNodes[18].text;
+					
+
+				MsjWait.hide();
+				
+				document.getElementById("nombre").focus();
+			
+			break;
+			
 			
 			
 			default: 

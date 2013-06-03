@@ -10,27 +10,16 @@
 	//Creacion de Objetos
 
 
+	$anio = "";
+	$msj = "";
+	$execQuery = "";
+	
 	$msj = 'Insert';
 	
 	
 	// Llenamos las variables
 	
 	$pKeys = array_keys($_POST);
-    //$Per->id_persona = trim($_POST[$pKeys[0]]);
-    $nombres = trim($_POST[$pKeys[1]]);
-    $apellido_pri = trim($_POST[$pKeys[2]]);
-    $apellido_seg = trim($_POST[$pKeys[3]]);
-    $Direccion = trim($_POST[$pKeys[4]]);
-    $id_municipio = trim($_POST[$pKeys[5]]);
-    $id_pais = trim($_POST[$pKeys[6]]);
-    $telefono_casa = trim($_POST[$pKeys[7]]);
-    $telefono_movil = trim($_POST[$pKeys[8]]);
-    $telefono_trabajo = trim($_POST[$pKeys[9]]);
-    $nit = trim($_POST[$pKeys[10]]);
-    $fecha_nacimiento = trim($_POST[$pKeys[11]]);
-    $Genero = trim($_POST[$pKeys[12]]);
-    $correo_electronico = trim($_POST[$pKeys[13]]);
-	
 	
 	$id_tipo_pago = trim($_POST[$pKeys[14]]);
 	$Monto = trim($_POST[$pKeys[15]]);
@@ -38,9 +27,26 @@
 	$id_persona = trim($_POST[$pKeys[17]]);
 	
 	
+	$execQuery = " Select anio_trans from anio_transacciones where activo = 1 ";
+	$anio = $database -> database_scalar ($execQuery);
 	
 	
+	$execQuery = " select id_donante from donante where id_persona = $id_persona ";
+	$id_donante = $database -> database_scalar ($execQuery);
 
+	
+	$execQuery = " 	Insert into donacion
+				   (anio,id_donante,id_tipo_pago,id_promotor,Monto,fecha_creacion,estado)
+				   
+				   Values ($anio,$id_donante,$id_tipo_pago,$id_promotor,$Monto,Now(),1) ";
+				   
+	/*
+	$fp = fopen("prueba.txt","a");
+	fwrite($fp, $execQuery . PHP_EOL );
+	fclose($fp);
+	*/
+			 
+	$database -> database_query ($execQuery);
 	
 	
 	//Retornar respuesta XML

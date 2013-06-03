@@ -10,7 +10,7 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
 	$execQuery = " Select id_pais,nombre_pais from pais where activo = 1 order by nombre_pais ";
 			  

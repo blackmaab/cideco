@@ -10,7 +10,7 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
 	$execQuery = " Select  id_promotor,CONCAT(Nombres,' ',apellido_pri)
 					From promotor a

@@ -39,10 +39,6 @@
 
 	$database -> database_query ($execQuery);
 
-	$fp = fopen("prueba.txt","a");
-	fwrite($fp, $execQuery . PHP_EOL );
-	fclose($fp);
-
 	$execQuery = " Select id_registro_alumno from beca_escolar Where id_beca = $idre ";
 
 	$id_registro = $database -> database_scalar ($execQuery);

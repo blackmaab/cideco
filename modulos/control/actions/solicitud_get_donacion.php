@@ -17,27 +17,41 @@
 	// Llenamos las variables
 	
 	$pKeys = array_keys($_POST);
-    $nit = trim($_POST[$pKeys[0]]);
+    $id = trim($_POST[$pKeys[0]]);
+	
+	//$id = '14';
 
 	
 	$execQuery = " 
-				Select 
-					   nombres,
-					   apellido_pri,
-					   apellido_seg,
-					   direccion,
-					   id_pais,
-					   id_municipio,
-					   fecha_nacimiento,
-					   telefono_casa,
-					   telefono_movil,
-					   telefono_trabajo,
-					   Genero,
-					   correo_electronico,
-					   id_persona
-					   
-				from  persona
-				Where nit = '$nit'
+					Select 
+						nit,
+						c.id_persona,
+						nombres,
+						apellido_pri,
+						apellido_seg,
+						direccion,
+						id_pais,
+						id_municipio,
+						fecha_nacimiento,
+						telefono_casa,
+						telefono_movil,
+						telefono_trabajo,
+						Genero,
+						correo_electronico, 
+						id_tipo_pago,
+						monto,
+						id_promotor,
+						id_donacion
+						
+						
+
+					from donacion a
+					Left Join donante b
+						 On a.id_donante = b.id_donante
+					Left Join persona c 
+						 On c.id_persona = b.id_persona
+						 
+					where id_donacion = $id
 				 ";
 				 
 	$result = $database -> database_query ($execQuery);
@@ -57,7 +71,11 @@
 		$data .=  "<field id='type'>".$row[10]."</field>\n";
 		$data .=  "<field id='type'>".$row[11]."</field>\n";
 		$data .=  "<field id='type'>".$row[12]."</field>\n";
-		$msj = "1";
+		$data .=  "<field id='type'>".$row[13]."</field>\n";
+		$data .=  "<field id='type'>".$row[14]."</field>\n";
+		$data .=  "<field id='type'>".$row[15]."</field>\n";
+		$data .=  "<field id='type'>".$row[16]."</field>\n";
+		$data .=  "<field id='type'>".$row[17]."</field>\n";
 	}	
 	
 	
@@ -68,8 +86,7 @@
 	$xmlvar = "";
 	$xmlvar .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	$xmlvar .= "<item>\n";
-   	$xmlvar .= "<field id='type'>get_donante</field>\n";
-	$xmlvar .= "<field id='type'>$msj</field>\n";
+   	$xmlvar .= "<field id='type'>get_donacion</field>\n";
 	$xmlvar .= $data;
 	$xmlvar .= "</item>";
 	

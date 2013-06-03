@@ -10,7 +10,7 @@
 	$retVal = "";
 	$execQuery = "";
 	
-	//$selValue = $_GET['p0'];
+	$selValue = $_GET['p0'];
 	
 	$execQuery = " Select id_tipo_pago,descripcion from tipo_pago where activo = 1  ";
 			  
