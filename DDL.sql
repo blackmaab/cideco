@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2013 a las 02:56:26
+-- Tiempo de generación: 03-06-2013 a las 08:04:06
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -137,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `beca_escolar` (
   `anio_beca` int(11) NOT NULL DEFAULT '0',
   `Monto` decimal(10,2) NOT NULL DEFAULT '0.00',
   `comentario` varchar(255) DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `activo` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id_beca`),
   KEY `fk_registro_alumno_idx` (`id_registro_alumno`)
@@ -146,9 +147,9 @@ CREATE TABLE IF NOT EXISTS `beca_escolar` (
 -- Volcado de datos para la tabla `beca_escolar`
 --
 
-INSERT INTO `beca_escolar` (`id_beca`, `id_registro_alumno`, `anio_beca`, `Monto`, `comentario`, `activo`) VALUES
-(1, 1, 2013, 50.00, NULL, '1'),
-(2, 2, 2013, 35.00, '', '1');
+INSERT INTO `beca_escolar` (`id_beca`, `id_registro_alumno`, `anio_beca`, `Monto`, `comentario`, `fecha_creacion`, `activo`) VALUES
+(1, 1, 2013, 50.00, NULL, '2013-05-30 00:00:00', '1'),
+(2, 2, 2013, 35.00, '', '2013-05-30 00:00:00', '1');
 
 -- --------------------------------------------------------
 
@@ -258,12 +259,12 @@ INSERT INTO `donacion` (`id_donacion`, `anio`, `id_donante`, `id_tipo_pago`, `id
 (6, 2013, 14, 1, 1, 2, 30.00, 6, '2013-05-31 18:13:53', 2),
 (7, 2013, 15, 1, 1, 2, 30.00, 6, '2013-05-31 20:33:26', 2),
 (8, 2013, 16, 1, 1, 2, 30.00, 6, '2013-05-31 21:05:37', 2),
-(9, 2013, 17, 1, 1, NULL, 30.00, 6, '2013-05-31 21:10:47', 1),
-(10, 2013, 18, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:30:39', 1),
-(11, 2013, 19, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:33:58', 1),
+(9, 2013, 17, 1, 1, NULL, 30.00, 6, '2013-05-31 21:10:47', 5),
+(10, 2013, 18, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:30:39', 5),
+(11, 2013, 19, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:33:58', 5),
 (12, 2013, 20, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:37:51', 1),
-(13, 2013, 21, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:51:50', 1),
-(14, 2013, 21, 1, 1, NULL, 30.00, NULL, '2013-06-02 18:46:27', 1);
+(13, 2013, 21, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:51:50', 6),
+(14, 2013, 21, 1, 1, NULL, 50.00, NULL, '2013-06-02 18:46:27', 1);
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,7 @@ INSERT INTO `donante` (`id_donante`, `id_usuario`, `id_persona`, `estado`) VALUE
 (17, NULL, 19, 1),
 (18, NULL, 19, 1),
 (19, NULL, 19, 1),
-(20, NULL, 19, 1),
+(20, 11, 19, 1),
 (21, NULL, 20, 1);
 
 -- --------------------------------------------------------
@@ -851,7 +852,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
 --
 
 INSERT INTO `persona` (`id_persona`, `nombres`, `apellido_pri`, `apellido_seg`, `Direccion`, `id_municipio`, `id_pais`, `telefono_casa`, `telefono_movil`, `telefono_trabajo`, `nit`, `fecha_nacimiento`, `Genero`, `correo_electronico`) VALUES
-(1, 'Pedro', 'Molina', NULL, 'Soyapango', 1, 1, NULL, NULL, NULL, '0614-010170-112-1', '1970-01-01', 'M', NULL),
+(1, 'Ramon', 'Martines', 'Leiva', 'Long beach', NULL, 2, '901-223-2345', '901-723-2345', '901-723-6239', '0614-010984-112-1', '1983-09-01', 'M', 'cordova10@hotmail.com'),
 (6, 'Jose', 'Perez', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', 'jose.perez@hotmail.com'),
 (7, 'Juan', 'Rivera', '', 'San Salvador', 1, 1, '', '', '', '0614-010180-112-1', '1980-01-01', 'M', ''),
 (12, 'Luis', 'Gonzales', '', 'Soyapango', 4, 1, '', '', '', '0614-010180-112-3', '2013-05-29', 'M', ''),
@@ -1372,7 +1373,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `estado_usuario` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`id_usuario`),
   KEY `Fkey_usuarios_perfil` (`id_perfil`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -1387,7 +1388,8 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `clave_acceso`, `fecha_c
 (7, '5', '25u1QytEq31DZpbHFLo6TBwa3bKMxDIh0CSXemPXP2o=', '2013-06-01', '', '', 3, 'A'),
 (8, '5', '25u1QytEq31DZpbHFLo6TBwa3bKMxDIh0CSXemPXP2o=', '2013-06-01', '', '', 3, 'A'),
 (9, 'luis.mejia', '5LejbVIW/55nzMjFQFWQQ1C1FNHK2yh9NHXXw881FmM=', '2013-06-01', '', '', 3, 'A'),
-(10, 'luis.mejia', '5LejbVIW/55nzMjFQFWQQ1C1FNHK2yh9NHXXw881FmM=', '2013-06-01', '', '', 3, 'A');
+(10, 'luis.mejia', '5LejbVIW/55nzMjFQFWQQ1C1FNHK2yh9NHXXw881FmM=', '2013-06-01', '', '', 3, 'A'),
+(11, '6', '25u1QytEq31DZpbHFLo6TBwa3bKMxDIh0CSXemPXP2o=', '2013-06-03', '', '', 3, 'A');
 
 --
 -- Restricciones para tablas volcadas
