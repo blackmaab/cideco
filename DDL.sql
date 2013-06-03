@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2013 a las 16:05:12
+-- Tiempo de generación: 03-06-2013 a las 02:56:26
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `gd_cideco_es`
 --
+CREATE DATABASE `gd_cideco_es` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `gd_cideco_es`;
 
 -- --------------------------------------------------------
 
@@ -55,21 +57,21 @@ INSERT INTO `alumno` (`id_alumno`, `id_persona`, `nie`, `destacado_en`, `necesid
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `año_transacciones`
+-- Estructura de tabla para la tabla `anio_transacciones`
 --
 
-CREATE TABLE IF NOT EXISTS `año_transacciones` (
+CREATE TABLE IF NOT EXISTS `anio_transacciones` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `año_trans` int(11) NOT NULL DEFAULT '0',
+  `anio_trans` int(11) NOT NULL DEFAULT '0',
   `activo` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Volcado de datos para la tabla `año_transacciones`
+-- Volcado de datos para la tabla `anio_transacciones`
 --
 
-INSERT INTO `año_transacciones` (`Id`, `año_trans`, `activo`) VALUES
+INSERT INTO `anio_transacciones` (`Id`, `anio_trans`, `activo`) VALUES
 (1, 2013, 1);
 
 -- --------------------------------------------------------
@@ -132,9 +134,8 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `beca_escolar` (
   `id_beca` int(11) NOT NULL AUTO_INCREMENT,
   `id_registro_alumno` int(11) NOT NULL,
+  `anio_beca` int(11) NOT NULL DEFAULT '0',
   `Monto` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `fecha_inicio_beca` date NOT NULL,
-  `fecha_fin_beca` date NOT NULL,
   `comentario` varchar(255) DEFAULT NULL,
   `activo` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id_beca`),
@@ -145,9 +146,9 @@ CREATE TABLE IF NOT EXISTS `beca_escolar` (
 -- Volcado de datos para la tabla `beca_escolar`
 --
 
-INSERT INTO `beca_escolar` (`id_beca`, `id_registro_alumno`, `Monto`, `fecha_inicio_beca`, `fecha_fin_beca`, `comentario`, `activo`) VALUES
-(1, 1, 50.00, '2013-01-01', '2013-12-31', NULL, '1'),
-(2, 2, 35.00, '2013-01-01', '2013-12-31', '', '1');
+INSERT INTO `beca_escolar` (`id_beca`, `id_registro_alumno`, `anio_beca`, `Monto`, `comentario`, `activo`) VALUES
+(1, 1, 2013, 50.00, NULL, '1'),
+(2, 2, 2013, 35.00, '', '1');
 
 -- --------------------------------------------------------
 
@@ -229,13 +230,13 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `donacion` (
   `id_donacion` int(11) NOT NULL AUTO_INCREMENT,
-  `año` int(11) NOT NULL DEFAULT '0',
+  `anio` int(11) NOT NULL DEFAULT '0',
   `id_donante` int(11) NOT NULL,
   `id_tipo_pago` int(11) NOT NULL,
   `id_promotor` int(11) NOT NULL,
   `id_registro_alumno` int(11) DEFAULT NULL,
   `Monto` decimal(10,2) NOT NULL,
-  `mes_inicio` int(11) DEFAULT '1',
+  `mes_inicio` int(11) DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL,
   `estado` int(1) NOT NULL,
   PRIMARY KEY (`id_donacion`),
@@ -244,20 +245,25 @@ CREATE TABLE IF NOT EXISTS `donacion` (
   KEY `Fkey_donacion_promotor` (`id_promotor`),
   KEY `fk_estado_idx` (`estado`),
   KEY `Fkey_donacion_registro_alumno` (`id_registro_alumno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `donacion`
 --
 
-INSERT INTO `donacion` (`id_donacion`, `año`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `mes_inicio`, `fecha_creacion`, `estado`) VALUES
+INSERT INTO `donacion` (`id_donacion`, `anio`, `id_donante`, `id_tipo_pago`, `id_promotor`, `id_registro_alumno`, `Monto`, `mes_inicio`, `fecha_creacion`, `estado`) VALUES
 (1, 2013, 6, 1, 1, 1, 30.00, 6, '2013-05-28 00:00:00', 2),
 (3, 2013, 8, 1, 1, NULL, 30.00, 6, '2013-05-28 00:00:00', 6),
 (5, 2013, 13, 1, 1, NULL, 30.00, 6, '2013-05-29 15:04:17', 5),
 (6, 2013, 14, 1, 1, 2, 30.00, 6, '2013-05-31 18:13:53', 2),
 (7, 2013, 15, 1, 1, 2, 30.00, 6, '2013-05-31 20:33:26', 2),
 (8, 2013, 16, 1, 1, 2, 30.00, 6, '2013-05-31 21:05:37', 2),
-(9, 2013, 17, 1, 1, NULL, 30.00, 6, '2013-05-31 21:10:47', 1);
+(9, 2013, 17, 1, 1, NULL, 30.00, 6, '2013-05-31 21:10:47', 1),
+(10, 2013, 18, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:30:39', 1),
+(11, 2013, 19, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:33:58', 1),
+(12, 2013, 20, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:37:51', 1),
+(13, 2013, 21, 1, 1, NULL, 30.00, NULL, '2013-06-02 17:51:50', 1),
+(14, 2013, 21, 1, 1, NULL, 30.00, NULL, '2013-06-02 18:46:27', 1);
 
 -- --------------------------------------------------------
 
@@ -274,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `donante` (
   KEY `Fkey_donante_estado` (`estado`),
   KEY `Fkey_donante_persona` (`id_persona`),
   KEY `Fkey_donante_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Volcado de datos para la tabla `donante`
@@ -287,7 +293,11 @@ INSERT INTO `donante` (`id_donante`, `id_usuario`, `id_persona`, `estado`) VALUE
 (14, 6, 16, 1),
 (15, 9, 17, 1),
 (16, 10, 18, 1),
-(17, NULL, 19, 1);
+(17, NULL, 19, 1),
+(18, NULL, 19, 1),
+(19, NULL, 19, 1),
+(20, NULL, 19, 1),
+(21, NULL, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -822,7 +832,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `apellido_pri` varchar(60) NOT NULL,
   `apellido_seg` varchar(60) DEFAULT NULL,
   `Direccion` varchar(250) NOT NULL,
-  `id_municipio` int(11) NOT NULL,
+  `id_municipio` int(11) DEFAULT NULL,
   `id_pais` int(11) DEFAULT NULL,
   `telefono_casa` varchar(15) DEFAULT NULL,
   `telefono_movil` varchar(15) DEFAULT NULL,
@@ -834,7 +844,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`id_persona`),
   KEY `Fkey_persona_pais` (`id_pais`),
   KEY `Fkey_persona_municipio_idx` (`id_municipio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `persona`
@@ -851,7 +861,8 @@ INSERT INTO `persona` (`id_persona`, `nombres`, `apellido_pri`, `apellido_seg`, 
 (16, 'Sofia', 'Perez', 'Martines', 'San salvador', 1, 1, '', '', '', '0614-010580-112-5', '1980-05-01', 'F', 'sofia@hotmail.com'),
 (17, 'Luis', 'Mejia', '', 'los angeles', 82, 2, '', '', '', '0614-010980-122-1', '2013-06-01', 'M', ''),
 (18, 'Luis', 'Mejia', '', 'San salvador', 1, 2, '', '', '', '0614-010980-112-1', '2013-06-01', 'M', ''),
-(19, 'Luis', 'mejia', '', 'los angeles', 100, 1, '909-2221-3435', '', '', '0614-010980-112-1', '2013-06-01', 'M', 'Luis@hotmail.com');
+(19, 'Luis', 'mejia', '', 'los angeles', 100, 1, '909-2221-3435', '', '', '0614-010980-112-1', '2013-06-01', 'M', 'Luis@hotmail.com'),
+(20, 'Christian', 'Cordova', 'Mendez', 'Long beach', NULL, 2, '901-223-2345', '901-723-2345', '901-723-6239', '0614-010983-112-1', '1983-09-01', 'M', 'cordova10@hotmail.com');
 
 --
 -- Disparadores `persona`
@@ -896,7 +907,7 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 		END IF;
 
 
-		/*VALIDACION DEL CAMPO TELEFONO_CASA*/
+		/*VALIDACION DEL CAMPO TELEFONO_CASA
 		IF NEW.telefono_casa <> null OR NEW.telefono_casa<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_casa REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -904,9 +915,9 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;
 		END IF;
+        */
 
-
-		/*VALIDACION DEL CAMPO TELEFONO_MOVIL*/
+		/*VALIDACION DEL CAMPO TELEFONO_MOVIL
 		IF NEW.telefono_movil <> null OR NEW.telefono_movil<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_movil REGEXP '[78][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -915,7 +926,8 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 			END IF;
 		END IF;
 
-		/*VALIDACION DEL CAMPO TELEFONO_TRABAJO*/
+        */
+		/*VALIDACION DEL CAMPO TELEFONO_TRABAJO
 		IF NEW.telefono_trabajo <> null OR NEW.telefono_trabajo<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_trabajo REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -923,8 +935,10 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;
 		END IF;
+    
+        */
 
-		/*VALIDACION DEL CAMPO NIT*/
+		/*VALIDACION DEL CAMPO NIT
 		IF NEW.nit<>null OR NEW.nit<>"" THEN			
 			SET validar_nit=(SELECT NEW.nit REGEXP '[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9]');
 			IF validar_nit<>1 THEN
@@ -932,7 +946,7 @@ CREATE TRIGGER `trg_persona_insert` BEFORE INSERT ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;        			
 		END IF;
-
+        */
 
 		/*VALIDACION DEL CAMPO GENERO*/
 		IF NEW.genero <> null OR NEW.genero <>"" THEN
@@ -994,7 +1008,7 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 		END IF;
 
 
-		/*VALIDACION DEL CAMPO TELEFONO_CASA*/
+		/*VALIDACION DEL CAMPO TELEFONO_CASA
 		IF NEW.telefono_casa <> null OR NEW.telefono_casa<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_casa REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -1003,8 +1017,9 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 			END IF;
 		END IF;
 
+       */
 
-		/*VALIDACION DEL CAMPO TELEFONO_MOVIL*/
+		/*VALIDACION DEL CAMPO TELEFONO_MOVIL
 		IF NEW.telefono_movil <> null OR NEW.telefono_movil<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_movil REGEXP '[78][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -1012,8 +1027,10 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;
 		END IF;
+    
+    */
 
-		/*VALIDACION DEL CAMPO TELEFONO_TRABAJO*/
+		/*VALIDACION DEL CAMPO TELEFONO_TRABAJO
 		IF NEW.telefono_trabajo <> null OR NEW.telefono_trabajo<>"" THEN
 		SET validar_telefono=(SELECT NEW.telefono_trabajo REGEXP '[2][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]');
 			IF validar_telefono<>1 THEN
@@ -1021,8 +1038,10 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;
 		END IF;
+    
+    */
 
-		/*VALIDACION DEL CAMPO NIT*/
+		/*VALIDACION DEL CAMPO NIT
 		IF NEW.nit<>null OR NEW.nit<>"" THEN			
 			SET validar_nit=(SELECT NEW.nit REGEXP '[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9]');
 			IF validar_nit<>1 THEN
@@ -1030,7 +1049,7 @@ CREATE TRIGGER `trg_persona_update` BEFORE UPDATE ON `persona`
 				SIGNAL sqlstate '45000' SET message_text = msg;     
 			END IF;        			
 		END IF;
-
+        */
 
 		/*VALIDACION DEL CAMPO GENERO*/
 		IF NEW.genero <> null OR NEW.genero <>"" THEN
@@ -1132,7 +1151,7 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `registro_alumno` (
   `id_registro` int(11) NOT NULL AUTO_INCREMENT,
-  `año_trans` int(11) NOT NULL DEFAULT '0',
+  `anio` int(11) NOT NULL DEFAULT '0',
   `id_alumno` int(11) NOT NULL,
   `id_institucion_edu` int(11) NOT NULL,
   `id_grado` int(11) NOT NULL,
@@ -1150,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `registro_alumno` (
 -- Volcado de datos para la tabla `registro_alumno`
 --
 
-INSERT INTO `registro_alumno` (`id_registro`, `año_trans`, `id_alumno`, `id_institucion_edu`, `id_grado`, `seccion`, `nota_promedio`, `fecha_creacion`, `activa`) VALUES
+INSERT INTO `registro_alumno` (`id_registro`, `anio`, `id_alumno`, `id_institucion_edu`, `id_grado`, `seccion`, `nota_promedio`, `fecha_creacion`, `activa`) VALUES
 (1, 2013, 1, 1, 1, 'A', 9.00, '2013-06-01 00:00:00', '1'),
 (2, 2013, 2, 1, 1, 'A', 10.00, '2013-05-31 09:14:55', '1');
 
