@@ -5,7 +5,7 @@
 var mygrid;
 var myCalendar;
 var loader;
-
+var toolbar;
 var idReg=0;
 
 
@@ -29,7 +29,47 @@ function doCalendar()
 
 }
 
+// Funcion para cargar el menu
+function doOnLoad() {
 
+    // Creando nuevo objeto
+    toolbar = new dhtmlXToolbarObject("toolbarObj");
+    // Direccion de iconos
+    toolbar.setIconsPath("../../../images/icons/");
+    // xml a cargar, este es fijo en la direccion q aparece
+    toolbar.loadXML("../../../components/toolbar/Donaciones_Donante.xml?etc=" + new Date().getTime());
+	
+	
+    // Funcion cuando el usuario da click en el toolbar
+    toolbar.attachEvent("onClick", function(id) {
+	
+        DoEvent(id);
+	
+    });
+}
+
+
+function DoEvent(data) {
+    if(document.getElementById("txtFechaIni").value=="" || document.getElementById("txtFechaFin").value==""){
+        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos de fecha</td></tr></table>");
+        Msjbox.show();
+        return false;
+    }
+	
+    var param="?fechaini="+document.getElementById("txtFechaIni").value;
+    param+="&fechafin="+document.getElementById("txtFechaFin").value;
+    var url="../actions/donaciones_export.php"+param;
+			
+    var window_width = 10;
+    var window_height = 10;
+    var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+    var window_top = (screen.height-window_height)/2;
+    var window_left = (screen.width-window_width)/2;
+    window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+		
+   
+	
+}
 
 // Funcion para cargar los datos
 function LoadData(){
@@ -69,7 +109,7 @@ function filterGrid()
 {   
     
     if(document.getElementById("txtFechaIni").value=="" || document.getElementById("txtFechaFin").value==""){
-        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar todos los campos</td></tr></table>");
+        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos de fecha</td></tr></table>");
         Msjbox.show();
         return false;
     }
@@ -142,23 +182,5 @@ function init() {
         alert(err.message );
     
     }
-
-
-    function toolbars(){
-        var toolbar = new dhtmlXToolbarObject("divOpciones"); 
-        toolbar.addButton("id", "pos", "text", "imgEnabled", "imgDisabled");
-        
-        
    
-    // Direccion de iconos
-    toolbar.setIconsPath("../../../images/icons/");
-    
-	
-    // Funcion cuando el usuario da click en el toolbar
-    toolbar.attachEvent("onClick", function(id) {
-	
-        DoEvent(id);
-	
-    });
-    }
 }

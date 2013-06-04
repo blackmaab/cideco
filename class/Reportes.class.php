@@ -66,7 +66,7 @@ class Reportes extends Conexion {
         }
     }
 
-    public function load_donaciones($all_row = true) {
+    public function load_donaciones($all_row = 0) {
         try {
             $array_data = array();
             //verificacion si se filtraran los datos                     
@@ -81,13 +81,23 @@ class Reportes extends Conexion {
             $this->sqlQuery .="inner join persona f on e.id_persona=f.id_persona ";
             $this->sqlQuery .="inner join pagos g on a.id_donacion=g.id_donacion ";
             $this->sqlQuery.="where g.fecha ";
-            if ($all_row == true):
+            if ($all_row == 1):
                 $this->sqlQuery .="BETWEEN '" . date("Y") . "-" . date("m") . "-01 00:00:00' AND '" . date("Y") . "-" . date("m") . "-31 23:59:59'";
-            else:
+                $this->sqlQuery .=" AND c.id_usuario=" . $this->idUsuario . " order by g.fecha,c.id_persona asc ";
+            elseif ($all_row == 2):
                 $this->sqlQuery .="BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
+                $this->sqlQuery .=" AND c.id_usuario=" . $this->idUsuario . " order by g.fecha,c.id_persona asc ";
+            elseif ($all_row == 3):
+                //PARA EL MODULO DEL ADMINISTRADOR - AUTOCARGA
+                $this->sqlQuery .="BETWEEN '" . date("Y") . "-" . date("m") . "-01 00:00:00' AND '" . date("Y") . "-" . date("m") . "-31 23:59:59'";
+                $this->sqlQuery .=" AND c.id_usuario=" . $this->idUsuario . " order by g.fecha,c.id_persona asc ";
+            elseif ($all_row == 4):
+                //PARA EL MODULO DEL ADMINISTRADOR - BUSQUEDA POR FECHAS
+                $this->sqlQuery .="BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
+                $this->sqlQuery .=" order by g.fecha,c.id_persona asc ";
             endif;
 
-            $this->sqlQuery .=" AND c.id_usuario=" . $this->idUsuario . " order by g.fecha,c.id_persona asc ";
+
             $resultSet = $this->conection->prepare($this->sqlQuery);
             $resultSet->execute();
             $coicidencias = $resultSet->rowCount();

@@ -65,6 +65,41 @@ function filterGrid()
         );
 }
 
+// Funcion para cargar el menu
+function doOnLoad() {
+
+    // Creando nuevo objeto
+    toolbar = new dhtmlXToolbarObject("toolbarObj");
+    // Direccion de iconos
+    toolbar.setIconsPath("../../../images/icons/");
+    // xml a cargar, este es fijo en la direccion q aparece
+    toolbar.loadXML("../../../components/toolbar/Notas_Donante.xml?etc=" + new Date().getTime());
+	
+	
+    // Funcion cuando el usuario da click en el toolbar
+    toolbar.attachEvent("onClick", function(id) {
+	
+        DoEvent(id);
+	
+    });
+}
+
+
+function DoEvent(data) {
+   	
+    var param="?anio="+document.getElementById("selAnio").value;    
+    var url="../actions/notas_export.php"+param;
+			
+    var window_width = 10;
+    var window_height = 10;
+    var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+    var window_top = (screen.height-window_height)/2;
+    var window_left = (screen.width-window_width)/2;
+    window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+		
+   
+	
+}
 
 function init() {
     

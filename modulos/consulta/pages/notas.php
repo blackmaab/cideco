@@ -38,7 +38,7 @@
 
     </head>
 
-    <body class="yui-skin-sam" onLoad="init();LoadData()" >
+    <body class="yui-skin-sam" onLoad="init();LoadData();doOnLoad();" >
 
         <br/>
         <fieldset style="width: 99%;">
@@ -49,7 +49,7 @@
                     <td width="2%">&nbsp;</td>
                     <td width="96%">
                         <div style="width:99%;padding-bottom: 10px;">                            
-                            <span>Buscar calificaciones por a&ntilde;o</span>
+                            <span>Buscar calificaciones por a&ntilde;o:</span>
                             <select id="selAnio">
                                 <?php
                                 $year = ((int) date('Y')) - 5;
@@ -59,9 +59,10 @@
                                     <?php
                                 endfor;
                                 ?>
-                            </select>
+                            </select>                            
                             <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
                         </div>
+                        <div style="width:99%;"><div id="toolbarObj"></div></div>
                         <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
                     </td>
                     <td width="1%">&nbsp;</td>

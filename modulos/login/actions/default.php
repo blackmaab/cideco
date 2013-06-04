@@ -71,6 +71,7 @@ while ($row = $database->database_array($result)) {
 
     $_SESSION['CIDECO'] = true;
     $_SESSION['USERID'] = $row[0]; //usr_id
+    $_SESSION['IDPERF'] = $row[2]; //usr_id
     $_SESSION['USER'] = $usr;
     $_SESSION['PWD'] = $pwd;
     $_SESSION['SES'] = $id;

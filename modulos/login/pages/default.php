@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1  " />
 <title>FUNDACION CIDECO - Formulario de Acceso</title>
 
 <link href="login-box.css" rel="stylesheet" type="text/css" />
@@ -51,11 +51,11 @@ Acceso a Sistema
 <br />
 
 <div id="login-box-name" style="margin-top:20px;">Usuario:</div><div id="login-box-field" style="margin-top:20px;"><input id="user" name="user" class="form-login" title="Username" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);" /></div>
-<div id="login-box-name">Contraseña:</div><div id="login-box-field"><input id="pass" name="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);"  /></div>
+<div id="login-box-name">Contrase&ntilde;a:</div><div id="login-box-field"><input id="pass" name="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);"  /></div>
 
 <br />
 
-<span class="login-box-options"><input type="checkbox" id="remember" name="remember" value="0"> Remember Me <a href="javascript:NoPass();" style="margin-left:30px;">olvide contrase�a</a></span>
+<span class="login-box-options"><input type="checkbox" id="remember" name="remember" value="0"> Remember Me <a href="javascript:NoPass();" style="margin-left:30px;">olvide contrase&ntilde;a</a></span>
 
 <br />
 <br />
@@ -68,7 +68,7 @@ Acceso a Sistema
 if (isset($_GET['err']))
 {
 	if ($_GET['err']==1)
-		echo 'Usuario o Contrase�a no valida...';
+		echo 'Usuario o Contrase&ntilde;a no valida...';
 }
 	
 ?>
