@@ -64,3 +64,4 @@
 						   id_promotor = 1,
 						   Monto = 50.00
 					Where id_donacion =  14 
+55 45.00

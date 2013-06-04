@@ -83,7 +83,7 @@ $database->database_close();
 
         <!-- Fromulario de Nuevo, Editar Registro -->
 
-        <div style="visibility:hidden;">
+		<div style="visibility:hidden;">
             <button id="frm_show"></button> 
             <button id="frm_hide"></button>
 
@@ -93,45 +93,170 @@ $database->database_close();
 
                     <div class="label">
 
+                        <table width="100%" CellSpacing = 0 >
+
+                            <tr>
+                                <td width="50%">
+                                    <fieldset style="width: 99%;">
+                                        <legend class="fieldsetTitle">&nbsp;Datos Personales</legend>
+
+                                        <table width="100%" CellSpacing = 0 >
+                                            <tr>
+                                                <td width="3%"></td>
+                                                <td width="30%"></td>
+                                                <td width="67%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Numero Nit:</td>
+                                                <td ><input name="nit" id="nit" class="small" onfocus="jform.col(this);" onChange="getDonante()" ></td>
+                                            </tr>
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Nombre</td>
+                                                <td ><input name="nombre" id="nombre" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>	
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Primer Apellido:</td>
+                                                <td ><input name="apellido1" id="apellido1" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>	
+                                            <tr>
+                                                <td >&nbsp;</td>
+                                                <td >Segundo Apellido:</td>
+                                                <td ><input name="apellido2" id="apellido2" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>		
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Direccion:</td>
+                                                <td rowspan="2"><textarea height="15" name="direccion" id="direccion" 
+                                                                          style="width: 250px;padding: 3px 3px 3px 3px;border: 1px solid #ddd ;background: #ffffff;;font-size: 11px;color: #000000;overflow: auto;"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Pais:</td>
+                                                <td ><div id='cbo_pais'></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Municipio:</td>
+                                                <td ><div id='cbo_municipio'></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Fecha Nacimiento:</td>
+                                                <td ><input name="fecha_nac" id="fecha_nac" class="small" onfocus="jform.col(this);" readonly></td>
+                                            </tr>	
+
+                                            <tr>
+                                                <td >&nbsp;</td>
+                                                <td >Telefono Casa:</td>
+                                                <td ><input name="telefono_casa" id="telefono_casa" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>	
+
+                                            <tr>
+                                                <td >&nbsp;</td>
+                                                <td >Telefono Movil:</td>
+                                                <td ><input name="telefono_movil" id="telefono_movil" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td >&nbsp;</td>
+                                                <td >Telefono Trabajo:</td>
+                                                <td ><input name="telefono_trabajo" id="telefono_trabajo" class="small" onfocus="jform.col(this);" ></td>
+                                            </tr>	
+
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Genero:</td>
+                                                <td ><div id='cbo_genero'></div></td>
+                                            </tr>	
+                                            <tr>
+                                                <td >&nbsp;</td>
+                                                <td >Correo:</td>
+                                                <td ><input name="correo" id="correo" class="medium" onfocus="jform.col(this);" ></td>
+                                            </tr>						
+
+                                        </table>
+
+                                    </fieldset>
+                                </td >
+
+                                <td width="50%">
+                                    <fieldset style="width: 99%;">
+                                        <legend class="fieldsetTitle">&nbsp;Datos Donacion</legend>
+                                        <table width="100%" CellSpacing = 0 >
+                                            <tr>
+                                                <td width="3%"></td>
+                                                <td width="40%"></td>
+                                                <td width="57%"></td>
+                                            </tr>						
+                                            <tr>
+                                                <td align="center" ><div class="fieldsetTitle">*</div></td>
+                                                <td >Tipo pago</td>
+                                                <td ><div id='cbo_tipo_pago'></div></td>
+                                            </tr>	
+                                            <tr>
+                                                <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                                <td >Monto ($ USD)</td>
+                                                <td ><input name="monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
+                                            </tr>	
+                                            <tr>
+                                                <td align="center" ><div class="fieldsetTitle">*</div></td>
+                                                <td >Promotor</td>
+                                                <td ><div id='cbo_promotor'></div></td>
+                                            </tr>
+
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td>&nbsp;</td></tr>
+                                            <tr><td></td><td><div class="fieldsetTitle">(*) Campos Obligatorios</div></td></tr>
+                                        </table>
+                                    </fieldset>
+
+                                </td>
+
+
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		
+		<div style="visibility:hidden;">
+            <button id="Alu_show"></button> 
+            <button id="Alu_hide"></button>
+
+            <div id="AluNew" class="yui-pe-content">
+                <div class="hd">Datos Registro...</div>
+                <div class="bd">
+
+                    <div class="label">
+
 
                         <fieldset style="width: 99%;">
                             <legend class="fieldsetTitle">&nbsp;Datos Donacion</legend>
 
-                            <table width="100%" >
-                                <tr>
-                                    <td width="3%"></td>
-                                    <td width="40%"></td>
-                                    <td width="57%"></td>
-                                </tr>
-                                <tr>
-                                    <td  align="center"><div class="fieldsetTitle">*</div></td>
-                                    <td >Donante:</td>
-                                    <td ><div id='cbo_donante'></div></td>
-                                </tr>	
-                                <tr>
-                                    <td  align="center"><div class="fieldsetTitle">*</div></td>
-                                    <td >Tipo Donacion</td>
-                                    <td ><div id='cbo_tipo_donacion'></div></td>
-                                </tr>					
-                                <tr>
-                                    <td align="center" ><div class="fieldsetTitle">*</div></td>
-                                    <td >Tipo pago</td>
-                                    <td ><div id='cbo_tipo_pago'></div></td>
-                                </tr>	
-                                <tr>
-                                    <td  align="center"><div class="fieldsetTitle">*</div></td>
-                                    <td >Monto ($ USD)</td>
-                                    <td ><input name="Monto" id="monto" class="small" onfocus="jform.col(this);" value="30.00" ></td>
-                                </tr>	
-                                <tr>
-                                    <td >&nbsp;</td>
-                                    <td >Renovacion Automatica</td>
-                                    <td ><input type="checkbox" name="renovacion" id="renovacion" ></td>
-                                </tr>	
+                            <table width="100%" >	
                                 <tr>
                                     <td align="center" ><div class="fieldsetTitle">*</div></td>
                                     <td >Alumno:</td>
-                                    <td ><div id='cbo_alumno'></div></td>
+                                    <td ><div id='cbo_alumno_bis'></div></td>
                                 </tr>
 
                             </table>
@@ -139,12 +264,10 @@ $database->database_close();
                         </fieldset>
 
 
-
-
                     </div>
                 </div>
             </div>
-        </div>
+        </div>				
 
 
 
@@ -158,7 +281,7 @@ $database->database_close();
 
                     <div class="label">
 
-                        ¿Esta seguro(a) que desea borrar el Registro Permanentemente?
+                        ¿Esta seguro(a) que desea Cancelar la Donacion?
 
 
                     </div>

@@ -7,6 +7,7 @@ var myCalendar;
 var loader;
 
 var idReg=0;
+var idper=0;
 
 // Funcion para cargar el menu
 function doOnLoad() {
@@ -36,10 +37,12 @@ function DoEvent(data) {
     {
 	
         case "add":
+		
             idReg=0;
             ClearParam()
             document.getElementById('frm_show').click();
             //document.getElementById('cbo_donate').focus();
+			
             break;
 		
 		
@@ -54,13 +57,19 @@ function DoEvent(data) {
 		
             SaveData();
             //Msjbox.show();
+			
             break;
-		
-        case "edit":
+			
+			
+		case "edit_donacion":
 		
             if(mygrid.getSelectedId())
             {
-                LoadParam();
+				idReg=0;
+				idper=0;
+				ClearParam()
+				document.getElementById('frm_show').click();
+				getDonacion();
             }
             else
             {
@@ -68,9 +77,30 @@ function DoEvent(data) {
                 Msjbox.show();
             }
 			
-            break;		
+            break;	
+
+			
+			
+		case "edit_alumno":
 		
-        case "delete":
+            if(mygrid.getSelectedId())
+            {
+				idReg=0;
+				idper=0;
+				ClearParam()
+				document.getElementById('Alu_show').click();
+				getAlumno();
+            }
+            else
+            {
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
+                Msjbox.show();
+            }
+			
+            break;	
+		
+		
+        case "can":
 		
             if(mygrid.getSelectedId())
             {
@@ -155,12 +185,14 @@ function LoadGrid()
 
 // funcion q carga los combos. perfil y estatus
 
+
 var tipo_donacion;
 var tipo_pago;
-var alumno;
-var donante;
-
-
+var genero;
+var pais;
+var municipio;
+var promotor;
+var alumno_bis;
 
 function LoadCombos()
 {
@@ -168,52 +200,184 @@ function LoadCombos()
     // directorio de las imagenes del combo (no tocar)
     window.dhx_globalImgPath = "../../../components/select/imgs/";
 	
-	
-    // creacion del combo tipo donacion
-    tipo_donacion = new dhtmlXCombo("cbo_tipo_donacion","cbo_tipo_donacion",150);
-    tipo_donacion.enableFilteringMode(true);	
-    //combo_perfil.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-    //combo_perfil.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
-    //combo_perfil.attachEvent("onBlur", Validacion1);
-	
     // creacion del combo tipo pago
     tipo_pago = new dhtmlXCombo("cbo_tipo_pago","cbo_tipo_pago",150);
-    tipo_pago.enableFilteringMode(true);	
+    tipo_pago.enableFilteringMode(true);
+    tipo_pago.loadXML("../actions/solicitud_combo_tipo_pago.php?p0=" , function(){});
+    tipo_pago.readonly(1);
 	
-    // creacion del combo alumno
-    alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
-    alumno.enableFilteringMode(true);	
+    // creacion del combo genero
+    genero = new dhtmlXCombo("cbo_genero","cbo_genero",150);
+    genero.enableFilteringMode(false);	
+    genero.loadXML("../actions/solicitud_combo_genero.php?p0=" , function(){});
+    genero.readonly(1);
 	
-    // creacion del combo donante
-    donante = new dhtmlXCombo("cbo_donante","cbo_donante",250);
-    donante.enableFilteringMode(true);		
- 
+	
+	
+    // creacion del combo pais
+    pais = new dhtmlXCombo("cbo_pais","cbo_pais",150);
+    pais.enableFilteringMode(true);	
+    pais.loadXML("../actions/solicitud_combo_pais.php?p0=" , function(){});
+    pais.attachEvent("onBlur", ValidarPais);
+	
+
+    // creacion del combo municipio
+    municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
+    municipio.enableFilteringMode(true);	
+    municipio.attachEvent("onBlur", ValidarMunicipio);
+	
+	
+	
+    // creacion del combo promotor
+    promotor = new dhtmlXCombo("cbo_promotor","cbo_promotor",150);
+    promotor.enableFilteringMode(true);	
+    promotor.loadXML("../actions/solicitud_combo_promotor.php?p0=" , function(){});
+    promotor.attachEvent("onBlur", ValidarPromotor);
+	
+	
+	// Alumno 
+    alumno_bis = new dhtmlXCombo("cbo_alumno_bis","cbo_alumno_bis",250);
+    alumno_bis.enableFilteringMode(true);	
+    //alumno_bis.loadXML("../actions/control_combo_alumno.php?p0=" , function(){});
+	alumno_bis.attachEvent("onBlur", ValidacionAlumnoBis);		
 
 
 }
 
 
-/*
-// validacion del combo perfil
-function Validacion1() {
+function CargarMunicipio()
+{
 
-	if (combo_perfil.getSelectedValue()==null)
+    municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" + pais.getSelectedValue(), function(){});
+
+}
+
+
+// validacion del combo Alumno_bis
+function ValidacionAlumnoBis() {
+
+	if (alumno_bis.getSelectedValue()==null)
 	{
-		combo_perfil.setComboText('');
+		alumno_bis.setComboText('');
 	}
     return true;
 }
 
-// validacion del combo status
-function Validacion2() {
 
-	if (combo_status.getSelectedValue()==null)
-	{
-		combo_status.setComboText('');
-	}
+// validacion del combo Pais
+
+function ValidarPais() {
+
+    if (pais.getSelectedValue()==null)
+    {
+        pais.setComboText('');
+    }
+    else
+    {
+        municipio.setComboText('');
+        CargarMunicipio();
+	
+    }
     return true;
 }
-*/
+
+
+// validacion del combo Municipio
+
+function ValidarMunicipio() {
+
+    if (municipio.getSelectedValue()==null)
+    {
+        municipio.setComboText('');
+    }
+    return true;
+}
+
+
+function ValidarPromotor() {
+
+    if (promotor.getSelectedValue()==null)
+    {
+        promotor.setComboText('');
+    }
+    return true;
+}
+
+
+
+function getDonacion()
+{
+
+    var parameters = ""; 
+    parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+    loader = dhtmlxAjax.post( "../actions/solicitud_get_donacion.php",encodeURI(parameters), function(){
+        ReadXml()
+    } );
+    MsjWait.show();
+
+
+}
+
+
+function getAlumno()
+{
+
+    var parameters = ""; 
+    parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+    loader = dhtmlxAjax.post( "../actions/solicitud_get_alumno.php",encodeURI(parameters), function(){
+        ReadXml()
+    } );
+	
+    //MsjWait.show();
+
+
+}
+
+
+function CancelarDonacion()
+{
+
+    var parameters = ""; 
+    parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+    loader = dhtmlxAjax.post( "../actions/donacion_cancelar.php",encodeURI(parameters), function(){
+        ReadXml()
+    } );
+    MsjWait.show();
+
+
+}
+
+
+function AsignarAlumno()
+{
+
+
+	
+	if (alumno_bis.getSelectedValue() != null)
+	{
+        var parameters = ""; 
+        parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+        parameters = parameters + "&p1=" + alumno_bis.getSelectedValue();
+		
+		
+        MsjWait.show();
+        loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar_bis.php",encodeURI(parameters), function(){ ReadXml() } );
+		
+	}	
+	else
+	{
+		// mensaje de llenar los campos obligatorios
+        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar el Campo Alumno</td></tr></table>");
+        Msjbox.show();
+	
+	}
+
+}
+
+
 
 
 // funcion para guardar los registros
@@ -229,28 +393,35 @@ function SaveData()
 		
             // guardamos los parametros en un arreglo post
 			
-            //var parameters = ""; 
-            //parameters = parameters + "?p0=" + idReg;
-            //parameters = parameters + "&p1=" + document.getElementById("usuario").value;
+            var parameters = ""; 
+            parameters = parameters + "?p0=" + idReg;
+            parameters = parameters + "&p1=" + document.getElementById("nombre").value;
+            parameters = parameters + "&p2=" + document.getElementById("apellido1").value;
+            parameters = parameters + "&p3=" + document.getElementById("apellido2").value;
+            parameters = parameters + "&p4=" + document.getElementById("direccion").value;
+            parameters = parameters + "&p5=" + municipio.getSelectedValue();
+            parameters = parameters + "&p6=" + pais.getSelectedValue();
+            parameters = parameters + "&p7=" + document.getElementById("telefono_casa").value;
+            parameters = parameters + "&p8=" + document.getElementById("telefono_movil").value;
+            parameters = parameters + "&p9=" + document.getElementById("telefono_trabajo").value;
+            parameters = parameters + "&p10=" + document.getElementById("nit").value;
+            parameters = parameters + "&p11=" + document.getElementById("fecha_nac").value;
+            parameters = parameters + "&p12=" + genero.getSelectedValue();
+            parameters = parameters + "&p13=" + document.getElementById("correo").value;
 
+            parameters = parameters + "&p14=" + tipo_pago.getSelectedValue();
+            parameters = parameters + "&p15=" + document.getElementById("monto").value;
+            parameters = parameters + "&p16=" + promotor.getSelectedValue();
+            parameters = parameters + "&p17=" + idper
+	
+
+			// si es un update entra aqui
 			
-		
-
-            if (idReg==0)
-            {
-                // si es nuevo entra aqui
-                loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){
-                    ReadXml()
+			loader = dhtmlxAjax.post( "../actions/solicitud_donante_update.php",encodeURI(parameters), function(){
+				ReadXml()
                 } );
-            }
-            else
-            {
-                // si es un update entra aqui
-                loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){
-                    ReadXml()
-                } );
-            }
 
+			MsjWait.show();
         }
         else
         {
@@ -274,30 +445,63 @@ function SaveData()
 }
 
 
-
-// Campos Obligatorios.
+// Verificar los Campos Obligatorios
 
 function CheckParam()
 {
-    var Val = true
+    var Val = true;
+	
+    if (document.getElementById('nombre').value == '')
+    {
+        Val = false;
+    }
+	
+    if (document.getElementById('apellido1').value == '')
+    {
+        Val = false;
+    }
+	
+    if (document.getElementById('direccion').value == '')
+    {
+        Val = false;
+    }
 	
 	
+    if (document.getElementById('fecha_nac').value == '')
+    {
+        Val = false;
+    }
 	
-    /*if (document.getElementById('usuario').value == '')
-	{
-		Val = false;
-	}
+    if (document.getElementById('nit').value == '')
+    {
+        Val = false;
+    }
 	
-	if (document.getElementById('contrasena').value == '')
-	{
-		Val = false;
-	}
+    if (document.getElementById('monto').value == '')
+    {
+        Val = false;
+    }
 	
-	if (document.getElementById('fechacad').value == '')
-	{
-		Val = false;
-	}
-	*/
+    if (pais.getSelectedValue()=='null' && pais.getSelectedValue()=='')
+    {
+        Val = false;
+    }
+	
+    if (genero.getSelectedValue()=='null' && genero.getSelectedValue()=='')
+    {
+        Val = false;
+    }
+	
+    if (tipo_pago.getSelectedValue()=='null' && tipo_pago.getSelectedValue()=='')
+    {
+        Val = false;
+    }
+	
+    if (promotor.getSelectedValue()=='null' && promotor.getSelectedValue()=='')
+    {
+        Val = false;
+    }
+	
 	
 	
     return Val;
@@ -305,40 +509,29 @@ function CheckParam()
 }
 
 
-// Catgando los campos del grid hacia las cajas del formulario
-function LoadParam()
-{
-
-    // limpiamos las cajas
-    ClearParam();
-	
-    // llenamos las cajas
-    idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
-	
-    /*
-	document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
-	document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
-	document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
-	document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
-	document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
-	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),7).getValue());
-	combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
-	*/
-	
-    document.getElementById('frm_show').click();
-
-}
 
 
 // funcion para limpiar las cajas
 
-function ClearParam(){
+function ClearParam()
+{
 
-
-
-//document.getElementById("usuario").value = "";	
-//combo_perfil.setComboText('');
-
+    document.getElementById("nombre").value = '';
+    document.getElementById("apellido1").value = '';
+    document.getElementById("apellido2").value = '';
+    document.getElementById("direccion").value = '';
+    municipio.setComboText('');
+    pais.setComboText('');
+    document.getElementById("telefono_casa").value = '';
+    document.getElementById("telefono_movil").value = '';
+    document.getElementById("telefono_trabajo").value = '';
+    document.getElementById("nit").value = '';
+    document.getElementById("fecha_nac").value = '';
+    genero.setComboText('');
+    document.getElementById("correo").value = '';
+    tipo_pago.setComboText('');
+    document.getElementById("monto").value = '30.00';
+    promotor.setComboText('');
 	
 	
 }
@@ -365,6 +558,7 @@ function DeleteData()
 function ReadXml(){
 
     //alert(loader.doSerialization());
+	
     if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
     {
         xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -389,9 +583,10 @@ function ReadXml(){
             case "Update":
 			
 				
-                MsjWait.show();
+                
                 document.getElementById('frm_hide').click();
                 LoadGrid();
+				MsjWait.hide();
 				
 			
                 break;
@@ -406,7 +601,76 @@ function ReadXml(){
                 LoadGrid();
 				
 			
-                break;
+				break;
+				
+			
+			case "get_alumno":
+			
+				
+				alumno_bis.loadXML("../actions/control_combo_alumno.php?p0="+ xmlDoc.documentElement.childNodes[1].text , function(){});
+				
+				MsjWait.hide();
+			
+				break;
+			
+				
+				
+            case "get_donacion":
+			
+                document.getElementById("nit").value = xmlDoc.documentElement.childNodes[1].text
+                idper = xmlDoc.documentElement.childNodes[2].text;
+                document.getElementById("nombre").value = xmlDoc.documentElement.childNodes[3].text;
+                document.getElementById("apellido1").value = xmlDoc.documentElement.childNodes[4].text;
+                document.getElementById("apellido2").value = xmlDoc.documentElement.childNodes[5].text;
+                document.getElementById("direccion").value = xmlDoc.documentElement.childNodes[6].text;
+                pais.loadXML("../actions/solicitud_combo_pais.php?p0=" + xmlDoc.documentElement.childNodes[7].text , function(){});
+                municipio.getSelectedValue();
+                document.getElementById("fecha_nac").value = xmlDoc.documentElement.childNodes[9].text;
+                document.getElementById("telefono_casa").value = xmlDoc.documentElement.childNodes[10].text;
+                document.getElementById("telefono_movil").value = xmlDoc.documentElement.childNodes[11].text;
+                document.getElementById("telefono_trabajo").value = xmlDoc.documentElement.childNodes[12].text;
+                genero.loadXML("../actions/solicitud_combo_genero.php?p0="+xmlDoc.documentElement.childNodes[13].text , function(){});
+                document.getElementById("correo").value= xmlDoc.documentElement.childNodes[14].text;
+                tipo_pago.loadXML("../actions/solicitud_combo_tipo_pago.php?p0="+xmlDoc.documentElement.childNodes[15].text , function(){});
+                document.getElementById("monto").value = xmlDoc.documentElement.childNodes[16].text;
+                promotor.loadXML("../actions/solicitud_combo_promotor.php?p0="+xmlDoc.documentElement.childNodes[17].text , function(){});
+                idReg = xmlDoc.documentElement.childNodes[18].text;
+					
+
+                MsjWait.hide();
+				
+                document.getElementById("nombre").focus();
+			
+                break;		
+
+
+				case "Estado_bis":
+				
+					if (xmlDoc.documentElement.childNodes[1].text == 0)
+					{
+						document.getElementById('Alu_hide').click();
+						LoadGrid();
+						MsjWait.hide();
+					}
+					else
+					{
+						Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;El Donante ya tiene Asociado a Este Alumno</td></tr></table>");
+						Msjbox.show();
+						MsjWait.hide();
+					}
+					
+                break;	
+
+				case "Cancelar":
+				
+				
+					LoadGrid();
+					document.getElementById('msj_hide').click();
+					MsjWait.hide();
+					
+					
+					
+                break;								
 		
         }
     }
@@ -432,13 +696,20 @@ var RegNew_Submit = function() {
 };
 var RegNew_Cancel = function() {
     document.getElementById('frm_hide').click();
-};	
+};
 
 var RegDel_Submit = function() {
-    DeleteData();
+    CancelarDonacion();
 };
 var RegDel_Cancel = function() {
     document.getElementById('msj_hide').click();
+};	
+
+var AluNew_Submit = function() {
+    AsignarAlumno();
+};
+var AluNew_Cancel = function() {
+    document.getElementById('Alu_hide').click();
 };	
 
 
@@ -482,7 +753,7 @@ function init() {
         // Fromulario de Nuevo Registro y Edicion. ************************
 		
         FormRegistro = new HBI.widget.Dialog("RegNew", {
-            width : "40em", 
+            width : "68em", 
             fixedcenter : true, 
             visible : false, 
             modal: true, 
@@ -499,6 +770,30 @@ function init() {
         FormRegistro.render();
         HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);
         HBI.util.Event.addListener("frm_hide", "click", FormRegistro.hide, FormRegistro, true);
+		
+		
+		
+        // Fromulario Para Asignar Alumno. ************************
+		
+        FormRegistro = new HBI.widget.Dialog("AluNew", {
+            width : "40em", 
+            fixedcenter : true, 
+            visible : false, 
+            modal: true, 
+            constraintoviewport : true, 
+            buttons : [ {
+                text:"Aceptar", 
+                handler:AluNew_Submit, 
+                isDefault:true
+            }, {
+                text:"Cancelar", 
+                handler:AluNew_Cancel
+            } ]
+        });
+        FormRegistro.render();
+        HBI.util.Event.addListener("Alu_show", "click", FormRegistro.show, FormRegistro, true);
+        HBI.util.Event.addListener("Alu_hide", "click", FormRegistro.hide, FormRegistro, true);		
+				
 		
 		
         // Mensaje de Eliminar Registro. **********************************

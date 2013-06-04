@@ -150,19 +150,7 @@ function menuClick(id) {
 		
 		break;			
 		
-		//Consultas
-                case "Con_Donaciones":		
-			document.getElementById('contenido').src = "../../consulta/pages/donaciones.php";		
-		break;	
-                
-                
-                case "Con_Becas":		
-			document.getElementById('contenido').src = "../../consulta/pages/becas.php";		
-		break;	
-                
-                case "Con_Notas":		
-			document.getElementById('contenido').src = "../../consulta/pages/notas.php";		
-		break;	
+		
 		/*
 		case "ayuda": 
 		
@@ -398,7 +386,7 @@ function Init() {
 		Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Prueba de Mensaje</td></tr></table>");
 		Msjbox.render(document.body);	
 		
-		// Fromulario Cambio de Contraseï¿½a . ************************
+		// Fromulario Cambio de Contraseña . ************************
 		
 		FormPass = new HBI.widget.Dialog("RegPass", { width : "23em", fixedcenter : true, visible : false, modal: true, constraintoviewport : true, 
 									buttons : [ { text:"Cambiar", handler:Pass_Submit, isDefault:true }, { text:"Cancelar", handler:Pass_Cancel } ]});

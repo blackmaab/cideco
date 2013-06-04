@@ -173,8 +173,8 @@ if ($Don->bandera == 0) {
 
 
     $execQuery = " INSERT INTO donacion 
-								(anio,id_donante,id_tipo_pago,id_promotor,id_registro_alumno,Monto,fecha_creacion,estado)
-								VALUES($anio,$id_donante,$id_tipo_pago,$id_promotor,NULL,$Monto,Now(),1) ";
+								(anio,id_donante,id_tipo_pago,id_promotor,id_registro_alumno,Monto,fecha_creacion,estado,mes_inicio)
+								VALUES($anio,$id_donante,$id_tipo_pago,$id_promotor,NULL,$Monto,Now(),1,MONTH(Now())) ";
 
     $database->database_query($execQuery);
 

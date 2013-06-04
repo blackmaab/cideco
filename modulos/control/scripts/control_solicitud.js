@@ -39,12 +39,7 @@ function DoEvent(data) {
 			
             if(mygrid.getSelectedId())
             {
-			
-                idReg=0;
-                ClearParam()
-                document.getElementById('frm_show').click();
-                document.getElementById('usuario').focus();
-				
+				ExisteUsuario();
             }
             else
             {
@@ -132,9 +127,8 @@ function LoadGrid()
 
 
 var alumno;
+var alumno_bis;
 	
-
-
 
 function LoadCombos()
 {
@@ -146,34 +140,39 @@ function LoadCombos()
     // creacion del combo tipo donacion
     alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
     alumno.enableFilteringMode(true);	
-    //alumno.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
     alumno.loadXML("../actions/control_combo_alumno.php?p0=" , function(){});
-//alumno.attachEvent("onBlur", Validacion1);
+	alumno.attachEvent("onBlur", ValidacionAlumno);
+	
+	
+    alumno_bis = new dhtmlXCombo("cbo_alumno_bis","cbo_alumno_bis",250);
+    alumno_bis.enableFilteringMode(true);	
+    alumno_bis.loadXML("../actions/control_combo_alumno.php?p0=" , function(){});
+	alumno_bis.attachEvent("onBlur", ValidacionAlumnoBis);	
 	
 }
 
 
-/*
-// validacion del combo perfil
-function Validacion1() {
 
-	if (combo_perfil.getSelectedValue()==null)
+// validacion del combo Alumno
+function ValidacionAlumno() {
+
+	if (alumno.getSelectedValue()==null)
 	{
-		combo_perfil.setComboText('');
+		alumno.setComboText('');
 	}
     return true;
 }
 
-// validacion del combo status
-function Validacion2() {
+// validacion del combo Alumno_bis
+function ValidacionAlumnoBis() {
 
-	if (combo_status.getSelectedValue()==null)
+	if (alumno_bis.getSelectedValue()==null)
 	{
-		combo_status.setComboText('');
+		alumno_bis.setComboText('');
 	}
     return true;
 }
-*/
+
 
 
 function AprobarSolicitud()
@@ -221,6 +220,24 @@ function RechazarSolicitud()
 
 }
 
+
+
+function AsignarAlumno()
+{
+
+	if (alumno.setComboText() != '')
+	{
+        var parameters = ""; 
+        parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+        parameters = parameters + "&p1=" + alumno_bis.getSelectedValue();
+		
+        MsjWait.show();
+        loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar_bis.php",encodeURI(parameters), function(){ ReadXml() } );
+		
+	}	
+
+}
+
 // funcion para guardar los registros
 function SaveData()
 {
@@ -230,32 +247,28 @@ function SaveData()
     if(CheckParam())
     {
 	
-        // guardamos los parametros en un arreglo post
+		if (document.getElementById('contrasena').value == document.getElementById("confirmar").value)
+		{
 		
-        var parameters = ""; 
-        parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
-        parameters = parameters + "&p1=" + document.getElementById("usuario").value;
-        parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
-        parameters = parameters + "&p3=" + alumno.getSelectedValue();
+			var parameters = ""; 
+			parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+			parameters = parameters + "&p1=" + document.getElementById("usuario").value;
+			parameters = parameters + "&p2=" + document.getElementById("contrasena").value;
+			parameters = parameters + "&p3=" + alumno.getSelectedValue();
+			
+			//MsjWait.show();
+			
+			loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){ ReadXml() } );
 		
-        //MsjWait.show();
+		}
+		else
+		{
 		
-        loader = dhtmlxAjax.post( "../actions/control_solicitud_aprobar.php",encodeURI(parameters), function(){
-            ReadXml()
-        } );
-	
+			Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Los campos Contrasenia deben ser Iguales</td></tr></table>");
+			Msjbox.show();
+		}
 
-        if (idReg==0)
-        {
-        // si es nuevo entra aqui
-        // loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){ReadXml()} );
-        }
-        else
-        {
-        // si es un update entra aqui
-        // loader = dhtmlxAjax.post( "../actions/usuarios_update.php",encodeURI(parameters), function(){ReadXml()} );
-        }
-
+        
     }
     else
     {
@@ -269,6 +282,19 @@ function SaveData()
 
 }
 
+
+function ExisteUsuario()
+{
+
+	var parameters = ""; 
+	parameters = parameters + "?p0=" + mygrid.cells(mygrid.getSelectedId(),1).getValue();
+	
+	//MsjWait.show();
+	
+	loader = dhtmlxAjax.post( "../actions/control_existe_usuario.php",encodeURI(parameters), function(){ ReadXml() } );
+
+
+}
 
 
 // Campos Obligatorios.
@@ -289,6 +315,11 @@ function CheckParam()
         Val = false;
     }
 	
+    if (document.getElementById('confirmar').value == '')
+    {
+        Val = false;
+    }	
+	
     if ( alumno.getSelectedValue() == '' || alumno.getSelectedValue() == null)
     {
         Val = false;
@@ -299,41 +330,15 @@ function CheckParam()
 }
 
 
-// Catgando los campos del grid hacia las cajas del formulario
-function LoadParam()
-{
-
-    // limpiamos las cajas
-    ClearParam();
-	
-    // llenamos las cajas
-    idReg = mygrid.cells(mygrid.getSelectedId(),0).getValue();
-	
-    /*
-	document.getElementById("usuario").value = mygrid.cells(mygrid.getSelectedId(),1).getValue();
-	document.getElementById("contrasena").value = mygrid.cells(mygrid.getSelectedId(),2).getValue();
-	document.getElementById("fechacad").value = mygrid.cells(mygrid.getSelectedId(),4).getValue();
-	document.getElementById("pregunta").value = mygrid.cells(mygrid.getSelectedId(),5).getValue();
-	document.getElementById("respuesta").value = mygrid.cells(mygrid.getSelectedId(),6).getValue();
-	combo_perfil.setComboValue(mygrid.cells(mygrid.getSelectedId(),7).getValue());
-	combo_status.setComboValue(mygrid.cells(mygrid.getSelectedId(),8).getValue());
-	*/
-	
-    document.getElementById('frm_show').click();
-
-}
-
-
 // funcion para limpiar las cajas
 
 function ClearParam(){
 
 
-
-//document.getElementById("usuario").value = "";	
-//combo_perfil.setComboText('');
-
-	
+	document.getElementById('usuario').value = '';
+	document.getElementById("contrasena").value = '';	
+	document.getElementById("confirmar").value = '';	
+	alumno.setComboText('');
 	
 }
 
@@ -359,8 +364,6 @@ function DeleteData()
 function ReadXml(){
 
  
-    //alert(loader.doSerialization());
- 
  
     if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
     {
@@ -382,6 +385,23 @@ function ReadXml(){
 				
 				
                 break;
+				
+            case "Estado_bis":
+				
+				if (xmlDoc.documentElement.childNodes[1].text == 0)
+				{
+					document.getElementById('Alu_hide').click();
+					LoadGrid();
+					MsjWait.hide();
+				}
+				else
+				{
+					Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;El Donante ya tiene Asociado a Este Alumno</td></tr></table>");
+					Msjbox.show();
+					MsjWait.hide();
+				}
+				
+                break;				
 			
             // si fue un insert
             case "Insert":
@@ -415,7 +435,32 @@ function ReadXml(){
                 LoadGrid();
 				
 			
-                break;
+            break;
+			
+			
+			case "existe_usuario":
+			
+			
+				if (xmlDoc.documentElement.childNodes[1].text!='')
+				{
+					document.getElementById('Alu_show').click();
+					MsjWait.hide();
+				}
+				else
+				{
+					idReg=0;
+					ClearParam()
+					document.getElementById('frm_show').click();
+					document.getElementById('usuario').focus();
+				}
+				
+
+
+				
+			
+            break;
+			
+			
 		
         }
     }
@@ -442,6 +487,15 @@ var RegNew_Submit = function() {
 var RegNew_Cancel = function() {
     document.getElementById('frm_hide').click();
 };	
+
+
+var AluNew_Submit = function() {
+    AsignarAlumno();
+};
+var AluNew_Cancel = function() {
+    document.getElementById('Alu_hide').click();
+};	
+
 
 var RegDel_Submit = function() {
     DeleteData();
@@ -508,6 +562,30 @@ function init() {
         FormRegistro.render();
         HBI.util.Event.addListener("frm_show", "click", FormRegistro.show, FormRegistro, true);
         HBI.util.Event.addListener("frm_hide", "click", FormRegistro.hide, FormRegistro, true);
+		
+		
+		
+        // Fromulario Para Asignar Alumno. ************************
+		
+        FormRegistro = new HBI.widget.Dialog("AluNew", {
+            width : "40em", 
+            fixedcenter : true, 
+            visible : false, 
+            modal: true, 
+            constraintoviewport : true, 
+            buttons : [ {
+                text:"Aceptar", 
+                handler:AluNew_Submit, 
+                isDefault:true
+            }, {
+                text:"Cancelar", 
+                handler:AluNew_Cancel
+            } ]
+        });
+        FormRegistro.render();
+        HBI.util.Event.addListener("Alu_show", "click", FormRegistro.show, FormRegistro, true);
+        HBI.util.Event.addListener("Alu_hide", "click", FormRegistro.hide, FormRegistro, true);		
+		
 		
 		
         // Mensaje de Eliminar Registro. **********************************

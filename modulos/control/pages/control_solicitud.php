@@ -100,6 +100,11 @@
                                     <td >Contraseña:</td>
                                     <td ><input name="contrasena" id="contrasena" type="password" class="tiny" onfocus="jform.col(this);" /></td>
                                 </tr>	
+								<tr>
+                                    <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                    <td >Confirmar:</td>
+                                    <td ><input name="confirmar" id="confirmar" type="password" class="tiny" onfocus="jform.col(this);" /></td>
+                                </tr>								
                                 <tr>
                                     <td align="center" ><div class="fieldsetTitle">*</div></td>
                                     <td >Alumno:</td>
@@ -117,6 +122,38 @@
                 </div>
             </div>
         </div>
+		
+		
+	<div style="visibility:hidden;">
+            <button id="Alu_show"></button> 
+            <button id="Alu_hide"></button>
+
+            <div id="AluNew" class="yui-pe-content">
+                <div class="hd">Datos Registro...</div>
+                <div class="bd">
+
+                    <div class="label">
+
+
+                        <fieldset style="width: 99%;">
+                            <legend class="fieldsetTitle">&nbsp;Datos Donacion</legend>
+
+                            <table width="100%" >	
+                                <tr>
+                                    <td align="center" ><div class="fieldsetTitle">*</div></td>
+                                    <td >Alumno:</td>
+                                    <td ><div id='cbo_alumno_bis'></div></td>
+                                </tr>
+
+                            </table>
+
+                        </fieldset>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>		
 
 
 
@@ -144,23 +181,23 @@
 
         <!-- Componente Grid -->
         <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
-        <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
+        <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css"/>
 
             <!-- Componente Toolbar -->
 
             <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
-            <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
+            <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css"/>
 
 
                 <!-- Componente Calendar -->
 
                 <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
-                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
+                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css"/>
 
                     <!-- Componente Combo -->
 
                     <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
-                    <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
+                    <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css"/>
 
 
                         <!-- Componente Formularios, Ventanas y Avisos -->

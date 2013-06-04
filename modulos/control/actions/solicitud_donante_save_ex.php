@@ -36,9 +36,9 @@ $id_donante = $database->database_scalar($execQuery);
 
 
 $execQuery = " 	Insert into donacion
-				   (anio,id_donante,id_tipo_pago,id_promotor,Monto,fecha_creacion,estado)
+				   (anio,id_donante,id_tipo_pago,id_promotor,Monto,fecha_creacion,estado,mes_inicio)
 				   
-				   Values ($anio,$id_donante,$id_tipo_pago,$id_promotor,$Monto,Now(),1) ";
+				   Values ($anio,$id_donante,$id_tipo_pago,$id_promotor,$Monto,Now(),1,MONTH(Now())) ";
 
 /*
   $fp = fopen("prueba.txt","a");

@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <toolbar>
-
+	<item id="info" type="text" text="Pagos:"/>
 	<item id="sep1" type="separator"/>
+	<item id="add" type="button" text="Agregar Pago"  img="add.png" imgdis="add.png"/>
 	<item id="edit" type="button" text="Editar Pago"  img="page_edit.png" imgdis="page_edit.png"/> 
 	<item id="anular" type="button" text="Anular Pago"  img="decline.png" imgdis="decline.png"/> 
 	<item id="sep1" type="separator"/>
-	<item id="dona" type="button" text="Ir a Donaciones"  img="arrow_turn_right.png" imgdis="arrow_turn_right.png"/> 
-	<item id="sep2" type="separator"/>
 	<item id="info" type="text" text=""/>
 	
 </toolbar>

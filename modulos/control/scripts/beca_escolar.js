@@ -238,7 +238,7 @@ function LoadCombos()
     // creacion del combo Municipio
     municipio = new dhtmlXCombo("cbo_municipio","cbo_municipio",150);
     municipio.enableFilteringMode(true);	
-    municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=" , function(){});
+    municipio.loadXML("../actions/solicitud_combo_municipio.php?p0=1" , function(){});
     municipio.attachEvent("onBlur", ValidacionMunicipio);
 	
 	

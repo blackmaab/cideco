@@ -3,6 +3,9 @@
 
 	<item id="sep1" type="separator"/>
 	<item id="can" type="button" text="Cancelar Donacion"  img="decline.png" imgdis="decline.png"/> 
+	<item id="sep2" type="separator"/>
+	<item id="edit_donacion" type="button" text="Editar Donacion"  img="page_edit.png" imgdis="page_edit.png"/>
+	<item id="edit_alumno" type="button" text="Editar Alumno Asignado"  img="page_edit.png" imgdis="page_edit.png"/> 
 	<item id="sep1" type="separator"/>
 	<item id="sol" type="button" text="Ir a Solicitudes"  img="arrow_turn_right.png" imgdis="arrow_turn_right.png"/> 
 	<item id="sep2" type="separator"/>

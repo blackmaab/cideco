@@ -48,18 +48,47 @@
             <legend class="fieldsetTitle">&nbsp;Detalles de Pagos</legend>
 
             <br />
-            <table width="100%">
+			
+			
+			<table width="100%">
                 <tr>
                     <td width="2%">&nbsp;</td>
-                    <td width="96%">
-                        <div style="width:99%;"><div id="toolbarObj"></div></div>
-                        <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
-                    </td>
+                    <td width="10%">Donante</td>
+					<td width="80%"><div id='cbo_donante'></div></td>
                     <td width="1%">&nbsp;</td>
-
                 </tr>
             </table>
 
+			<table width="100%">
+                <tr>
+                    <td width="50%">
+						<table width="100%">
+							<tr>
+								<td width="2%">&nbsp;</td>
+								<td width="96%">
+									<div style="width:99%;"><div id="toolbarObj1"></div></div>
+									<div id="gridbox_dona" style="width:99%;height:325px;background-color:white;"></div>
+								</td>
+								<td width="1%">&nbsp;</td>
+
+							</tr>
+						</table>
+					</td>
+                    <td width="50%">
+						<table width="100%">
+							<tr>
+								<td width="2%">&nbsp;</td>
+								<td width="96%">
+									<div style="width:99%;"><div id="toolbarObj"></div></div>
+									<div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
+								</td>
+								<td width="1%">&nbsp;</td>
+
+							</tr>
+						</table>
+					</td>
+                </tr>
+            </table>
             <br />
 
         </fieldset>
@@ -94,7 +123,12 @@
                                     <td  align="center"><div class="fieldsetTitle">*</div></td>
                                     <td >Fecha:</td>
                                     <td ><input name="fecha" id="fecha" class="tiny" onfocus="jform.col(this);" /></td>
-                                </tr>				
+                                </tr>		
+                                <tr>
+                                    <td  align="center"><div class="fieldsetTitle">*</div></td>
+                                    <td >Mes Pago:</td>
+                                    <td ><div id='cbo_mes'></div></td>
+                                </tr>									
                                 <tr>
                                     <td  align="center"><div class="fieldsetTitle">*</div></td>
                                     <td >Monto:</td>
@@ -104,11 +138,6 @@
                                     <td align="center" ><div class="fieldsetTitle">*</div></td>
                                     <td >No. Recibo:</td>
                                     <td ><input name="recibo" id="recibo" class="tiny" onfocus="jform.col(this);" /></td>
-                                </tr>			
-                                <tr>
-                                    <td align="center" ><div class="fieldsetTitle">*</div></td>
-                                    <td >Comentario:</td>
-                                    <td ><input name="comentario" id="comentario" class="medium" onfocus="jform.col(this);" /></td>
                                 </tr>
                                 <tr ><td></td><td>&nbsp;</td></tr>
                                 <tr><td></td><td colspan="2"><div class="fieldsetTitle">(*) Campos Obligatorios</div></td></tr>			

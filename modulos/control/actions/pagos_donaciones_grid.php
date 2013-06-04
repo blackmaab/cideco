@@ -1,6 +1,6 @@
 <?php
 
-// header("Content-type: text/xml");
+header("Content-type: text/xml");
 
 set_time_limit(120);
 
@@ -19,31 +19,34 @@ $id = session_id();
 //Inicia
 include("../../../class/database.class.php");
 
-
-$execQuery = "";
-$retVal = "";
-$p0 = "";
+$p0= '';
 
 $p0 = $_GET['p0'];
 
 
+$execQuery = "";
+$retVal = "";
 
-if ($p0 == '')
-{
+
+if ($p0=='')
 	$p0 = 'NULL';
-}
+
 
 $execQuery = " Select 
-					id_pago,
-					fecha,
-					mes,
-					Monto,
-					numero_recibo 
+				   id_donacion,
+				   anio,
+				   Monto as MontoMensual,
+				   mes,
+				   estado_donacion
 				   
-				   From pagos
+				   From donacion 
+				   Left Join estado_donacion 
+						On estado = id_est_donacion
 				   Left Join meses
-						On mes_pago = id_mes
-				   Where id_donacion = $p0 ";
+						On mes_inicio = id_mes
+						
+				   where id_donante = $p0 and estado = 2
+        ";
 
 
 
@@ -58,11 +61,11 @@ $counter = 0;
 $head = "";
 
 $head .="<head>";
-$head .="<column width='0' type='ro' align='left' sort='str'>id_pago</column> \n";
-$head .="<column width='100' type='ro' align='left' sort='str'>Fecha</column> \n";
-$head .="<column width='80' type='ro' align='left' sort='str'>Mes</column> \n";
-$head .="<column width='100' type='ro' align='left' sort='str'>Monto</column> \n";
-$head .="<column width='100' type='ro' align='left' sort='str'>No Recibo</column> \n";
+$head .="<column width='80' type='ro' align='left' sort='str'>No Donacion</column> \n";
+$head .="<column width='60' type='ro' align='left' sort='str'>Anio</column> \n";
+$head .="<column width='125' type='ro' align='left' sort='str'>Monto Comprometido</column> \n";
+$head .="<column width='80' type='ro' align='left' sort='str'>Mes Inicio</column> \n";
+$head .="<column width='60' type='ro' align='left' sort='str'>Estado</column> \n";
 
 
 $head .="<settings> \n";
@@ -76,14 +79,14 @@ $head .="</head> \n";
 while ($row = $database->database_array($result)) {
 
     $counter++;
-
     $retVal .= "<row id='$counter'> \n";
     $retVal .= "<cell >" . trim($row[0]) . "</cell> \n";
     $retVal .= "<cell >" . trim($row[1]) . "</cell> \n";
     $retVal .= "<cell >" . trim($row[2]) . "</cell> \n";
     $retVal .= "<cell >" . trim($row[3]) . "</cell> \n";
-    $retVal .= "<cell >" . trim($row[4]) . "</cell> \n";
+	$retVal .= "<cell >" . trim($row[4]) . "</cell> \n";
     $retVal .= "</row>";
+	
 }
 
 //Cerra conexiones a base de datos

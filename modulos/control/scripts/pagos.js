@@ -2,7 +2,9 @@
 // Variables globales
 
 var toolbar;
+var toolbar1;
 var mygrid;
+var mygrid1;
 var myCalendar;
 var loader;
 
@@ -25,6 +27,13 @@ function doOnLoad() {
         DoEvent(id);
 	
     });
+	
+	// Segundo Toolbar
+	
+	toolbar2 = new dhtmlXToolbarObject("toolbarObj1");
+    toolbar2.setIconsPath("../../../images/icons/");
+    toolbar2.loadXML("../../../components/toolbar/Pago_Donacion.xml?etc=" + new Date().getTime());	
+	
 }
 
 
@@ -35,11 +44,33 @@ function DoEvent(data) {
     switch(data)
     {
 	
+	
+	
+		case "add":
+		
+			if (mygrid1.getSelectedId())
+			{
+				idReg=0;
+				ClearParam()
+				document.getElementById('frm_show').click();
+				document.getElementById('fecha').focus();
+			}
+			else
+			{
+				Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar una Donacion</td></tr></table>");
+                Msjbox.show();
+			}
+			
+		break;
+			
         case "edit":
+		
+		/*
             idReg=0;
             ClearParam()
             document.getElementById('frm_show').click();
             document.getElementById('fecha').focus();
+		*/
             break;
 		
 		
@@ -81,7 +112,6 @@ function DoEvent(data) {
                 Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe Seleccionar Un Registro</td></tr></table>");
                 Msjbox.show();
             }		
-			
 
             break;
 		
@@ -111,7 +141,7 @@ function DoEvent(data) {
 function doCalendar()
 {
 
-    myCalendar = new dhtmlXCalendarObject(["fechacad"]);
+    myCalendar = new dhtmlXCalendarObject(["fecha"]);
 
 }
 
@@ -122,7 +152,7 @@ function LoadData(){
     MsjWait.show();
 	
     // Luego despues de un segundo cargamos el grid
-    setTimeout("LoadGrid();", 1000);
+    setTimeout("LoadGridDonaciones();LoadGrid();", 1000);
 
 }
 
@@ -132,17 +162,24 @@ function LoadData(){
 function LoadGrid()
 {
 
+	var valor = '';
+	
     mygrid = new dhtmlXGridObject('gridbox');
     mygrid.setImagePath("../../../components/grid/imgs/");
     mygrid.init();
     mygrid.setSkin("dhx_skyblue");
 
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/pagos_grid.php",
+	if (mygrid1.getSelectedId())
+	{
+		valor = mygrid1.cells(mygrid1.getSelectedId(),0).getValue();
+	}
+	
+    mygrid.loadXML("../actions/pagos_grid.php?p0=" + valor,
         function()
         {
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,,");
+            //mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
@@ -153,10 +190,39 @@ function LoadGrid()
 }
 
 
+function LoadGridDonaciones()
+{
+
+    mygrid1 = new dhtmlXGridObject('gridbox_dona');
+    mygrid1.setImagePath("../../../components/grid/imgs/");
+    mygrid1.init();
+    mygrid1.setSkin("dhx_skyblue");
+
+	mygrid1.attachEvent("onRowSelect",function(rowId,columnIndex){LoadGrid();})
+
+	
+    // direccion de la pagina que hace el xml de forma dinamica
+    mygrid1.loadXML("../actions/pagos_donaciones_grid.php?p0=" + donante.getSelectedValue(),
+        function()
+        {
+            // Para agregar los filtros del grid.
+            // mygrid.attachHeader(",,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,,");
+            // finalizamos el mensaje de espere
+            MsjWait.hide();
+        }
+        );
+
+}
+
+
+
+
+
 // funcion q carga los combos. perfil y estatus
 
 
-var alumno;
+var donante;
+var mes;
 	
 
 
@@ -169,65 +235,63 @@ function LoadCombos()
 	
 	
     // creacion del combo tipo donacion
-    alumno = new dhtmlXCombo("cbo_alumno","cbo_alumno",250);
-    alumno.enableFilteringMode(true);	
-//alumno.attachEvent("onKeyPressed", function(keyCode){if (keyCode == 13 ) LoadGrid(0);});
-//alumno.loadXML("../actions/usuarios_combo_perfil.php?p0=" , function(){});
-//alumno.attachEvent("onBlur", Validacion1);
-	
+    donante = new dhtmlXCombo("cbo_donante","cbo_donante",250);
+    donante.enableFilteringMode(true);	
+    donante.loadXML("../actions/pago_combo_donantes.php?p0=", function(){});
+    donante.attachEvent("onSelectionChange", function(){ LoadGridDonaciones(); });  
 
 	
-
- 
-
+	    // creacion del combo tipo donacion
+    mes = new dhtmlXCombo("cbo_mes","cbo_mes",125);
+    mes.enableFilteringMode(true);	
+    mes.loadXML("../actions/pago_combo_meses.php?p0=", function(){});
+	mes.attachEvent("onBlur", ValidacionMes);
 
 }
 
 
-/*
-// validacion del combo perfil
-function Validacion1() {
 
-	if (combo_perfil.getSelectedValue()==null)
+// validacion del combo Mes
+function ValidacionMes() 
+{
+
+	if (mes.getSelectedValue()==null)
 	{
-		combo_perfil.setComboText('');
+		mes.setComboText('');
 	}
     return true;
 }
-
-// validacion del combo status
-function Validacion2() {
-
-	if (combo_status.getSelectedValue()==null)
-	{
-		combo_status.setComboText('');
-	}
-    return true;
-}
-*/
 
 
 // funcion para guardar los registros
 function SaveData()
 {
 
-    try
-    {
-
+		
         // verificamos q los parametros obligatorios esten llenos
         if(CheckParam())
         {
 		
             // guardamos los parametros en un arreglo post
 			
-            //var parameters = ""; 
-            //parameters = parameters + "?p0=" + idReg;
-            //parameters = parameters + "&p1=" + document.getElementById("usuario").value;
-
+            var parameters = ""; 
+			parameters = parameters + "?p0=" + idReg;
+            parameters = parameters + "&p1=" + mygrid1.cells(mygrid1.getSelectedId(),0).getValue();
+			parameters = parameters + "&p2=" + mygrid1.cells(mygrid1.getSelectedId(),1).getValue();
+			parameters = parameters + "&p3=" + mygrid1.cells(mygrid1.getSelectedId(),2).getValue();
+            parameters = parameters + "&p4=" + document.getElementById("fecha").value;
+			parameters = parameters + "&p5=" + mes.getSelectedValue();
+			parameters = parameters + "&p6=" + document.getElementById("monto").value;
+			parameters = parameters + "&p7=" + document.getElementById("recibo").value;
+			
+			alert(parameters);
+			
+			
+			
             if (idReg==0)
             {
                 // si es nuevo entra aqui
-                loader = dhtmlxAjax.post( "../actions/usuarios_insert.php",encodeURI(parameters), function(){
+                loader = dhtmlxAjax.post( "../actions/pago_save.php",encodeURI(parameters), function(){
                     ReadXml()
                 } );
             }
@@ -238,6 +302,7 @@ function SaveData()
                     ReadXml()
                 } );
             }
+			
 
         }
         else
@@ -249,13 +314,7 @@ function SaveData()
 		
         }
 
-    }
-    catch(err)
-    {
 
-        alert(err.message );
-		
-    }
 
 
 
@@ -271,21 +330,25 @@ function CheckParam()
 	
 	
 	
-    /*if (document.getElementById('usuario').value == '')
+    if (document.getElementById('fecha').value == '')
 	{
 		Val = false;
 	}
 	
-	if (document.getElementById('contrasena').value == '')
+	if (document.getElementById('monto').value == '')
 	{
 		Val = false;
 	}
 	
-	if (document.getElementById('fechacad').value == '')
+	if (document.getElementById('recibo').value == '')
 	{
 		Val = false;
 	}
-	*/
+	
+	if (mes.getSelectedValue()==null)
+	{
+		Val = false;
+	}
 	
 	
     return Val;
@@ -352,7 +415,8 @@ function DeleteData()
 // lectura del xml de respuesta
 function ReadXml(){
 
-    //alert(loader.doSerialization());
+
+	
     if ( loader.xmlDoc.responseXML != null && loader.xmlDoc.statusText=='OK' && loader.doSerialization()!='' ) 
     {
         xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -362,6 +426,42 @@ function ReadXml(){
         switch(xmlDoc.documentElement.childNodes[0].text)
         {
 		
+                
+                
+            
+            
+            case "Add_pago":
+                
+                if (xmlDoc.documentElement.childNodes[1].text=='0')
+                    {
+                        
+                        MsjWait.show();
+                        document.getElementById('frm_hide').click();
+                        LoadGrid();
+                        
+                    }
+                else
+                    {
+                        
+                        if (xmlDoc.documentElement.childNodes[1].text == '1')
+                        {
+                            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Existe Monto Pendiente en el Mes Anterior</td></tr></table>");
+                            Msjbox.show();
+                        }
+                        
+                        if (xmlDoc.documentElement.childNodes[1].text == '2')
+                        {
+                            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;El Monto sobrepasa el pago de la Cuota </td></tr></table>");
+                            Msjbox.show();
+                        }
+
+                    }
+                        
+
+				
+				
+                break;
+                
             // si fue un insert
             case "Insert":
 				
