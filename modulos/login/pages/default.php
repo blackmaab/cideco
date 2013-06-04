@@ -51,11 +51,11 @@ Acceso a Sistema
 <br />
 
 <div id="login-box-name" style="margin-top:20px;">Usuario:</div><div id="login-box-field" style="margin-top:20px;"><input id="user" name="user" class="form-login" title="Username" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);" /></div>
-<div id="login-box-name">Contraseña:</div><div id="login-box-field"><input id="pass" name="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);"  /></div>
+<div id="login-box-name">ContraseÃ±a:</div><div id="login-box-field"><input id="pass" name="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" onKeyPress="if (event.keyCode == 13) SendData(); else return checkNoChars(event);"  /></div>
 
 <br />
 
-<span class="login-box-options"><input type="checkbox" id="remember" name="remember" value="0"> Remember Me <a href="javascript:NoPass();" style="margin-left:30px;">olvide contraseña</a></span>
+<span class="login-box-options"><input type="checkbox" id="remember" name="remember" value="0"> Remember Me <a href="javascript:NoPass();" style="margin-left:30px;">olvide contraseï¿½a</a></span>
 
 <br />
 <br />
@@ -68,7 +68,7 @@ Acceso a Sistema
 if (isset($_GET['err']))
 {
 	if ($_GET['err']==1)
-		echo 'Usuario o Contraseña no valida...';
+		echo 'Usuario o Contraseï¿½a no valida...';
 }
 	
 ?>
@@ -87,7 +87,7 @@ if (isset($_GET['err']))
 		<button id="hide"></button>
     
 		<div id="NoPass" class="yui-pe-content">
-		<div class="hd">Olvide Contraseña...</div>
+		<div class="hd">Olvide Contrase&ntilde;a...</div>
 		<div class="bd">
 		
 		<div class="label">

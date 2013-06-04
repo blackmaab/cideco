@@ -9,26 +9,6 @@ var loader;
 var idReg=0;
 
 
-function setSens(id, k) {
-    // update range
-    if (k == "min") {
-        myCalendar.setSensitiveRange(byId(id).value, null);
-    } else {
-        myCalendar.setSensitiveRange(null, byId(id).value);
-    }
-}
-function byId(id) {
-    return document.getElementById(id);
-}
-
-// funcion para crear el calendario
-function doCalendar()
-{
-    myCalendar = new dhtmlXCalendarObject(["txtFechaIni", "txtFechaFin"]);
-
-
-}
-
 
 
 // Funcion para cargar los datos
@@ -53,11 +33,11 @@ function LoadGrid()
     mygrid.setSkin("dhx_skyblue");
     
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/donaciones_grid.php",
+    mygrid.loadXML("../actions/notas_grid.php",
         function()
         {            
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",#text_filter,,#text_filter,,");
+            mygrid.attachHeader(",#text_filter,#text_filter,,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
@@ -67,26 +47,18 @@ function LoadGrid()
 
 function filterGrid()
 {   
-    
-    if(document.getElementById("txtFechaIni").value=="" || document.getElementById("txtFechaFin").value==""){
-        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar todos los campos</td></tr></table>");
-        Msjbox.show();
-        return false;
-    }
-    
-    
+        
     mygrid = new dhtmlXGridObject('gridbox');
     mygrid.setImagePath("../../../components/grid/imgs/");
     mygrid.init();
     mygrid.setSkin("dhx_skyblue");
-    var param="?fechaini="+document.getElementById("txtFechaIni").value;
-    param+="&fechafin="+document.getElementById("txtFechaFin").value;
+    var param="?anio="+document.getElementById("selAnio").value;   
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/donaciones_grid.php"+param,
+    mygrid.loadXML("../actions/notas_grid.php"+param,
         function()
         {            
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",#text_filter,,#text_filter,,");
+            mygrid.attachHeader(",#text_filter,#text_filter,,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
@@ -143,22 +115,4 @@ function init() {
     
     }
 
-
-    function toolbars(){
-        var toolbar = new dhtmlXToolbarObject("divOpciones"); 
-        toolbar.addButton("id", "pos", "text", "imgEnabled", "imgDisabled");
-        
-        
-   
-    // Direccion de iconos
-    toolbar.setIconsPath("../../../images/icons/");
-    
-	
-    // Funcion cuando el usuario da click en el toolbar
-    toolbar.attachEvent("onClick", function(id) {
-	
-        DoEvent(id);
-	
-    });
-    }
 }

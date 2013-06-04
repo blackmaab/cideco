@@ -5,7 +5,8 @@ class Reportes extends Conexion {
     public $date_start;
     public $date_end;
     public $sqlQuery;
-    public $idDonante;
+    public $idUsuario;
+    public $anio;
 
     public function __construct() {
         parent::conexion();
@@ -65,8 +66,6 @@ class Reportes extends Conexion {
         }
     }
 
-    
-    
     public function load_donaciones($all_row = true) {
         try {
             $array_data = array();
@@ -88,7 +87,7 @@ class Reportes extends Conexion {
                 $this->sqlQuery .="BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
             endif;
 
-            $this->sqlQuery .=" AND a.id_donante=".$this->idDonante." order by g.fecha,c.id_persona asc ";
+            $this->sqlQuery .=" AND c.id_usuario=" . $this->idUsuario . " order by g.fecha,c.id_persona asc ";
             $resultSet = $this->conection->prepare($this->sqlQuery);
             $resultSet->execute();
             $coicidencias = $resultSet->rowCount();
@@ -100,7 +99,7 @@ class Reportes extends Conexion {
                         "promotor" => $row["promotor"],
                         "tipo_pago" => $row["tipo_pago"],
                         "monto" => $row["monto"],
-                        "numero_recibo" => $row["numero_recibo"],                        
+                        "numero_recibo" => $row["numero_recibo"],
                         "fecha" => $row["fecha"]
                     );
                     $i++;
@@ -116,6 +115,58 @@ class Reportes extends Conexion {
             $this->bandera = 0;
         }
     }
+
+    public function load_notas_becados($all_row = true) {
+        try {
+            $array_data = array();
+            //verificacion si se filtraran los datos                     
+            $this->sqlQuery = "select b.id_alumno,TRIM(concat(IFNULL(c.nombres,''),' ',IFNULL(c.apellido_pri,''),' ',IFNULL(c.apellido_seg,''))) alumno,";
+            $this->sqlQuery .="d.nombre_institucion,e.grado,a.seccion,a.nota_promedio,a.anio, ";
+            $this->sqlQuery .="TRIM(concat(IFNULL(h.nombres,''),' ',IFNULL(h.apellido_pri,''),' ',IFNULL(h.apellido_seg,''))) donante ";
+            $this->sqlQuery .="from registro_alumno a ";
+            $this->sqlQuery .="inner join alumno b on a.id_alumno=b.id_alumno ";
+            $this->sqlQuery .="inner join persona c on b.id_persona=c.id_persona ";
+            $this->sqlQuery .="inner join institucion_educativa d on a.id_institucion_edu=d.id_institucion ";
+            $this->sqlQuery .="inner join grado e on a.id_grado=e.id_grado ";
+            $this->sqlQuery .="inner join donacion f  on a.id_registro=f.id_registro_alumno ";
+            $this->sqlQuery .="inner join donante g on f.id_donante=g.id_donante ";
+            $this->sqlQuery.="inner join persona h on g.id_persona=h.id_persona ";
+            $this->sqlQuery.="where a.activa=1 ";
+            if ($all_row == true):
+                $this->sqlQuery .="and a.anio=" . date('Y');
+            else:
+                $this->sqlQuery .="and a.anio=" . $this->anio;
+            endif;
+            $this->sqlQuery .=" AND g.id_usuario=" . $this->idUsuario;
+            $this->sqlQuery .=" order by a.fecha_creacion,b.id_alumno asc ";
+            $resultSet = $this->conection->prepare($this->sqlQuery);
+            $resultSet->execute();
+            $coicidencias = $resultSet->rowCount();
+            if ($coicidencias > 0) {
+                $i = 1;
+                while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {
+                    $array_data[$i] = array(
+                        "alumno" => $row["alumno"],
+                        "institucion" => $row["nombre_institucion"],
+                        "grado" => $row["grado"],
+                        "seccion" => $row["seccion"],
+                        "nota" => $row["nota_promedio"],
+                        "anio" => $row["anio"]
+                    );
+                    $i++;
+                }
+                $this->bandera = 1;
+            } else {
+                $this->mensaje = "NO SE ENCONTRARON COICIDENCIAS";
+                $this->bandera = 0;
+            }
+            return $array_data;
+        } catch (PDOException $e) {
+            $this->mensaje = "Error: " . $e->getMessage();
+            $this->bandera = 0;
+        }
+    }
+
 }
 
 ?>

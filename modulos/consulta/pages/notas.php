@@ -38,120 +38,63 @@
 
     </head>
 
-    <body class="yui-skin-sam" onLoad="init();LoadData();doOnLoad();doCalendar();" >
-
-
-
+    <body class="yui-skin-sam" onLoad="init();LoadData()" >
 
         <br/>
         <fieldset style="width: 99%;">
-            <legend class="fieldsetTitle">&nbsp;Mantenimiento - Bancos</legend>
-
+            <legend class="fieldsetTitle">&nbsp;Consulta - Notas de apadrinados</legend>
             <br />
             <table width="100%">
                 <tr>
                     <td width="2%">&nbsp;</td>
                     <td width="96%">
-                        <div style="width:99%;"><div id="toolbarObj"></div></div>
+                        <div style="width:99%;padding-bottom: 10px;">                            
+                            <span>Buscar calificaciones por a&ntilde;o</span>
+                            <select id="selAnio">
+                                <?php
+                                $year = ((int) date('Y')) - 5;
+                                for ($anio = ((int) date('Y')); $anio > $year; $anio--):
+                                    ?>
+                                    <option value="<?php echo $anio; ?>"><?php echo $anio; ?></option>
+                                    <?php
+                                endfor;
+                                ?>
+                            </select>
+                            <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
+                        </div>
                         <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
                     </td>
                     <td width="1%">&nbsp;</td>
 
                 </tr>
             </table>
-
             <br />
-
         </fieldset>
 
         <div align = 'left' id="content"></div>
 
-
-
-        <!-- Fromulario de Nuevo, Editar Registro -->
-
-        <div style="visibility:hidden;">
-            <button id="frm_show"></button> 
-            <button id="frm_hide"></button>
-
-            <div id="RegNew" class="yui-pe-content">
-                <div class="hd">Datos del nuevo Banco</div>
-                <div class="bd">
-                    <div class="label">
-                        <table width="100%" >
-                            <tr>
-                                <td width="3%"></td>
-                                <td width="25%"></td>
-                                <td width="72%"></td>
-                            </tr>
-                            <tr>
-
-                                <td  align="center"><div class="fieldsetTitle">*</div></td>
-                                <td>Nombre Banco:</td>
-                                <td><input name="tipo_pago" id="tipo_pago" class="medium" onfocus="jform.col(this);" /></td>
-                            </tr>				                           	
-                            <tr>
-                                <td  align="center"><div class="fieldsetTitle">*</div></td>
-                                <td>Activo:</td>
-                                <td>
-                                    Si <input type="radio" name="rd_activo"  id="rd_si" value="1" checked="checked" />
-                                    No <input type="radio" name="rd_activo" id="rd_no" value="0" />                                    
-                                </td>
-                            </tr>
-                            <tr ><td></td><td>&nbsp;</td></tr>
-                            <tr><td></td><td colspan="2"><div class="fieldsetTitle">(*) Campos Obligatorios</div></td></tr>			
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div style="visibility:hidden;">
-            <button id="msj_show"></button> 
-            <button id="msj_hide"></button>
-
-            <div id="RegDel" class="yui-pe-content">
-                <div class="hd">Advertencia...</div>
-                <div class="bd">
-
-                    <div class="label">
-
-                        ¿Esta seguro(a) que desea borrar el Registro Permanentemente?
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-        <!-- Componente Grid -->
+        <!--Componente Grid--> 
         <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
         <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
 
-            <!-- Componente Toolbar -->
+            <!--Componente Toolbar--> 
 
             <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
             <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
 
 
-                <!-- Componente Calendar -->
+                <!--Componente Calendar--> 
 
                 <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
                 <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
 
-                    <!-- Componente Combo -->
+                    <!--Componente Combo--> 
 
                     <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
                     <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
 
 
-                        <!-- Componente Formularios, Ventanas y Avisos -->
+                        <!--Componente Formularios, Ventanas y Avisos--> 
 
                         <link rel="stylesheet" type="text/css" href="../../../components/build/fonts/fonts-min.css" />
                         <link rel="stylesheet" type="text/css" href="../../../components/build/button/assets/skins/sam/button.css" />
@@ -169,9 +112,7 @@
                         <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
                         <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-                        <script type="text/javascript" src = '../scripts/bancos.js'></script>
-
-
+                        <script type="text/javascript" src = '../scripts/notas.js'></script>
 
                         </body>
 

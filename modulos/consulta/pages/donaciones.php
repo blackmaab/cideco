@@ -38,22 +38,23 @@
 
     </head>
 
-    <body class="yui-skin-sam" onLoad="init();LoadData();doCalendar();" >
+    <body class="yui-skin-sam" onLoad="init();LoadData();doCalendar();toolbars();" >
 
         <br/>
         <fieldset style="width: 99%;">
-            <legend class="fieldsetTitle">&nbsp;Consulta - Becas</legend>
+            <legend class="fieldsetTitle">&nbsp;Consulta - Historial de Donaciones</legend>
             <br />
             <table width="100%">
                 <tr>
                     <td width="2%">&nbsp;</td>
                     <td width="96%">
                         <div style="width:99%;padding-bottom: 10px;">
-                            <h4>Buscar becas por fechas</h4>                            
-                            <span>desde:</span><input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true">
-                            <span>hasta:</span><input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true">
+                            <h4>Buscar donaciones realizadas por fechas</h4>                            
+                            <span>&nbsp;&nbsp;desde:&nbsp;&nbsp;</span><input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true">
+                            <span>&nbsp;&nbsp;hasta:&nbsp;&nbsp;</span><input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true">
                                 <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
                         </div>
+                        <div id="divOpciones"></div>
                         <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
                     </td>
                     <td width="1%">&nbsp;</td>

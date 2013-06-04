@@ -129,7 +129,7 @@ function LoadGrid()
         function()
         {            
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",#text_filter,");
+            mygrid.attachHeader(",#text_filter,,#text_filter,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
