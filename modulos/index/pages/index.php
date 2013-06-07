@@ -23,8 +23,7 @@ if (!isset($_SESSION['CIDECO'])) {
     <head>
         <title>FUNDACION CIDECO - Sistema de Gestion de Donaciones</title>
         <meta http-equiv="content-type" content="application/xhtml; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
-
+        <link rel="stylesheet" type="text/css" href="../../../css/style.css" />        
 
         <style type="text/css">
 

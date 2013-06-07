@@ -184,3 +184,22 @@ function init() {
     }
    
 }
+
+
+$(document).ready(function(){
+    $('#selFiltro').change(function(){
+        opc=$(this).val();
+        console.log(opc);
+        switch(opc){
+            case 1:
+            case 2:
+                $('#rowNombre').show();
+                $('#rowFecha').hide();
+                break;
+            case 3:
+                $('#rowNombre').hide();
+                $('#rowFecha').show();
+                break;
+        }
+    });
+});

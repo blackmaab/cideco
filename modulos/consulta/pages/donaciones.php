@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
     <head>
-
+        <script type="text/javascript" src="../../../script/jquery.js"></script>
 
         <script type="text/javascript">
 
@@ -61,78 +61,105 @@
                                             </div>
                                             <?php
                                         elseif ($_SESSION['IDPERF'] == 1):
-
-                                            require_once $_SERVER['DOCUMENT_ROOT'] . '/cideco/class/Conexion.class.php';
-                                            require_once $_SERVER['DOCUMENT_ROOT'] . '/cideco/class/Reportes.class.php';
                                             ?>
                                             <div style="width:99%;padding-bottom: 10px;">
                                                 <h4>Buscar donaciones realizadas</h4>                            
 
-                                            </div>
-                                            <?php
-                                        endif;
-                                        ?>
-                                        <div style="width:99%;"><div id="toolbarObj"></div></div>
-                                        <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
-                                        </td>
-                                        <td width="1%">&nbsp;</td>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>Realizar busqueda por:</td>
+                                                            <td>
+                                                                <select id="selFiltro">
+                                                                    <option value="1" selected="selected">Donante</option>
+                                                                    <option value="2">Promotor</option>
+                                                                    <option value="3">Rango de Fechas</option>
+                                                                </select>
+                                                            </td>                                                            
+                                                            <td>
+                                                                <input type="button" name="btnBuscar" id="btnBuscar" value="Buscar"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr id="rowNombre">
+                                                            <td>Escribir el nombre:</td>
+                                                            <td>
+                                                                <input type="text" id="txtNombre" name="txtNombre" class="tiny"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr id="rowFecha" style="display: none;">
+                                                            <td>Fecha inicial:</td>
+                                                            <td>
+                                                                <input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true"/>
+                                                            </td>
+                                                            <td>hasta:    <input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true"/></td>                                                            
+                                                        </tr>
+                                                    </table>
+                                                </div>
 
-                                        </tr>
-                                        </table>
-                                        <br />
-                                        </fieldset>
+                                                <?php
+                                            endif;
+                                            ?>                       
+                                            <div style="width:99%;"><div id="toolbarObj"></div></div>
+                                            <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
+                                            </td>
+                                            <td width="1%">&nbsp;</td>
 
-                                        <div align = 'left' id="content"></div>
+                                            </tr>
+                                            </table>
+                                            <br />
+                                            </fieldset>
 
-
-
-
-
-
-
-
-
-                                        <!--Componente Grid--> 
-                                        <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
-                                        <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
-
-                                            <!--Componente Toolbar--> 
-
-                                            <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
-                                            <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
-
-
-                                                <!--Componente Calendar--> 
-
-                                                <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
-                                                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
-
-                                                    <!--Componente Combo--> 
-
-                                                    <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
-                                                    <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
-
-
-                                                        <!--Componente Formularios, Ventanas y Avisos--> 
-
-                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/fonts/fonts-min.css" />
-                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/button/assets/skins/sam/button.css" />
-                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/container/assets/skins/sam/container.css" />
-                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/carousel/assets/skins/sam/carousel.css" />
-
-                                                        <script type="text/javascript" src="../../../components/build/framework-dom-event/framework-dom-event.js"></script>
-                                                        <script type="text/javascript" src="../../../components/build/element/element-min.js"></script>
-                                                        <script type="text/javascript" src="../../../components/build/button/button-min.js"></script>
-                                                        <script type="text/javascript" src="../../../components/build/animation/animation-min.js"></script>
-                                                        <script type="text/javascript" src="../../../components/build/dragdrop/dragdrop-min.js"></script>
-                                                        <script type="text/javascript" src="../../../components/build/container/container-min.js"></script>
+                                            <div align = 'left' id="content"></div>
 
 
-                                                        <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
-                                                        <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
 
-                                                        <script type="text/javascript" src = '../scripts/donaciones.js'></script>
 
-                                                        </body>
 
-                                                        </html>
+
+
+
+
+                                            <!--Componente Grid--> 
+                                            <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
+                                            <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
+
+                                                <!--Componente Toolbar--> 
+
+                                                <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
+                                                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
+
+
+                                                    <!--Componente Calendar--> 
+
+                                                    <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
+                                                    <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
+
+                                                        <!--Componente Combo--> 
+
+                                                        <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
+                                                        <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
+
+
+                                                            <!--Componente Formularios, Ventanas y Avisos--> 
+
+                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/fonts/fonts-min.css" />
+                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/button/assets/skins/sam/button.css" />
+                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/container/assets/skins/sam/container.css" />
+                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/carousel/assets/skins/sam/carousel.css" />
+
+                                                            <script type="text/javascript" src="../../../components/build/framework-dom-event/framework-dom-event.js"></script>
+                                                            <script type="text/javascript" src="../../../components/build/element/element-min.js"></script>
+                                                            <script type="text/javascript" src="../../../components/build/button/button-min.js"></script>
+                                                            <script type="text/javascript" src="../../../components/build/animation/animation-min.js"></script>
+                                                            <script type="text/javascript" src="../../../components/build/dragdrop/dragdrop-min.js"></script>
+                                                            <script type="text/javascript" src="../../../components/build/container/container-min.js"></script>
+
+
+                                                            <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
+                                                            <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
+
+                                                            <script type="text/javascript" src = '../scripts/donaciones.js'></script>
+
+                                                            </body>
+
+                                                            </html>
