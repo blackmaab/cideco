@@ -149,7 +149,6 @@ function DoEvent(data) {
     }else{
         return false;
     }
-console.log(param);
     var url="../actions/notas_export.php"+param;
 			
     var window_width = 10;
@@ -215,8 +214,7 @@ function init() {
 }
 
 $(document).ready(function(){
-    var filter_Grid_notas=function(param){
-        console.log(param);
+    var filter_Grid_notas=function(param){        
         mygrid = new dhtmlXGridObject('gridbox');
         mygrid.setImagePath("../../../components/grid/imgs/");
         mygrid.init();

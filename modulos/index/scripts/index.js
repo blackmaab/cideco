@@ -155,6 +155,11 @@ function menuClick(id) {
                     document.getElementById('contenido').src = "../../consulta/pages/donaciones.php";
                 break
                 
+                
+                case "Con_Becas":
+                    document.getElementById('contenido').src = "../../consulta/pages/becas.php";
+                break
+                
                 case "Con_Notas":
                     document.getElementById('contenido').src = "../../consulta/pages/notas.php";
                 break;

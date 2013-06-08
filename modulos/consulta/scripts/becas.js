@@ -29,8 +29,6 @@ function doCalendar()
 
 }
 
-
-
 // Funcion para cargar los datos
 function LoadData(){
     
@@ -53,11 +51,11 @@ function LoadGrid()
     mygrid.setSkin("dhx_skyblue");
     
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/becas_grid.php",
+    mygrid.loadXML("../actions/becas_grid.php?type=load",
         function()
         {            
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",#text_filter,");
+            mygrid.attachHeader(",#text_filter,#text_filter,,,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
@@ -67,24 +65,88 @@ function LoadGrid()
 
 function filterGrid()
 {   
+        
     mygrid = new dhtmlXGridObject('gridbox');
     mygrid.setImagePath("../../../components/grid/imgs/");
     mygrid.init();
     mygrid.setSkin("dhx_skyblue");
-    var param="?fechaini="+document.getElementById("txtFechaIni").value;
-    param+="&fechafin="+document.getElementById("txtFechaFin").value;
+    var param="?anio="+document.getElementById("selAnio").value;   
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/becas_grid.php"+param,
+    mygrid.loadXML("../actions/notas_grid.php"+param,
         function()
         {            
             // Para agregar los filtros del grid.
-            mygrid.attachHeader(",#text_filter,");
+            mygrid.attachHeader(",#text_filter,#text_filter,,,,");
             // finalizamos el mensaje de espere
             MsjWait.hide();
         }
         );
 }
 
+// Funcion para cargar el menu
+function doOnLoad() {
+
+    // Creando nuevo objeto
+    toolbar = new dhtmlXToolbarObject("toolbarObj");
+    // Direccion de iconos
+    toolbar.setIconsPath("../../../images/icons/");
+    // xml a cargar, este es fijo en la direccion q aparece
+    toolbar.loadXML("../../../components/toolbar/Beca_Donacion.xml?etc=" + new Date().getTime());
+	
+	
+    // Funcion cuando el usuario da click en el toolbar
+    toolbar.attachEvent("onClick", function(id) {
+	
+        DoEvent(id);
+	
+    });
+}
+
+
+function DoEvent(data) {
+    var param="";
+    var fecha_fin="";
+    //verificacion del tipo de usuario
+        
+    var opc= $('#selFiltro').val();        
+    switch(opc){
+        case '1':
+            if($('#txtNombre').val()==""){
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar el campo nombre</td></tr></table>");
+                Msjbox.show();
+                return false;
+            }
+               
+            param="?type=alumno&nombre="+$('#txtNombre').val();                                  
+            break;
+        case '2':
+            param="?type=institucion&id="+$('#selInstitucion').val();                  
+            break;
+        case '3':
+            if($('#txtFechaIni').val()==""){
+                Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+                Msjbox.show();
+                return false;
+            }
+            fecha_fin=($('#txtFechaFin').val()=="")?$("#txtFechaIni").val():$("#txtFechaFin").val();
+            param="?fechaini="+$("#txtFechaIni").val();
+            param+="&fechafin="+fecha_fin+"&type=fecha";                      
+            break;            
+                       
+    }
+   
+    var url="../actions/becas_export.php"+param;
+			
+    var window_width = 10;
+    var window_height = 10;
+    var newfeatures= 'scrollbars=no,resizable=no, menubar=no, toolbar=no';
+    var window_top = (screen.height-window_height)/2;
+    var window_left = (screen.width-window_width)/2;
+    window.open(url, 'titulo','width=' + window_width + ',height=' + window_height + ',top=' + window_top + ',left=' + window_left + ',features=' + newfeatures + '');
+		
+   
+	
+}
 
 function init() {
     
@@ -136,3 +198,75 @@ function init() {
     }
 
 }
+
+$(document).ready(function(){
+    var filter_Grid_becas=function(param){   
+        mygrid = new dhtmlXGridObject('gridbox');
+        mygrid.setImagePath("../../../components/grid/imgs/");
+        mygrid.init();
+        mygrid.setSkin("dhx_skyblue");   
+        // direccion de la pagina que hace el xml de forma dinamica
+        mygrid.loadXML("../actions/becas_grid.php"+param,
+            function()
+            {            
+                // Para agregar los filtros del grid.
+                mygrid.attachHeader(",#text_filter,#text_filter,,,,");
+                // finalizamos el mensaje de espere
+                MsjWait.hide();
+            }
+            );
+    }
+    
+    $('#selFiltro').change(function(){
+        var opc=$(this).val();
+        switch(opc){
+            case '1':
+                $('#rowNombre').show();
+                $('#rowInstitucion').hide();                
+                $('#rowFecha').hide();
+                break;
+            case '2':
+                $('#rowNombre').hide();
+                $('#rowInstitucion').show();                
+                $('#rowFecha').hide();
+                break;            
+            case '3':
+                $('#rowNombre').hide();
+                $('#rowInstitucion').hide();                
+                $('#rowFecha').show();
+                break;
+        }
+    });
+    
+    $('#btnBuscar').click(function(){
+        
+        var param="";
+        var opc= $('#selFiltro').val();        
+        switch(opc){
+            case '1':
+                if($('#txtNombre').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar el campo nombre</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }                
+                param="?type=alumno&nombre="+$('#txtNombre').val();                                 
+                filter_Grid_becas(param);
+                break;
+            case '2':
+                param="?type=institucion&id="+$('#selInstitucion').val();  
+                filter_Grid_becas(param);
+                break;
+            case '3':
+                if($('#txtFechaIni').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }
+                var fecha_fin=($('#txtFechaFin').val()=="")?$("#txtFechaIni").val():$("#txtFechaFin").val();
+                param="?fechaini="+$("#txtFechaIni").val();
+                param+="&fechafin="+fecha_fin+"&type=load";
+                filter_Grid_becas(param);
+                break;              
+        }
+    });
+});

@@ -17,7 +17,7 @@ class Reportes extends Conexion {
         parent::conexion();
     }
 
-    public function load_becas($all_row = true) {
+    public function load_becas($all_row = 0) {
         try {
             $array_data = array();
             //verificacion si se filtraran los datos
@@ -30,11 +30,15 @@ class Reportes extends Conexion {
             $this->sqlQuery .="inner join institucion_educativa d on a.id_institucion_edu=d.id_institucion ";
             $this->sqlQuery .="inner join grado e on a.id_grado=e.id_grado ";
             $this->sqlQuery .="inner join beca_escolar f on a.id_registro=f.id_registro_alumno ";
-            $this->sqlQuery .="where f.activo=1 and f.fecha_creacion ";
-            if ($all_row == true):
-                $this->sqlQuery .="BETWEEN '" . date("Y") . "-" . date("m") . "-01 00:00:00' AND '" . date("Y") . "-" . date("m") . "-31 23:59:59'";
-            else:
-                $this->sqlQuery .="BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
+            $this->sqlQuery .="where f.activo=1 and  ";
+            if ($all_row == 1):
+                $this->sqlQuery .=" f.fecha_creacion BETWEEN '" . date("Y") . "-" . date("m") . "-01 00:00:00' AND '" . date("Y") . "-" . date("m") . "-31 23:59:59'";
+            elseif ($all_row == 2):
+                $this->sqlQuery .=" f.fecha_creacion BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
+            elseif ($all_row == 3):
+                $this->sqlQuery .=" a.id_institucion_edu= " . $this->texto_buscar;
+            elseif ($all_row == 4):
+                $this->sqlQuery .=" c.nombres like '%" . $this->texto_buscar . "%' OR  c.apellido_pri like '%" . $this->texto_buscar . "%' OR c.apellido_seg like '%" . $this->texto_buscar . "%'";
             endif;
 
             $this->sqlQuery .=" order by f.fecha_creacion,b.id_alumno asc";

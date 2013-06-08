@@ -18,13 +18,24 @@ $head .="<colwidth>px</colwidth> \n";
 $head .="</settings> \n";
 $head .="</head> \n";
 $obj_reporte = new Reportes();
-if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
-    $obj_reporte->date_start = $_GET['fechaini'];
-    $obj_reporte->date_end = $_GET['fechafin'];
-    $array_data = $obj_reporte->load_becas(false);
-else:
-    $array_data = $obj_reporte->load_becas(true);
+if (isset($_GET["type"])):
+    if ($_GET["type"] == 'load'):
+        if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
+            $obj_reporte->date_start = $_GET['fechaini'];
+            $obj_reporte->date_end = $_GET['fechafin'];
+            $array_data = $obj_reporte->load_becas(2);
+        else:
+            $array_data = $obj_reporte->load_becas(1);
+        endif;
+    elseif ($_GET["type"] == 'institucion'):
+        $obj_reporte->texto_buscar = $_GET['id'];
+        $array_data = $obj_reporte->load_becas(3);
+    elseif ($_GET["type"] == 'alumno'):
+        $obj_reporte->texto_buscar = $_GET['nombre'];
+        $array_data = $obj_reporte->load_becas(4);
+    endif;
 endif;
+
 //Cierra encabezado
 //Bucle para armar la tabla a mostrar
 $contador = 0;

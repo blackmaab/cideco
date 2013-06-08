@@ -48,13 +48,14 @@
                 <tr>
                     <td width="2%">&nbsp;</td>
                     <td width="96%">
-                        <div style="width:99%;padding-bottom: 10px;">                            
-                            <h4>Buscar calificaciones</h4>
-                            <?php
-                            session_name("CIDECO");
-                            session_start();
-                            if ($_SESSION['IDPERF'] == 3):
-                                ?>
+                        <?php
+                        session_name("CIDECO");
+                        session_start();
+                        if ($_SESSION['IDPERF'] == 3):
+                            ?>
+                            <div style="width:99%;padding-bottom: 10px;">                            
+                                <h4>Buscar calificaciones</h4>
+
                                 <select id="selAnio">
                                     <?php
                                     $year = ((int) date('Y')) - 5;

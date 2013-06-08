@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<toolbar>
+	<item id="sep1" type="separator"/>	
+	<item id="export" type="button" text="Exportar Excel"  img="page_excel.png" imgdis="page_excel.png"/>
+</toolbar>

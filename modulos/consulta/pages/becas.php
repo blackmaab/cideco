@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
     <head>
-
+        <script type="text/javascript" src="../../../script/jquery.js"></script>
 
         <script type="text/javascript">
 
@@ -38,7 +38,7 @@
 
     </head>
 
-    <body class="yui-skin-sam" onLoad="init();LoadData();doCalendar();" >
+    <body class="yui-skin-sam" onLoad="init();LoadData();doOnLoad();doCalendar();" >
 
         <br/>
         <fieldset style="width: 99%;">
@@ -48,12 +48,69 @@
                 <tr>
                     <td width="2%">&nbsp;</td>
                     <td width="96%">
-                        <div style="width:99%;padding-bottom: 10px;">
-                            <h4>Buscar becas por fechas</h4>                            
-                            <span>desde:</span><input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true">
-                            <span>hasta:</span><input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true">
-                                <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
-                        </div>
+                        <?php
+                        session_name("CIDECO");
+                        session_start();
+                      if ($_SESSION['IDPERF'] == 1):
+                            include_once '../../../class/Conexion.class.php';
+                            include_once '../../../class/InstitucionEducativa.class.php';
+
+                            $obj_ins_edu = new InstitucionEducativa();
+                            $array = $obj_ins_edu->select_InstitucionEducativa(true);
+                            ?>
+                            <div style="width:99%;padding-bottom: 10px;">
+                                <h4>Buscar  becas</h4>
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td>Realizar busqueda por:</td>
+                                            <td>
+                                                <select id="selFiltro">
+                                                    <option value="1" selected="selected">Alumno</option>                                                    
+                                                    <option value="2">Institucion</option>                                                    
+                                                    <option value="3">Rango de Fechas</option>
+                                                </select>                                                
+                                            </td>                                                            
+                                            <td>
+                                                <input type="button" name="btnBuscar" id="btnBuscar" value="Buscar"/>
+                                            </td>
+                                        </tr>
+                                        <tr id="rowNombre">
+                                            <td>Escribir el nombre:</td>
+                                            <td>
+                                                <input type="text" id="txtNombre" name="txtNombre" class="tiny"/>
+                                            </td>
+                                        </tr>
+                                        <tr id="rowInstitucion" style="display: none">
+                                            <td>Institucion:</td>
+                                            <td>
+                                                <select id="selInstitucion">
+                                                    <?php
+                                                    foreach ($array as $key => $value):
+                                                        ?>
+                                                        <option value="<?php echo $value['id_institucion'] ?>"><?php echo $value['nombre_institucion']; ?></option>
+                                                        <?php
+                                                    endforeach;
+                                                    ?>                                                    
+                                                </select>
+                                            </td>
+                                        </tr>                                        
+                                        <tr id="rowFecha" style="display: none;">
+                                            <td>Fecha inicial:</td>
+                                            <td>
+                                                <input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true"/>
+                                            </td>
+                                            <td>hasta:<input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true"/></td>                                                            
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <?php
+                        endif;
+                        ?>
+
+
+                        <div style="width:99%;"><div id="toolbarObj"></div></div>
                         <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
                     </td>
                     <td width="1%">&nbsp;</td>
@@ -64,14 +121,6 @@
         </fieldset>
 
         <div align = 'left' id="content"></div>
-
-
-
-
-
-
-
-
 
         <!--Componente Grid--> 
         <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	

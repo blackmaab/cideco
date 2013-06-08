@@ -79,7 +79,7 @@ $objPHPExcel->getActiveSheet()->setTitle('Notas - ' . $name);
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
 
 //Encabezado y Titulo
-$objPHPExcel->getActiveSheet()->mergeCells('A1:G1');
+$objPHPExcel->getActiveSheet()->mergeCells('A1:H1');
 $objPHPExcel->getDefaultStyle()->getFont()->setSize(12);
 if ($_GET['type'] == 'load'):
     $objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - NOTAS DE LOS APADRINADOS AÑO ' . $obj_reporte->anio);
