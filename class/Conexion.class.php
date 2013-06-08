@@ -9,7 +9,7 @@ class Conexion {
     //variables de conexion
     private $hostname = "localhost";
     private $userData = "root";
-    private $passwordData = "admincsj";
+    private $passwordData = "";
     protected $database = "";
     public $conection;
 
