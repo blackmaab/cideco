@@ -57,7 +57,8 @@
                                 <h4>Buscar donaciones realizadas</h4>                            
                                 <span>&nbsp;&nbsp;Fecha inicial:&nbsp;&nbsp;</span><input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true">
                                     <span>&nbsp;&nbsp;hasta:&nbsp;&nbsp;</span><input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true">
-                                        <input type="button" id="btnBuscar" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
+                                        <input type="button" id="btnBuscars" name="btnBuscar" value="Buscar" onclick="filterGrid();">    
+                                            <input type="hidden" id="txtTipoUsuario" value="3"/>
                                             </div>
                                             <?php
                                         elseif ($_SESSION['IDPERF'] == 1):
@@ -75,6 +76,7 @@
                                                                     <option value="2">Promotor</option>
                                                                     <option value="3">Rango de Fechas</option>
                                                                 </select>
+                                                                <input type="hidden" id="txtTipoUsuario" value="1"/>
                                                             </td>                                                            
                                                             <td>
                                                                 <input type="button" name="btnBuscar" id="btnBuscar" value="Buscar"/>
@@ -91,27 +93,25 @@
                                                             <td>
                                                                 <input type="text" id="txtFechaIni" name="txtFechaIni" class="tiny" onclick="setSens('txtFechaFin', 'max');" readonly="true"/>
                                                             </td>
-                                                            <td>hasta:    <input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true"/></td>                                                            
+                                                            <td>hasta:<input type="text" id="txtFechaFin" name="txtFechaFin" class="tiny" onclick="setSens('txtFechaIni', 'min');" readonly="true"/></td>                                                            
                                                         </tr>
                                                     </table>
                                                 </div>
+                                            </div>
+                                            <?php
+                                        endif;
+                                        ?>                       
+                                        <div style="width:99%;"><div id="toolbarObj"></div></div>
+                                        <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
+                                        </td>
+                                        <td width="1%">&nbsp;</td>
 
-                                                <?php
-                                            endif;
-                                            ?>                       
-                                            <div style="width:99%;"><div id="toolbarObj"></div></div>
-                                            <div id="gridbox" style="width:99%;height:325px;background-color:white;"></div>
-                                            </td>
-                                            <td width="1%">&nbsp;</td>
+                                        </tr>
+                                        </table>
+                                        <br />
+                                        </fieldset>
 
-                                            </tr>
-                                            </table>
-                                            <br />
-                                            </fieldset>
-
-                                            <div align = 'left' id="content"></div>
-
-
+                                        <div align = 'left' id="content"></div>
 
 
 
@@ -119,47 +119,49 @@
 
 
 
-                                            <!--Componente Grid--> 
-                                            <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
-                                            <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
-
-                                                <!--Componente Toolbar--> 
-
-                                                <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
-                                                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
 
 
-                                                    <!--Componente Calendar--> 
+                                        <!--Componente Grid--> 
+                                        <script  language="JavaScript" type="text/javascript" src="../../../components/grid/dhtmlxgrid_std.js"></script>	
+                                        <link rel="stylesheet" type="text/css" href="../../../components/grid/dhtmlxgrid_std.css">
 
-                                                    <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
-                                                    <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
+                                            <!--Componente Toolbar--> 
 
-                                                        <!--Componente Combo--> 
-
-                                                        <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
-                                                        <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
-
-
-                                                            <!--Componente Formularios, Ventanas y Avisos--> 
-
-                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/fonts/fonts-min.css" />
-                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/button/assets/skins/sam/button.css" />
-                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/container/assets/skins/sam/container.css" />
-                                                            <link rel="stylesheet" type="text/css" href="../../../components/build/carousel/assets/skins/sam/carousel.css" />
-
-                                                            <script type="text/javascript" src="../../../components/build/framework-dom-event/framework-dom-event.js"></script>
-                                                            <script type="text/javascript" src="../../../components/build/element/element-min.js"></script>
-                                                            <script type="text/javascript" src="../../../components/build/button/button-min.js"></script>
-                                                            <script type="text/javascript" src="../../../components/build/animation/animation-min.js"></script>
-                                                            <script type="text/javascript" src="../../../components/build/dragdrop/dragdrop-min.js"></script>
-                                                            <script type="text/javascript" src="../../../components/build/container/container-min.js"></script>
+                                            <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxtoolbar_full.js"></script>
+                                            <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxtoolbar_full.css">
 
 
-                                                            <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
-                                                            <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
+                                                <!--Componente Calendar--> 
 
-                                                            <script type="text/javascript" src = '../scripts/donaciones.js'></script>
+                                                <script  language="JavaScript" type="text/javascript" src="../../../components/toolbar/dhtmlxcalendar_full.js"></script>
+                                                <link rel="STYLESHEET" type="text/css" href="../../../components/toolbar/dhtmlxcalendar_full.css">
 
-                                                            </body>
+                                                    <!--Componente Combo--> 
 
-                                                            </html>
+                                                    <script  language="JavaScript" type="text/javascript" src="../../../components/select/dhtmlxcombo_full.js"></script>
+                                                    <link rel="STYLESHEET" type="text/css" href="../../../components/select/dhtmlxcombo_full.css">
+
+
+                                                        <!--Componente Formularios, Ventanas y Avisos--> 
+
+                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/fonts/fonts-min.css" />
+                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/button/assets/skins/sam/button.css" />
+                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/container/assets/skins/sam/container.css" />
+                                                        <link rel="stylesheet" type="text/css" href="../../../components/build/carousel/assets/skins/sam/carousel.css" />
+
+                                                        <script type="text/javascript" src="../../../components/build/framework-dom-event/framework-dom-event.js"></script>
+                                                        <script type="text/javascript" src="../../../components/build/element/element-min.js"></script>
+                                                        <script type="text/javascript" src="../../../components/build/button/button-min.js"></script>
+                                                        <script type="text/javascript" src="../../../components/build/animation/animation-min.js"></script>
+                                                        <script type="text/javascript" src="../../../components/build/dragdrop/dragdrop-min.js"></script>
+                                                        <script type="text/javascript" src="../../../components/build/container/container-min.js"></script>
+
+
+                                                        <script type="text/javascript" src = '../../../script/functions.fields.js'></script>
+                                                        <script type="text/javascript" src = '../../../script/functions.ajax.js'></script>
+
+                                                        <script type="text/javascript" src = '../scripts/donaciones.js'></script>
+
+                                                        </body>
+
+                                                        </html>

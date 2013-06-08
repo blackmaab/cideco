@@ -23,9 +23,37 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/cideco/class/Reportes.class.php';
 
 $obj_reporte = new Reportes();
 $obj_reporte->idUsuario = $_SESSION['USERID'];
-$obj_reporte->anio = $_GET['anio'];
-$array_data = $obj_reporte->load_notas_becados(false);
 
+if ($_SESSION['IDPERF'] == 3):
+    $obj_reporte->anio = $_GET['anio'];
+    $array_data = $obj_reporte->load_notas_becados(2);
+
+elseif ($_SESSION['IDPERF'] == 1):
+    //verificacion de la busqueda a realizar
+    if (isset($_GET['type'])):
+        if ($_GET['type'] == 'load'):
+            if (isset($_GET['anio'])):
+                $obj_reporte->anio = $_GET['anio'];
+                $array_data = $obj_reporte->load_notas_becados(5);
+            else:
+                $array_data = $obj_reporte->load_notas_becados(4);
+            endif;
+        elseif ($_GET['type'] == 'alumno'):
+            $obj_reporte->texto_buscar = $_GET['nombre'];
+            $array_data = $obj_reporte->load_notas_becados(3);
+        elseif ($_GET['type'] == 'institucion'):
+            $obj_reporte->texto_buscar = $_GET['id'];
+            $array_data = $obj_reporte->load_notas_becados(6);
+        elseif ($_GET['type'] == 'fecha'):
+            $obj_reporte->date_start = $_GET['fechaini'];
+            $obj_reporte->date_end = $_GET['fechafin'];
+            $array_data = $obj_reporte->load_notas_becados(7);
+        elseif ($_GET['type'] == 'donante'):
+            $obj_reporte->texto_buscar = $_GET['nombre'];
+            $array_data = $obj_reporte->load_notas_becados(8);
+        endif;
+    endif;
+endif;
 
 
 
@@ -53,8 +81,15 @@ $objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
 //Encabezado y Titulo
 $objPHPExcel->getActiveSheet()->mergeCells('A1:G1');
 $objPHPExcel->getDefaultStyle()->getFont()->setSize(12);
-$objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - NOTAS DE LOS APADRINADOS AÑO ' . $obj_reporte->anio);
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+if ($_GET['type'] == 'load'):
+    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - NOTAS DE LOS APADRINADOS AÑO ' . $obj_reporte->anio);
+elseif ($_GET['type'] == 'fecha'):
+    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - NOTAS DE LOS APADRINADOS PERIODO ' . $_GET['fechaini'] . ' HASTA ' . $_GET['fechafin']);
+else:
+    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'CIDECO EL SALVADOR - NOTAS DE LOS APADRINADOS');
+endif;
+
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
 
 //Contenido
@@ -63,7 +98,7 @@ $objPHPExcel->getDefaultStyle()->getFont()->getColor()->setARGB('000000');
 $objPHPExcel->getActiveSheet()->setShowGridLines(true);
 $objPHPExcel->getActiveSheet()->freezePane('A3');
 
-$objPHPExcel->getActiveSheet()->getStyle('A2:G2')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A2:H2')->getFont()->setBold(true);
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(35);
@@ -72,6 +107,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(35);
 
 
 //Encabezado
@@ -82,10 +118,11 @@ $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue('D2', 'Grado')
         ->setCellValue('E2', 'Sección')
         ->setCellValue('F2', 'Nota Promedio')
-        ->setCellValue('G2', 'Año');
+        ->setCellValue('G2', 'Año')
+        ->setCellValue('H2', 'Donante');
 
-$objPHPExcel->getActiveSheet()->getStyle('A2:G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle('A2:G2')->applyFromArray(array('fill' => array('type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR, 'rotation' => 90, 'startcolor' => array('argb' => 'FFFFFFFF'), 'endcolor' => array('argb' => 'FFCDE3FE'))));
+$objPHPExcel->getActiveSheet()->getStyle('A2:H2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A2:H2')->applyFromArray(array('fill' => array('type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR, 'rotation' => 90, 'startcolor' => array('argb' => 'FFFFFFFF'), 'endcolor' => array('argb' => 'FFCDE3FE'))));
 
 
 $counter = 3;
@@ -93,8 +130,8 @@ $counter = 3;
 $totales = 0;
 $correlativo = 1;
 foreach ($array_data as $key => $value):
-    $objPHPExcel->getActiveSheet()->getStyle('A' . $counter . ':G' . $counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-    $objPHPExcel->getActiveSheet()->getStyle('A' . $counter . ':G' . $counter)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('argb' => 'FF999999'),),),));
+    $objPHPExcel->getActiveSheet()->getStyle('A' . $counter . ':H' . $counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->getStyle('A' . $counter . ':H' . $counter)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('argb' => 'FF999999'),),),));
 
     $objPHPExcel->getActiveSheet()->setCellValue('A' . $counter, $correlativo);
     $objPHPExcel->getActiveSheet()->setCellValue('B' . $counter, $value["alumno"]);
@@ -102,13 +139,14 @@ foreach ($array_data as $key => $value):
     $objPHPExcel->getActiveSheet()->setCellValue('D' . $counter, $value["grado"]);
     $objPHPExcel->getActiveSheet()->setCellValue('E' . $counter, $value["seccion"]);
     $objPHPExcel->getActiveSheet()->setCellValue('F' . $counter, $value["nota"]);
-    $objPHPExcel->getActiveSheet()->setCellValue('G' . $counter, $value["anio"]);    
+    $objPHPExcel->getActiveSheet()->setCellValue('G' . $counter, $value["anio"]);
+    $objPHPExcel->getActiveSheet()->setCellValue('H' . $counter, $value["donante"]);
     $correlativo++;
     $counter++;
 endforeach;
 
 
-$objPHPExcel->getActiveSheet()->setAutoFilter('A2:G' . $counter);
+$objPHPExcel->getActiveSheet()->setAutoFilter('A2:H' . $counter);
 
 
 //Finaliza programa

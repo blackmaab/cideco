@@ -10,7 +10,7 @@ class Conexion {
     private $hostname = "localhost";
     private $userData = "root";
     private $passwordData = "";
-    protected $database = "";
+    protected $database = "gd_cideco_es";
     public $conection;
 
     public function conexion() {

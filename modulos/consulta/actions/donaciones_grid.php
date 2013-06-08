@@ -21,21 +21,36 @@ $head .="</head> \n";
 $obj_reporte = new Reportes();
 $obj_reporte->idUsuario = $_SESSION['USERID'];
 if ($_SESSION['IDPERF'] == 3):
-    if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
-        $obj_reporte->date_start = $_GET['fechaini'];
-        $obj_reporte->date_end = $_GET['fechafin'];
-        $array_data = $obj_reporte->load_donaciones(2);
-    else:
-        $array_data = $obj_reporte->load_donaciones(1);
+    if (isset($_GET['type'])):
+        if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
+            $obj_reporte->date_start = $_GET['fechaini'];
+            $obj_reporte->date_end = $_GET['fechafin'];
+            $array_data = $obj_reporte->load_donaciones(2);
+        else:
+            $array_data = $obj_reporte->load_donaciones(1);
+        endif;
     endif;
+
 elseif ($_SESSION['IDPERF'] == 1):
-    if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
-        $obj_reporte->date_start = $_GET['fechaini'];
-        $obj_reporte->date_end = $_GET['fechafin'];
-        $array_data = $obj_reporte->load_donaciones(4);
-    else:
-        $array_data = $obj_reporte->load_donaciones(3);
+    //verificacion de la busqueda a realizar
+    if (isset($_GET['type'])):
+        if ($_GET['type'] == 'load'):
+            if (isset($_GET['fechaini']) && isset($_GET['fechafin'])):
+                $obj_reporte->date_start = $_GET['fechaini'];
+                $obj_reporte->date_end = $_GET['fechafin'];
+                $array_data = $obj_reporte->load_donaciones(4);
+            else:
+                $array_data = $obj_reporte->load_donaciones(3);
+            endif;
+        elseif ($_GET['type'] == 'donante'):
+            $obj_reporte->texto_buscar = $_GET['nombre'];
+            $array_data = $obj_reporte->load_donaciones(5);
+            elseif ($_GET['type'] == 'promotor'):
+            $obj_reporte->texto_buscar = $_GET['nombre'];
+            $array_data = $obj_reporte->load_donaciones(6);
+        endif;
     endif;
+
 endif;
 
 //Cierra encabezado

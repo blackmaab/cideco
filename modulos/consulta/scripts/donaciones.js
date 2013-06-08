@@ -50,14 +50,64 @@ function doOnLoad() {
 
 
 function DoEvent(data) {
-    if(document.getElementById("txtFechaIni").value=="" || document.getElementById("txtFechaFin").value==""){
-        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos de fecha</td></tr></table>");
-        Msjbox.show();
+    var param="";
+    var fecha_fin="";
+    //verificacion del tipo de usuario
+    usuario=$('#txtTipoUsuario').val();
+    if(usuario==1){        
+        var opc= $('#selFiltro').val();
+        switch(opc){
+            case '1':
+            case '2':
+                if($('#txtNombre').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar el campo nombre</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }
+                
+                if(opc==1){
+                    param="?type=donante&nombre="+$('#txtNombre').val();  
+                }else if(opc==2){
+                    param="?type=promotor&nombre="+$('#txtNombre').val();  
+                }                                
+                break;
+            case '3':
+                if($('#txtFechaIni').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }
+                fecha_fin=($('#txtFechaFin').val()=="")?$("#txtFechaIni").val():$("#txtFechaFin").val();
+                param="?fechaini="+$("#txtFechaIni").val();
+                param+="&fechafin="+fecha_fin+"&type=load";                
+                break;
+        }
+    }else if(usuario==2){
+        if($('#txtFechaIni').val()==""){
+            Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+            Msjbox.show();
+            return false;
+        }
+        fecha_fin=($('#txtFechaFin').val()=="")?$("#txtFechaIni").val():$("#txtFechaFin").val();
+        param="?fechaini="+$("#txtFechaIni").val();
+        param+="&fechafin="+fecha_fin+"&type=load";  
+    }else{
         return false;
     }
-	
-    var param="?fechaini="+document.getElementById("txtFechaIni").value;
-    param+="&fechafin="+document.getElementById("txtFechaFin").value;
+   
+//   if(){
+//       
+//   }
+//   
+//   if(document.getElementById("txtFechaIni").value==""){
+//        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+//        Msjbox.show();
+//        return false;
+//    }
+//    var fecha_fin=(document.getElementById("txtFechaFin").value=="")?document.getElementById("txtFechaIni").value:document.getElementById("txtFechaFin").value;
+//    var param="?fechaini="+$("#txtFechaIni").value;
+//    param+="&fechafin="+fecha_fin+"&type=load";
+//    
     var url="../actions/donaciones_export.php"+param;
 			
     var window_width = 10;
@@ -93,7 +143,7 @@ function LoadGrid()
     mygrid.setSkin("dhx_skyblue");
     
     // direccion de la pagina que hace el xml de forma dinamica
-    mygrid.loadXML("../actions/donaciones_grid.php",
+    mygrid.loadXML("../actions/donaciones_grid.php?type=load",
         function()
         {            
             // Para agregar los filtros del grid.
@@ -108,19 +158,21 @@ function LoadGrid()
 function filterGrid()
 {   
     
-    if(document.getElementById("txtFechaIni").value=="" || document.getElementById("txtFechaFin").value==""){
-        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar los campos de fecha</td></tr></table>");
+    if(document.getElementById("txtFechaIni").value==""){
+        Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
         Msjbox.show();
         return false;
     }
-    
+    var fecha_fin=(document.getElementById("txtFechaFin").value=="")?document.getElementById("txtFechaIni").value:document.getElementById("txtFechaFin").value;
+    var param="?fechaini="+$("#txtFechaIni").value;
+    param+="&fechafin="+fecha_fin+"&type=load";
     
     mygrid = new dhtmlXGridObject('gridbox');
     mygrid.setImagePath("../../../components/grid/imgs/");
     mygrid.init();
     mygrid.setSkin("dhx_skyblue");
-    var param="?fechaini="+document.getElementById("txtFechaIni").value;
-    param+="&fechafin="+document.getElementById("txtFechaFin").value;
+    //    var param="?fechaini="+document.getElementById("txtFechaIni").value;
+    //    param+="&fechafin="+document.getElementById("txtFechaFin").value+"&type=load";
     // direccion de la pagina que hace el xml de forma dinamica
     mygrid.loadXML("../actions/donaciones_grid.php"+param,
         function()
@@ -187,19 +239,77 @@ function init() {
 
 
 $(document).ready(function(){
-    $('#selFiltro').change(function(){
-        opc=$(this).val();
-        console.log(opc);
+    function filter_Grid(param)
+    {      
+        mygrid = new dhtmlXGridObject('gridbox');
+        mygrid.setImagePath("../../../components/grid/imgs/");
+        mygrid.init();
+        mygrid.setSkin("dhx_skyblue");
+        // direccion de la pagina que hace el xml de forma dinamica
+        mygrid.loadXML("../actions/donaciones_grid.php"+param,
+            function()
+            {            
+                // Para agregar los filtros del grid.
+                mygrid.attachHeader(",#text_filter,,#text_filter,,");
+                // finalizamos el mensaje de espere
+                MsjWait.hide();
+            }
+            );
+    }
+    
+    var verificar_filtro=function (){
+        var param="";
+        var opc= $('#selFiltro').val();
         switch(opc){
-            case 1:
-            case 2:
+            case '1':
+            case '2':
+                if($('#txtNombre').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar el campo nombre</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }
+                
+                if(opc==1){
+                    param="?type=donante&nombre="+$('#txtNombre').val();  
+                }else if(opc==2){
+                    param="?type=promotor&nombre="+$('#txtNombre').val();  
+                }
+                
+                filter_Grid(param);
+                break;
+            case '3':
+                if($('#txtFechaIni').val()==""){
+                    Msjbox.setBody("<table><tr><td><img src='../../../images/icons/close.gif' align='middle'></td><td>&nbsp;&nbsp;Debe llenar al menos la fecha de inicio</td></tr></table>");
+                    Msjbox.show();
+                    return false;
+                }
+                var fecha_fin=($('#txtFechaFin').val()=="")?$("#txtFechaIni").val():$("#txtFechaFin").val();
+                param="?fechaini="+$("#txtFechaIni").val();
+                param+="&fechafin="+fecha_fin+"&type=load";
+                filter_Grid(param);
+                break;
+        }
+    }
+    
+    $('#selFiltro').change(function(){
+        opc=$(this).val();        
+        switch(opc){
+            case '1':
+            case '2':
                 $('#rowNombre').show();
                 $('#rowFecha').hide();
                 break;
-            case 3:
+            case '3':
                 $('#rowNombre').hide();
                 $('#rowFecha').show();
                 break;
         }
     });
+    
+    $('#btnBuscar').click(function(){
+        verificar_filtro();    
+    });
+    
+    
+    
 });

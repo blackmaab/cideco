@@ -7,6 +7,7 @@ class Reportes extends Conexion {
     public $sqlQuery;
     public $idUsuario;
     public $anio;
+    public $texto_buscar;
 
     public function __construct() {
         parent::conexion();
@@ -94,7 +95,12 @@ class Reportes extends Conexion {
             elseif ($all_row == 4):
                 //PARA EL MODULO DEL ADMINISTRADOR - BUSQUEDA POR FECHAS
                 $this->sqlQuery .=" g.fecha BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
-
+            elseif ($all_row == 5):
+                //PARA EL MODULO DEL ADMINISTRADOR - BUSQUEDA POR DONANTE
+                $this->sqlQuery .=" d.nombres like '%" . $this->texto_buscar . "%' OR  d.apellido_pri like '%" . $this->texto_buscar . "%' OR d.apellido_seg like '%" . $this->texto_buscar . "%'";
+            elseif ($all_row == 6):
+                //PARA EL MODULO DEL ADMINISTRADOR - BUSQUEDA POR DONANTE
+                $this->sqlQuery .=" f.nombres like '%" . $this->texto_buscar . "%' OR  f.apellido_pri like '%" . $this->texto_buscar . "%' OR f.apellido_seg like '%" . $this->texto_buscar . "%'";
             endif;
 
             $this->sqlQuery .=" order by g.fecha,c.id_persona asc ";
@@ -126,11 +132,11 @@ class Reportes extends Conexion {
         }
     }
 
-    public function load_notas_becados($all_row = true) {
+    public function load_notas_becados($all_row = 0) {
         try {
             $array_data = array();
             //verificacion si se filtraran los datos                     
-            $this->sqlQuery = "select b.id_alumno,TRIM(concat(IFNULL(c.nombres,''),' ',IFNULL(c.apellido_pri,''),' ',IFNULL(c.apellido_seg,''))) alumno,";
+            $this->sqlQuery = "select DISTINCT(a.id_alumno),TRIM(concat(IFNULL(c.nombres,''),' ',IFNULL(c.apellido_pri,''),' ',IFNULL(c.apellido_seg,''))) alumno,";
             $this->sqlQuery .="d.nombre_institucion,e.grado,a.seccion,a.nota_promedio,a.anio, ";
             $this->sqlQuery .="TRIM(concat(IFNULL(h.nombres,''),' ',IFNULL(h.apellido_pri,''),' ',IFNULL(h.apellido_seg,''))) donante ";
             $this->sqlQuery .="from registro_alumno a ";
@@ -142,12 +148,34 @@ class Reportes extends Conexion {
             $this->sqlQuery .="inner join donante g on f.id_donante=g.id_donante ";
             $this->sqlQuery.="inner join persona h on g.id_persona=h.id_persona ";
             $this->sqlQuery.="where a.activa=1 ";
-            if ($all_row == true):
+            if ($all_row == 1):
+                //PARA EL MODULO DEL DONANTE - AUTOCARGA
                 $this->sqlQuery .="and a.anio=" . date('Y');
-            else:
+                $this->sqlQuery .=" AND g.id_usuario=" . $this->idUsuario;
+            elseif ($all_row == 2):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA DE ANIO
+                $this->sqlQuery .=" and a.anio=" . $this->anio;
+                $this->sqlQuery .=" AND g.id_usuario=" . $this->idUsuario;
+            elseif ($all_row == 3):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA DE NOMBRE ALUMNO                
+                $this->sqlQuery .=" AND c.nombres like '%" . $this->texto_buscar . "%' OR  c.apellido_pri like '%" . $this->texto_buscar . "%' OR c.apellido_seg like '%" . $this->texto_buscar . "%'";
+            elseif ($all_row == 4):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA AUTO CARGA POR AÑO 
+                $this->sqlQuery .="and a.anio=" . date('Y');
+            elseif ($all_row == 5):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA POR AÑO 
                 $this->sqlQuery .="and a.anio=" . $this->anio;
+            elseif ($all_row == 6):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA POR INSTITUCION 
+                $this->sqlQuery .="and a.id_institucion_edu=" . $this->texto_buscar;
+            elseif ($all_row == 7):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA POR FECHAS 
+                $this->sqlQuery .=" AND a.fecha_creacion BETWEEN '" . $this->date_start . " 00:00:00' AND '" . $this->date_end . " 23:59:59'";
+            elseif ($all_row == 8):
+                //PARA EL MODULO DEL DONANTE - BUSQUEDA DE NOMBRE DONANTE                
+                $this->sqlQuery .=" AND h.nombres like '%" . $this->texto_buscar . "%' OR  h.apellido_pri like '%" . $this->texto_buscar . "%' OR h.apellido_seg like '%" . $this->texto_buscar . "%'";
             endif;
-            $this->sqlQuery .=" AND g.id_usuario=" . $this->idUsuario;
+
             $this->sqlQuery .=" order by a.fecha_creacion,b.id_alumno asc ";
             $resultSet = $this->conection->prepare($this->sqlQuery);
             $resultSet->execute();
@@ -161,7 +189,8 @@ class Reportes extends Conexion {
                         "grado" => $row["grado"],
                         "seccion" => $row["seccion"],
                         "nota" => $row["nota_promedio"],
-                        "anio" => $row["anio"]
+                        "anio" => $row["anio"],
+                        "donante" => $row["donante"]
                     );
                     $i++;
                 }
